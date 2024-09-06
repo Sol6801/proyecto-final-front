@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
-
+const API_URL = process.env.API_URL
 export async function GET() {
-    'http://localhost:5001/api/movies'
-    const response = await fetch('http://localhost:5001/api/movies', {
+
+    const response = await fetch(`${API_URL}/movies`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

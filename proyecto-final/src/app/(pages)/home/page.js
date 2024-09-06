@@ -1,7 +1,6 @@
-import React from 'react';
-import Card from '../src/app/components/Card.js';
-  
-import styles from '';
+import Card from '@/app/components/Card';
+import React from 'react';  
+import styles from '@/app/styles/Card.module.css';
 
 const HomePage = () => {
   return (
