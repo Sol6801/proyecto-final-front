@@ -17,9 +17,6 @@ const Navbar = () => {
             <a href="/home" className="hover:underline">Inicio</a>
           </li>
           <li>
-            <a href="/friends" className="hover:underline">Amigos</a>
-          </li>
-          <li>
             <a href="/groups" className="hover:underline">Grupos</a>
           </li>
         </ul>

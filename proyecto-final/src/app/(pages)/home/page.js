@@ -16,12 +16,6 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">¡Invitá a tus amigos y empezá a planear!</h2>
           <div className=" flex flex-row justify-center items-center gap-8 text-center">
-            <a href="/friends">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Mis Amigos</h3>
-              <p>Lista de Amigos</p>
-            </div>
-            </a>
             <a href="/groups">
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-xl font-semibold mb-4">Mis Grupos</h3>
