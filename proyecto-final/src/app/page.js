@@ -5,7 +5,7 @@ import styles from '../app/styles/Card.module.css';
 import Head from 'next/head'
 
 const LandingPage = () => {
-  return (
+    return (
       <div className="min-h-screen bg-gray-50">
         {/* Main Content */}
         <main className="flex flex-col items-center justify-center py-20 bg-gradient-to-b from-blue-500 to-blue-700 text-white">
