@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold cursor-pointer" onClick={() => router.push('/')}>
+        <h1 className="text-2xl font-bold cursor-pointer" onClick={() => router.push('/home')}>
           Planner Buddy
         </h1>
         <ul className="flex space-x-4">

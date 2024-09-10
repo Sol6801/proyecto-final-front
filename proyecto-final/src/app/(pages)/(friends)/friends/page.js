@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Friend from '@/app/components/friend';
+import Navbar from '@/app/components/navbar';
 
 const Friends = () => {
   // Simulamos datos de amigos
@@ -39,6 +40,7 @@ const Friends = () => {
 
   return (
     <div>
+      <Navbar/>
       <Head>
         <title>Friends List</title>
       </Head>
