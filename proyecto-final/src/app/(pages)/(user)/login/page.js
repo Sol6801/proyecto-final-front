@@ -1,9 +1,8 @@
 "use client"; // Indica que este es un componente del cliente
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Actualiza la importación de router
-import RegisterLayout from '../layout';
 
-const LoginPage= () => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter(); // Usa el hook del cliente para la navegación
