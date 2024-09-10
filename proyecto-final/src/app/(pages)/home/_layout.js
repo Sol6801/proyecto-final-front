@@ -5,7 +5,7 @@ export default function HomeLayout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       {/* Navigation */}
-      <nav className="bg-blue-600 text-white p-4">
+      <nav className="bg-violet-600 text-white">
         <div className="container mx-auto flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
             Planner Buddy

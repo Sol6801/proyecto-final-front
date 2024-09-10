@@ -14,13 +14,13 @@ const Navbar = () => {
         </h1>
         <ul className="flex space-x-4">
           <li>
-            <a href="#" className="hover:underline">Inicio</a>
+            <a href="/home" className="hover:underline">Inicio</a>
           </li>
           <li>
-            <a href="#" className="hover:underline">Amigos</a>
+            <a href="/friends" className="hover:underline">Amigos</a>
           </li>
           <li>
-            <a href="#" className="hover:underline">Grupos</a>
+            <a href="/groups" className="hover:underline">Grupos</a>
           </li>
         </ul>
       </div>
