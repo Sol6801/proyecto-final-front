@@ -1,6 +1,7 @@
+'use client'
 import Navbar from "@/app/components/navbar"
 // import Link from "next/link"
-// import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 const LINKS = [
   {
@@ -21,7 +22,7 @@ const LINKS = [
 ]
 
 export default function GroupsLayout ({ children }) {
-  // const pathname = usePathname()
+  const pathname = usePathname()
 return (
   <>
   <Navbar/>
