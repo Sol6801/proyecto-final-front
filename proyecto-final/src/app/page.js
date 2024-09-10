@@ -1,38 +1,34 @@
-import React from 'react';
-import Navbar from '../app/components/Navbar';
-import Footer from '../app/components/Footer';
-import Card from '../app/components/Card';
-import styles from '../app/styles/Card.module.css';
+"use client"; // Asegúrate de que esto es un componente del cliente
 
-const HomePage = () => {
+import Navbar from '../app/components/navbar';
+import Footer from '../app/components/footer';
+import SwipeableCard from '../app/components/swipeablecard';
+
+export default function HomePage() {
   return (
-    <div>
+    <>
       <Navbar />
-      <div className={styles.container}>
-        <h1>Welcome to My Site</h1>
-        <div className={styles.cards}>
-          <Card
-            title="PELICULAS"
-            description="This is a description of the first card."
-            imageUrl=""  
+      <main className="flex flex-col min-h-screen">
+        <div className="flex flex-wrap justify-center gap-4 p-4 flex-grow">
+          <SwipeableCard
+            title="Comidas"
+            description="Desliza para la derecha o izquierda."
+            imageUrl="https://images.falabella.com/v3/assets/blt34d59f5b52e53f95/bltbafcfd1b285f9983/6284fe44af7b396927edc62a/power-card-400x300px-a000787-paso4.jpg"
           />
-          <Card
-            title="LUGARES"
-            description="This is a description of the second card."
-            imageUrl="" 
+          <SwipeableCard
+            title="Lugares"
+            description="Desliza para la derecha o izquierda."
+            imageUrl="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/26/b5/a7/parque-de-la-costa.jpg?w=500&h=400&s=1"
           />
-          <Card
-            title="COMIDAS"
-            description="This is a description of the third card."
-            imageUrl=""  
+          <SwipeableCard
+            title="Peliculas"
+            description="Desliza para la derecha o izquierda."
+            imageUrl="https://figurasfrikis.net/wp-content/uploads/2023/04/logopelisinicio.jpg"
           />
-          {/* Add more cards as needed */}
+          {/* Agrega más tarjetas según sea necesario */}
         </div>
-      </div>
-      <Footer />
-    </div>
+        <Footer />
+      </main>
+    </>
   );
-};
-
-export default HomePage;
-
+}
