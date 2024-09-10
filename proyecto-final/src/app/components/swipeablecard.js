@@ -20,7 +20,7 @@ const SwipeableCard = ({ title, description, imageUrl }) => {
     return (
         <div
             {...handlers}
-            className="w-full max-w-sm mx-auto bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
+            className="w-full max-w-sm mx-auto h-96 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
             onClick={() => router.push('/somepage')} // Ejemplo de navegación al hacer clic
         >
             {imageUrl && (
