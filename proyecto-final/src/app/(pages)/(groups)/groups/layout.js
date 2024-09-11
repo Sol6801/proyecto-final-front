@@ -1,4 +1,5 @@
 'use client'
+import Footer from "@/app/components/footer"
 import Navbar from "@/app/components/navbar"
 // import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -43,6 +44,7 @@ return (
       </aside>
       {children}
   </div>
+  <Footer/>
   </>
 )
 }

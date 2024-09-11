@@ -14,7 +14,7 @@ const categories = ({ params }) => {
 
   return (
     <section className='h-screen bg-violet-400 grid place-items-center flex-1'>
-      <h1 className="text-3xl font-bold text-center mb-12">Categories del Grupo {groupId}</h1>
+      <h1 className="text-3xl font-bold text-center mb-12">Categorías del Grupo {groupId}</h1>
       <section className="py-20 bg-gray-100 rounded-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Empezá a elegir dentro de cada categoría.</h2>

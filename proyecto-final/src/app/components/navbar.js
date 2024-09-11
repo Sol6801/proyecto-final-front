@@ -19,6 +19,9 @@ const Navbar = () => {
           <li>
             <a href="/groups" className="hover:underline">Grupos</a>
           </li>
+          <li>
+            <a href="/user" className="hover:underline">Usuario</a>
+          </li>
         </ul>
       </div>
     </nav>
