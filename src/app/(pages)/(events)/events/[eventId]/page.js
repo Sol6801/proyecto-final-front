@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import Member from '@/app/components/member.js';
+import Member from '@/components/member.js';
 
 const EventPage = ({ params }) => {
   const router = useRouter();

@@ -1,5 +1,5 @@
 'use client';
-import SwipeableCard from "@/app/components/swipeablecard";
+import SwipeableCard from "@/components/swipeable-card";
 import { useRouter } from 'next/navigation';
 
 const Movies = () => {
