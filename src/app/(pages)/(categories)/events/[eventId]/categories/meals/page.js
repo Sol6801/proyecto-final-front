@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 const Meals = () => {
   const router = useRouter();
 
-  const goBack = () => {
-    router.back(); 
+  const goToCategories = () => {
+    router.push(`../categories`);
   };
 
   const meals = [
-    { id: 1, title: 'Pizza', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Supreme_pizza.jpg' },
+    { id: 1, title: 'Pizza', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Supreme_pizza.jpg'},
     { id: 2, title: 'Sushi', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/60/Sushi_platter.jpg' },
     { id: 3, title: 'Hamburguesa', imageUrl: 'https://images.unsplash.com/photo-1550547660-d9450f859349' },
     { id: 4, title: 'Pasta a la Carbonara', imageUrl: 'https://www.pequerecetas.com/wp-content/uploads/2018/01/pasta-carbonara-receta.jpg' },
@@ -23,7 +23,7 @@ const Meals = () => {
    <SwipeableCard 
       items = {meals}
    />
-   <button onClick={goBack}>
+   <button onClick={goToCategories}>
       <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
             Ir Atrás
           </a>

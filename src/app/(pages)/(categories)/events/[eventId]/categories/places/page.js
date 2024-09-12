@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 const Places = () => {
   const router = useRouter();
 
-  const goBack = () => {
-    router.back(); 
+  const goToCategories = () => {
+    router.push(`../categories`);
   };
 
   const places = [
@@ -22,7 +22,7 @@ const Places = () => {
       <h1 className="text-3xl font-bold text-center mb-12">Lugares</h1>
     <SwipeableCard items = {places}/>
     
-    <button onClick={goBack}>
+    <button onClick={goToCategories}>
       <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
             Ir Atrás
           </a>

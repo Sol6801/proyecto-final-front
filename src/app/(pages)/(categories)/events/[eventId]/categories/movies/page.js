@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 const Movies = () => {
   const router = useRouter();
 
-  const goBack = () => {
-    router.back(); 
+  const goToCategories = () => {
+    router.push(`../categories`);
   };
 
 
@@ -30,7 +30,7 @@ const Movies = () => {
 </div>
 
    
-   <button onClick={goBack}>
+   <button onClick={goToCategories}>
       <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
             Ir Atrás
           </a>
