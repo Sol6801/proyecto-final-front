@@ -6,23 +6,23 @@ import { usePathname } from "next/navigation"
 
 const LINKS = [
   {
-      name:'Group1',
-      path:'/groups/groupId:1'
+      name:'Event1',
+      path:'/events/eventId:1'
 
   },
   {
-      name:'Group2',
-      path:'/groups/groupId:2'
+      name:'Event2',
+      path:'/events/eventId:2'
 
   },
   {
-      name:'Group3',
-      path:'/groups/groupId:3'
+      name:'Event3',
+      path:'/events/eventId:3'
 
   }
 ]
 
-export default function GroupsLayout ({ children }) {
+export default function EventsLayout ({ children }) {
   const pathname = usePathname()
 return (
   <>
