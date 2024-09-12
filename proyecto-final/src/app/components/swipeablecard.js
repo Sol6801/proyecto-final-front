@@ -1,40 +1,48 @@
 "use client"; // Asegúrate de que esto es un componente del cliente
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
-const SwipeableCard = ({ title, description, imageUrl }) => {
-    const router = useRouter();
+const SwipeableCard = ({ items }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+  
+    // Función para pasar a la siguiente tarjeta
+    const handleNext = () => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length); // Cicla a través de las películas
+    };
 
     // Configura los manejadores de swipe
     const handlers = useSwipeable({
-        onSwipedLeft: () => console.log('Swiped Left'),
-        onSwipedRight: () => console.log('Swiped Right'),
-        onSwipedUp: () => console.log('Swiped Up'),
-        onSwipedDown: () => console.log('Swiped Down'),
+        onSwipedLeft: handleNext,
+        onSwipedRight: handleNext,
         preventDefaultTouchmoveEvent: true,
         trackMouse: true,
     });
 
     return (
+
+        <section>
         <div
             {...handlers}
             className="w-full max-w-sm mx-auto h-96 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
-            onClick={() => router.push('/somepage')} // Ejemplo de navegación al hacer clic
+
         >
-            {imageUrl && (
+
                 <img
-                    className="w-full h-48 object-cover"
-                    src={imageUrl}
-                    alt={title}
+                    className="w-full h-80 object-cover"
+                    src={items[currentIndex].imageUrl}
+                    alt={items[currentIndex].title}
                 />
-            )}
+
             <div className="p-4">
-                <h3 className="text-xl font-bold mb-2">{title}</h3>
-                <p className="text-gray-600">{description}</p>
+                <h3 className="text-xl font-bold mb-2">{items[currentIndex].title}</h3>
             </div>
+
+            
         </div>
+      <button onClick={handleNext}>Siguiente</button>
+        </section>
     );
 };
 
