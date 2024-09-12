@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 
-const categories = ({ params }) => {
+const Categories = ({ params }) => {
   const router = useRouter();
   const { eventId } = params; 
 
@@ -49,8 +49,4 @@ const categories = ({ params }) => {
   );
 };
 
-export default categories;
-
-categories.getLayout = function getLayout(page) {
-  return <CategoryLayout>{page}</CategoryLayout>;
-};
+export default Categories;
