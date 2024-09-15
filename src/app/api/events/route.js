@@ -26,6 +26,6 @@ export async function POST() {
     const data = await response.json()
     return NextResponse.json({
         success: true,
-        events: data,
+        message: 'Nuevo evento creado',
     })
 }

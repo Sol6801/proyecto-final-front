@@ -25,7 +25,7 @@ const SwipeableCard = ({ items }) => {
         <section className='flex flex-row'>
                 <button onClick={handleNext}>
       <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-            Siguiente
+            Dislike
           </a>
       </button>
         <div
@@ -48,7 +48,7 @@ const SwipeableCard = ({ items }) => {
         </div> 
       <button onClick={handleNext}>
       <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-            Siguiente
+            Like
           </a>
       </button>
         </section>
