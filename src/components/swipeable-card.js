@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de que esto es un componente del cliente
+'use client' // Asegúrate de que esto es un componente del cliente
 
 import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
@@ -22,7 +22,12 @@ const SwipeableCard = ({ items }) => {
 
     return (
 
-        <section>
+        <section className='flex flex-row'>
+                <button onClick={handleNext}>
+      <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+            Siguiente
+          </a>
+      </button>
         <div
             {...handlers}
             className="w-full max-w-sm mx-auto h-96 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
@@ -40,8 +45,12 @@ const SwipeableCard = ({ items }) => {
             </div>
 
             
-        </div>
-      <button onClick={handleNext}>Siguiente</button>
+        </div> 
+      <button onClick={handleNext}>
+      <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+            Siguiente
+          </a>
+      </button>
         </section>
     );
 };
