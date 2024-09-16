@@ -2,15 +2,19 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import ItemCard from '@/components/item-card';
 
 
 const Categories = ({ params }) => {
   const router = useRouter();
   const { eventId } = params; 
 
-  const goBack = () => {
-    router.back(); 
-  };
+  const goToEvent = () => {
+    router.push(`/events/${eventId}`);
+  };    
+
+
+
 
   return (
     <section className='h-screen bg-violet-400 grid place-items-center flex-1'>
@@ -20,26 +24,33 @@ const Categories = ({ params }) => {
           <h2 className="text-3xl font-bold text-center mb-12">Empezá a elegir dentro de cada categoría.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
             <a href='categories/meals'>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Comidas</h3>
-              <p>Mmmmm... ¿Que quiero comer hoy?</p>
-            </div>
+            <ItemCard
+                category='Comidas'
+                description='Mmmmm... ¿Que quiero comer hoy?'
+                imageUrl='https://randomuser.me/api/portraits/women/44.jpg'
+              />
+
             </a>
             <a href='categories/places'>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Lugares</h3>
-              <p>¿Donde vamos?</p>
-            </div>
-            </a><a href='categories/movies'>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Peliculas</h3>
-              <p>¿Que quisieras ver?</p>
-            </div>
+            <ItemCard
+                category='Lugares'
+                description='¿Donde vamos?'
+                imageUrl='https://randomuser.me/api/portraits/women/44.jpg'
+              />
+
+            </a>
+            <a href='categories/movies'>
+            <ItemCard
+                category='Peliculas'
+                description='¿Que quisieras ver?'
+                imageUrl='https://randomuser.me/api/portraits/women/44.jpg'
+              />
+
             </a>
           </div>
         </div>
       </section>
-      <button onClick={goBack}>
+      <button onClick={goToEvent}>
       <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
             Ir Atrás
           </a>
