@@ -1,6 +1,6 @@
 "use client"; // Asegúrate de que esto es un componente del cliente
 
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (

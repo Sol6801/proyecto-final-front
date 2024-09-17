@@ -41,10 +41,10 @@ const HomePage = () => {
           </h2>
           <div className=" flex flex-row justify-center items-center gap-8 text-center">
             <a href="/events">
-            <ItemCard
-                category='Mis Eventos'
-                description='¡Invitá a tus amigos y empezá a planear!'
-                imageUrl='https://randomuser.me/api/portraits/women/44.jpg'
+              <ItemCard
+                category="Mis Eventos"
+                description="¡Invitá a tus amigos y empezá a planear!"
+                imageUrl="https://randomuser.me/api/portraits/women/44.jpg"
               />
             </a>
           </div>

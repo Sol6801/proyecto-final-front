@@ -1,16 +1,15 @@
-import { NextResponse } from "next/server"
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { NextResponse } from "next/server";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function GET() {
-
-    const response = await fetch(`${API_URL}/movies`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    const data = await response.json()
-    return NextResponse.json({
-        success: true,
-        movies: data,
-    })
+  const response = await fetch(`${API_URL}/movies`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return NextResponse.json({
+    success: true,
+    movies: data,
+  });
 }

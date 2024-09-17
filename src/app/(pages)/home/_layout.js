@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 export default function HomeLayout({ children }) {
   return (
@@ -11,17 +11,21 @@ export default function HomeLayout({ children }) {
             Planner Buddy
           </Link>
           <div className="space-x-4">
-            <Link href="/features" className="hover:underline">Features</Link>
-            <Link href="/pricing" className="hover:underline">Pricing</Link>
-            <Link href="/login" className="hover:underline">Login</Link>
+            <Link href="/features" className="hover:underline">
+              Features
+            </Link>
+            <Link href="/pricing" className="hover:underline">
+              Pricing
+            </Link>
+            <Link href="/login" className="hover:underline">
+              Login
+            </Link>
           </div>
         </div>
       </nav>
 
       {/* Main content */}
-      <main className="flex-grow">
-        {children}
-      </main>
+      <main className="flex-grow">{children}</main>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
