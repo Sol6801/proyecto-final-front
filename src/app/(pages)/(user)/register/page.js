@@ -6,51 +6,53 @@ import { useRouter } from 'next/navigation'; // Actualiza la importación de rou
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [age, setAge] = useState('');
   const router = useRouter(); // Usa el hook del cliente para la navegación
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // const router = useRouter();
+    const userData = {
+      username,
+      email,
+      age: parseInt(age),
+      password
+    };
+
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(),
+        body: JSON.stringify(userData),
       });
-
+  
       const data = await res.json();
-      
-      if (!res.ok) throw new Error(data.message);
-
-      // Redirige al perfil o inicio de sesión después del registro
-      router.push('/login');
-    } catch (err) {
-      setError(err.message);
+      console.log('User registered:', data);
+      router.push('/login')
+    } catch (error) {
+      console.error('An error occurred:', error);
     }
   };
-
 
   return (
     <div className="flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-bold mb-4">Registro</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
               Nombre Completo:
             </label>
             <input
               type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl"
               required/>
           </div>
@@ -60,7 +62,7 @@ const RegisterPage = () => {
             </label>
             <input
               type="number"
-              id="name"
+              id="age"
               value={age}
               onChange={(e) => setAge(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl"

@@ -5,14 +5,42 @@ import { useRouter } from 'next/navigation'; // Actualiza la importación de rou
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Usa el hook del cliente para la navegación
+  const router = useRouter(); 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí enviarías los datos al backend para el login
-    // Ejemplo de redirección después del login
-    router.push('/');
+    const userData = {
+      email,
+      password
+    };
+
+    try {
+      const res = await fetch(`${API_URL}/login`, { // Cambia a POST y usa el endpoint de login
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Error en la solicitud: ${errorText}`);
+      }
+
+      const data = await res.json();
+      console.log('User logged in:', data);
+      // Guarda el token en localStorage o en un estado global si es necesario
+      // localStorage.setItem('token', data.token);
+      router.push('/home'); // Redirige al usuario a la página de inicio
+    } catch (error) {
+      console.error('An error occurred:', error);
+      alert('Error al iniciar sesión. Verifica tus credenciales.');
+    }
   };
+
 
   return (
     <div className="flex items-center justify-center bg-gray-100">
