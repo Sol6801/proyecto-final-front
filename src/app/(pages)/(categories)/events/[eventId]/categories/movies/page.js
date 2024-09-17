@@ -9,6 +9,8 @@ const Movies = () => {
     router.push(`../categories`);
   };
 
+  //*fetch api movies */
+
   const movies = [
     {
       id: 1,

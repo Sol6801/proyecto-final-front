@@ -12,17 +12,27 @@ const SwipeableCard = ({ items }) => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length); // Cicla a través de las películas
   };
 
+  const handleLike = () => {
+    console.log("Like");
+    handleNext();
+  };
+  const handleDisike = () => {
+    console.log("Dislike");
+    handleNext();
+  };
+
+
   // Configura los manejadores de swipe
   const handlers = useSwipeable({
-    onSwipedLeft: handleNext,
-    onSwipedRight: handleNext,
+    onSwipedLeft: handleDisike,
+    onSwipedRight: handleLike,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
 
   return (
     <section className="flex flex-row">
-      <button onClick={handleNext}>
+      <button onClick={handleDisike}>
         <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
           Dislike
         </a>
@@ -43,7 +53,7 @@ const SwipeableCard = ({ items }) => {
           </h3>
         </div>
       </div>
-      <button onClick={handleNext}>
+      <button onClick={handleLike}>
         <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
           Like
         </a>

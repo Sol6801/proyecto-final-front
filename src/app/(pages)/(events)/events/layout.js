@@ -26,7 +26,9 @@ export default function EventsLayout({ children }) {
       <Navbar />
       <div className="h-screen flex bg-gray-100 mx-auto p-4 gap-4">
         <aside className="bg-violet-600 px-20 grid place-items-center rounded-lg relative">
-          <span className="absolute top-4 left-4">Layout</span>
+          <span className="absolute top-4 left-4">
+            <h1 className="text-xl p-1 text-center">Selecciona un evento para verlo</h1>
+          </span>
           <nav>
             <ul className="flex flex-col gap-10">
               {LINKS.map(({ name, path }) => (
