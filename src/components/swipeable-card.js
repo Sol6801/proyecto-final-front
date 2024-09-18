@@ -2,37 +2,70 @@
 
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 // import { useRouter } from 'next/navigation';
 
-const SwipeableCard = ({ items }) => {
+const SwipeableCard = ({ items, category }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Función para pasar a la siguiente tarjeta
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length); // Cicla a través de las películas
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length); // Resetea el estado de like cuando cambia de tarjeta
   };
 
-  const handleLike = () => {
-    console.log("Like");
-    handleNext();
-  };
-  const handleDisike = () => {
-    console.log("Dislike");
-    handleNext();
+  const handleLike = async () => {
+    try {
+      const response = await fetch(`${API_URL}/${category}/liked`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          itemId: items[currentIndex].id, // ID del ítem actual
+          itemType: category, // Tipo de ítem (movie, meal, place)
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Like guardado:", data);
+      handleNext();
+    } catch (error) {
+      console.error("Error guardando el like:", error);
+    }
   };
 
+  const handleDislike = async () => {
+    try {
+      const response = await fetch(`${API_URL}/${category}/disliked`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          itemId: items[currentIndex].id,
+          itemType: category,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Dislike guardado:", data);
+      handleNext();
+    } catch (error) {
+      console.error("Error guardando el dislike:", error);
+    }
+  };
 
   // Configura los manejadores de swipe
   const handlers = useSwipeable({
-    onSwipedLeft: handleDisike,
+    onSwipedLeft: handleDislike,
     onSwipedRight: handleLike,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
 
+
   return (
     <section className="flex flex-row">
-      <button onClick={handleDisike}>
+      <button onClick={handleDislike}>
         <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
           Dislike
         </a>
@@ -53,6 +86,7 @@ const SwipeableCard = ({ items }) => {
           </h3>
         </div>
       </div>
+
       <button onClick={handleLike}>
         <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
           Like
