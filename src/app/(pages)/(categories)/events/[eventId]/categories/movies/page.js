@@ -13,14 +13,13 @@ const Movies = () => {
   };
 
   useEffect(() => {
-    const url = "'https://parse-torrent-name-and-get-tmdb-data.p.rapidapi.com/getTMDBFromRapidAPI';";
+    const url = 'https://imdb-top-100-movies.p.rapidapi.com/';
     const options = {
       method: "GET",
       headers: {
-        'x-rapidapi-key': '41dd1de8f5msh8bc52d4be988edcp188425jsn6d54ca3b24c5',
-        'x-rapidapi-host': 'parse-torrent-name-and-get-tmdb-data.p.rapidapi.com',
-        'Content-Type': 'application/json'
-      },
+        'x-rapidapi-key': '0bf3f5c62emsh6e57527787a48dfp16ded0jsnfd8264a51e32',
+        'x-rapidapi-host': 'imdb-top-100-movies.p.rapidapi.com'
+      }
     };
 
     const fetchMovies = async () => {
