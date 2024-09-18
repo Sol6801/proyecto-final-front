@@ -1,7 +1,6 @@
 "use client";
 import SwipeableCard from "@/components/swipeable-card";
-import { useRouter } from "next/navigation";
-import { fetchMeals } from '../../../lib/api'; // Función para obtener comidas
+import { useRouter } from "next/navigation";// Función para obtener comidas
 
 const Meals = ({ meals }) => {
   const router = useRouter();
@@ -55,11 +54,5 @@ const Meals = ({ meals }) => {
   );
 };
 
-export async function getStaticProps() {
-  const meals = await fetchMeals(); // Obtén los datos de las comidas
-  return {
-    props: { meals },
-  };
-}
 
 export default Meals;

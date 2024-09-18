@@ -1,15 +1,41 @@
 "use client";
 import SwipeableCard from "@/components/swipeable-card";
 import { useRouter } from "next/navigation";
-import { fetchMovies } from '../../../lib/api'; 
+import { useState, useEffect } from "react";
+const RAPIDAPI = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
-const Movies = ({ movies }) => {
+const Movies = () => {
   const router = useRouter();
+  const [movies, setMovies] = useState([]);
 
   const goToCategories = () => {
     router.push(`../categories`);
   };
 
+  useEffect(() => {
+    const url = "'https://parse-torrent-name-and-get-tmdb-data.p.rapidapi.com/getTMDBFromRapidAPI';";
+    const options = {
+      method: "GET",
+      headers: {
+        'x-rapidapi-key': '41dd1de8f5msh8bc52d4be988edcp188425jsn6d54ca3b24c5',
+        'x-rapidapi-host': 'parse-torrent-name-and-get-tmdb-data.p.rapidapi.com',
+        'Content-Type': 'application/json'
+      },
+    };
+
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json(); // Cambié .text() a .json() para obtener el objeto directamente
+        console.log(result); // Aquí puedes ver los datos de la API en la consola
+        setMovies(result); // Guarda las películas en el estado
+      } catch (error) {
+        console.error("Error al obtener las películas:", error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
   // const movies = [
   //   {
   //     id: 1,
@@ -61,11 +87,5 @@ const Movies = ({ movies }) => {
 };
 
 
-export async function getStaticProps() {
-  const movies = await fetchMovies(); // Obtén los datos de las películas
-  return {
-    props: { movies },
-  };
-}
 
 export default Movies;

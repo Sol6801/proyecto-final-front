@@ -1,7 +1,6 @@
 "use client";
 import SwipeableCard from "@/components/swipeable-card";
-import { useRouter } from "next/navigation";
-import { fetchPlaces } from '../../../lib/api'; // Función para obtener lugares
+import { useRouter } from "next/navigation";// Función para obtener lugares
 
 
 const Places = ({ places}) => {
@@ -56,11 +55,6 @@ const Places = ({ places}) => {
   );
 };
 
-export async function getStaticProps() {
-  const places = await fetchPlaces(); // Obtén los datos de los lugares
-  return {
-    props: { places },
-  };
-}
+
 
 export default Places;
