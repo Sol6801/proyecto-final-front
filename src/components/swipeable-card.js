@@ -13,15 +13,16 @@ const SwipeableCard = ({ items, category }) => {
 
     const handleLike = async () => {
         try {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             const currentItem = items[currentIndex];
             const response = await fetch(`${API_URL}/${category}/liked`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    // "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
+                    userId: 1,
                     itemId: currentItem.id,
                     itemTitle: currentItem.title,
                     itemImage: currentItem.imageUrl,
