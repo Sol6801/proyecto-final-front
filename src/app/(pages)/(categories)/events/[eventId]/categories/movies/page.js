@@ -2,7 +2,6 @@
 import SwipeableCard from "@/components/swipeable-card";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-const RAPIDAPI = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
 const Movies = () => {
   const router = useRouter();
@@ -22,12 +21,21 @@ const Movies = () => {
       }
     };
 
+
     const fetchMovies = async () => {
       try {
         const response = await fetch(url, options);
-        const result = await response.json(); // Cambié .text() a .json() para obtener el objeto directamente
-        console.log(result); // Aquí puedes ver los datos de la API en la consola
-        setMovies(result); // Guarda las películas en el estado
+        const result = await response.json();
+
+        // Mapea los resultados de la API a las claves que SwipeableCard necesita
+        const formattedMovies = result.map((movie, index) => ({
+          id: index, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
+          title: movie.title, // Asegúrate de que la API tenga este campo
+          imageUrl: movie.image, // Asegúrate de que la API tenga este campo
+        }));
+
+        console.log(formattedMovies); // Puedes verificar los datos transformados en la consola
+        setMovies(formattedMovies); // Guarda las películas formateadas en el estado
       } catch (error) {
         console.error("Error al obtener las películas:", error);
       }
@@ -35,38 +43,20 @@ const Movies = () => {
 
     fetchMovies();
   }, []);
-  // const movies = [
-  //   {
-  //     id: 1,
-  //     title: "Inception",
-  //     imageUrl:
-  //       "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tXQvtRWfkUUnWJAn2tN3jERIUG.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "The Dark Knight",
-  //     imageUrl:
-  //       "https://image.tmdb.org/t/p/w500/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Interstellar",
-  //     imageUrl:
-  //       "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Parasite",
-  //     imageUrl:
-  //       "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Joker",
-  //     imageUrl:
-  //       "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-  //   },
-  // ];
+
+  //   const fetchMovies = async () => {
+  //     try {
+  //       const response = await fetch(url, options);
+  //       const result = await response.json(); // Cambié .text() a .json() para obtener el objeto directamente
+  //       console.log(result); // Aquí puedes ver los datos de la API en la consola
+  //       setMovies(result); // Guarda las películas en el estado
+  //     } catch (error) {
+  //       console.error("Error al obtener las películas:", error);
+  //     }
+  //   };
+
+  //   fetchMovies();
+  // }, []);
 
   return (
     <section className="w-screen flex flex-col bg-violet-400 rounded-lg">
