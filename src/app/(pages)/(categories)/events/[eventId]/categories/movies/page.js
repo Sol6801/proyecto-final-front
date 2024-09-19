@@ -29,7 +29,7 @@ const Movies = () => {
 
         // Mapea los resultados de la API a las claves que SwipeableCard necesita
         const formattedMovies = result.map((movie) => ({
-          id: movie.rank, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
+          id: movie.id, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
           title: movie.title, // Asegúrate de que la API tenga este campo
           imageUrl: movie.image, // Asegúrate de que la API tenga este campo
         }));
@@ -44,19 +44,6 @@ const Movies = () => {
     fetchMovies();
   }, []);
 
-  //   const fetchMovies = async () => {
-  //     try {
-  //       const response = await fetch(url, options);
-  //       const result = await response.json(); // Cambié .text() a .json() para obtener el objeto directamente
-  //       console.log(result); // Aquí puedes ver los datos de la API en la consola
-  //       setMovies(result); // Guarda las películas en el estado
-  //     } catch (error) {
-  //       console.error("Error al obtener las películas:", error);
-  //     }
-  //   };
-
-  //   fetchMovies();
-  // }, []);
 
   return (
     <section className="w-screen flex flex-col bg-violet-400 rounded-lg">
