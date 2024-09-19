@@ -28,8 +28,8 @@ const Movies = () => {
         const result = await response.json();
 
         // Mapea los resultados de la API a las claves que SwipeableCard necesita
-        const formattedMovies = result.map((movie, index) => ({
-          id: index, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
+        const formattedMovies = result.map((movie) => ({
+          id: movie.id, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
           title: movie.title, // Asegúrate de que la API tenga este campo
           imageUrl: movie.image, // Asegúrate de que la API tenga este campo
         }));
