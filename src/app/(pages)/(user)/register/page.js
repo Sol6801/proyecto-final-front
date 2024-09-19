@@ -7,7 +7,9 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const router = useRouter(); // Usa el hook del cliente para la navegación
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -17,7 +19,7 @@ const RegisterPage = () => {
     const userData = {
       username,
       email,
-      age: parseInt(age),
+      birthDate,
       password,
     };
 
@@ -45,10 +47,42 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
+              htmlFor="firstName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Nombre:
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Apellido:
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
               htmlFor="username"
               className="block text-sm font-medium text-gray-700"
             >
-              Nombre Completo:
+             Nombre de Usuario(*):
             </label>
             <input
               type="text"
@@ -61,16 +95,16 @@ const RegisterPage = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="age"
+              htmlFor="birthDate"
               className="block text-sm font-medium text-gray-700"
             >
-              Edad:
+              Fecha de Nacimiento(*):
             </label>
             <input
-              type="number"
-              id="age"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+            type="date"
+          name="birthDate"
+          value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl"
               required
             />
@@ -80,7 +114,7 @@ const RegisterPage = () => {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email:
+              Email(*):
             </label>
             <input
               type="email"
@@ -96,7 +130,7 @@ const RegisterPage = () => {
               htmlFor="password"
               className="block text-m font-medium text-gray-700"
             >
-              Contraseña:
+              Contraseña(*):
             </label>
             <input
               type="password"
@@ -107,6 +141,7 @@ const RegisterPage = () => {
               required
             />
           </div>
+          <p>Los campos con (*) son obligatorios</p>
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700"
