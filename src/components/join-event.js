@@ -1,13 +1,14 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const CreateEvent = ({ token }) => {
-  const router = useRouter();
+const JoinEvent = ({ token }) => {
+    const router = useRouter();
   const [eventData, setEventData] = useState({
     name: "",
-    plannedDate: "",
     password: "",
+    id: "",
   });
 
   const handleChange = (e) => {
@@ -42,10 +43,10 @@ const CreateEvent = ({ token }) => {
     }
   };
   return (
-    <section className="bg-gray-100 p-6 rounded-lg shadow-md w-70">
-    <h1 className="text-xl font-bold mb-4">Crear un nuevo evento</h1>
-    <button onClick={() => router.back()} className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer">Cerrar ventana</button>
-    <form onSubmit={handleSubmit} >
+    <section className="bg-gray-100 p-6 rounded-lg shadow-md w-70 items-center">
+      <h1 className="text-xl font-bold m-4">Unirse a Evento</h1>
+      <button onClick={() => router.back()} className="bg-white text-violet-600 p-2 mb-2 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer">Cerrar ventana</button>
+    <form onSubmit={handleSubmit}>
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2">
           Nombre del Evento
@@ -61,12 +62,12 @@ const CreateEvent = ({ token }) => {
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2">
-          Fecha del Evento
+          Id del Evento
         </label>
         <input
-          type="date"
-          name="plannedDate"
-          value={eventData.plannedDate}
+          type="number"
+          name="id"
+          value={eventData.id}
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded"
           required
@@ -88,11 +89,11 @@ const CreateEvent = ({ token }) => {
       <button
         type="submit"
         className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-        Crear Evento
+        Unirse al Evento
       </button>
     </form>
     </section>
   );
 };
 
-export default CreateEvent;
+export default JoinEvent;

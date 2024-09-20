@@ -11,6 +11,10 @@ const EventPage = ({ params }) => {
     router.push(`/events/${eventId}/categories`);
   };
 
+  const ready = () => {
+    //*fetch post ready = true */
+  };
+
   // Simulación de lista de amigos
   const members = [
     {
@@ -56,6 +60,11 @@ const EventPage = ({ params }) => {
           <button onClick={goToCategories}>
             <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
               Categorias
+            </a>
+          </button>
+          <button onClick={ready}>
+            <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+              Listo!
             </a>
           </button>
         </section>

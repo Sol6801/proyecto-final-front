@@ -19,7 +19,7 @@ const LINKS = [
   },
 ];
 
-export default function EventsLayout({ children }) {
+export default function EventsLayout({ children, createEventModal, joinEventModal }) {
   const pathname = usePathname();
   return (
     <>
@@ -39,7 +39,12 @@ export default function EventsLayout({ children }) {
             </ul>
           </nav>
         </aside>
+        <div className="bg-violet-400 place-items-center flex-1 flex px-20 h-full items-center rounded-lg">
         {children}
+          {createEventModal}
+          {joinEventModal}
+
+        </div>
       </div>
       <Footer />
     </>
