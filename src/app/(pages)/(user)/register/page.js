@@ -16,10 +16,14 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const router = useRouter();
+    const birthDateObject = new Date(birthDate);
+
     const userData = {
       username,
+      firstName,
+      lastName,      
       email,
-      birthDate,
+      birthDate: birthDateObject,
       password,
     };
 

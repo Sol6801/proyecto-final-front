@@ -6,6 +6,17 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const router = useRouter();
 
+  const handleLogout = async () => {
+    const response = await fetch('/api/logout', {
+      method: 'POST',
+      credentials: 'include', // Incluir cookies
+    });
+  
+    if (response.ok) {
+      router.push('/login'); // Redirigir al login
+    }
+  };
+
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -31,6 +42,9 @@ const Navbar = () => {
               Usuario
             </a>
           </li>
+          <button onClick={handleLogout}>
+            <a className="hover:underline">Logout</a>
+          </button>
         </ul>
       </div>
     </nav>
