@@ -3,12 +3,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const JoinEvent = ({ token }) => {
+const JoinEvent = (/*{ token }*/) => {
     const router = useRouter();
   const [eventData, setEventData] = useState({
-    name: "",
     password: "",
     id: "",
+    userId: 2,
   });
 
   const handleChange = (e) => {
@@ -25,11 +25,11 @@ const JoinEvent = ({ token }) => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     // Envía una solicitud POST al backend para crear el evento
-    const response = await fetch(`${API_URL}/events`, {
+    const response = await fetch(`${API_URL}/joinEvent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Envía el token para obtener el userId en el backend
+        // Authorization: `Bearer ${token}`, // Envía el token para obtener el userId en el backend
       },
       body: JSON.stringify(eventData),
     });
@@ -37,9 +37,10 @@ const JoinEvent = ({ token }) => {
     const result = await response.json();
 
     if (response.ok) {
-      alert(`Evento creado con éxito. El ID del evento es: ${result.id}`);
+      alert(`Te has unido al evento con éxito. El ID del evento es: ${result.id}`);      
+      router.push(`/events/${eventId}`);
     } else {
-      alert("Error al crear el evento");
+      alert("Error al unirse al evento");
     }
   };
   return (
@@ -47,19 +48,6 @@ const JoinEvent = ({ token }) => {
       <h1 className="text-xl font-bold m-4">Unirse a Evento</h1>
       <button onClick={() => router.back()} className="bg-white text-violet-600 p-2 mb-2 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer">Cerrar ventana</button>
     <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Nombre del Evento
-        </label>
-        <input
-          type="text"
-          name="name"
-          value={eventData.name}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-      </div>
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2">
           Id del Evento

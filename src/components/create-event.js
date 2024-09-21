@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const CreateEvent = ({ token }) => {
+const CreateEvent = (/*{ token }*/) => {
   const router = useRouter();
   const [eventData, setEventData] = useState({
     name: "",
     plannedDate: "",
     password: "",
+    userId: 1,
   });
 
   const handleChange = (e) => {
@@ -24,11 +25,11 @@ const CreateEvent = ({ token }) => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     // Envía una solicitud POST al backend para crear el evento
-    const response = await fetch(`${API_URL}/events`, {
+    const response = await fetch(`${API_URL}/createEvent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Envía el token para obtener el userId en el backend
+        // Authorization: `Bearer ${token}`, // Envía el token para obtener el userId en el backend
       },
       body: JSON.stringify(eventData),
     });
@@ -36,6 +37,7 @@ const CreateEvent = ({ token }) => {
     const result = await response.json();
 
     if (response.ok) {
+      router.push("/login");
       alert(`Evento creado con éxito. El ID del evento es: ${result.id}`);
     } else {
       alert("Error al crear el evento");
