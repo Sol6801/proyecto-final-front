@@ -2,6 +2,8 @@
 import SwipeableCard from "@/components/swipeable-card";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import withAuth from '@/components/withAuth.js'
+
 
 const Places = () => {
   const router = useRouter();
@@ -64,4 +66,4 @@ const Places = () => {
 
 
 
-export default Places;
+export default withAuth(Places);

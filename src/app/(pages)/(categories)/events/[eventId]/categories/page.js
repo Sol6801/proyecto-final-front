@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import ItemCard from "@/components/item-card";
+import withAuth from '@/components/withAuth.js'
 
 const Categories = ({ params }) => {
   const router = useRouter();
@@ -56,4 +57,4 @@ const Categories = ({ params }) => {
   );
 };
 
-export default Categories;
+export default withAuth(Categories);

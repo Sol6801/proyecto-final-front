@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Member from "@/components/member.js";
+import withAuth from '@/components/withAuth.js'
 
 const EventPage = ({ params }) => {
   const router = useRouter();
@@ -82,4 +83,4 @@ const gridStyle = {
   padding: "20px",
 };
 
-export default EventPage;
+export default withAuth(EventPage);
