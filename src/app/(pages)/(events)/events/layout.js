@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-// import Link from "next/link"
+import withAuth from '@/components/withAuth.js';
 import { usePathname } from "next/navigation";
 
 const LINKS = [
@@ -19,7 +19,7 @@ const LINKS = [
   },
 ];
 
-export default function EventsLayout({ children, createEventModal, joinEventModal }) {
+function EventsLayout({ children, createEventModal, joinEventModal }) {
   const pathname = usePathname();
   return (
     <>
@@ -40,13 +40,14 @@ export default function EventsLayout({ children, createEventModal, joinEventModa
           </nav>
         </aside>
         <div className="bg-violet-400 place-items-center flex-1 flex px-20 h-full items-center rounded-lg">
-        {children}
+          {children}
           {createEventModal}
           {joinEventModal}
-
         </div>
       </div>
       <Footer />
     </>
   );
 }
+
+export default withAuth(EventsLayout);
