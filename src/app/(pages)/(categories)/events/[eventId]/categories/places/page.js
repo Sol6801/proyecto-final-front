@@ -3,6 +3,7 @@ import SwipeableCard from "@/components/swipeable-card";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import withAuth from '@/components/withAuth.js'
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
 const Places = () => {
@@ -14,12 +15,11 @@ const Places = () => {
   };
 
   useEffect(() => {
-    const url = 'https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&tags=under_30_minutes';
+    const url = `${API_URL}/places`;
     const options = {
       method: "GET",
       headers: {
-        'x-rapidapi-key': '41dd1de8f5msh8bc52d4be988edcp188425jsn6d54ca3b24c5',
-        'x-rapidapi-host': 'tasty.p.rapidapi.com'
+        "Content-Type": "application/json",
       }
     };
 
@@ -32,8 +32,8 @@ const Places = () => {
         // Mapea los resultados de la API a las claves que SwipeableCard necesita
         const formattedPlaces = result.map((place) => ({
           id: place.id, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
-          title: place.name, // Asegúrate de que la API tenga este campo
-          imageUrl: place.thumbnail_url, // Asegúrate de que la API tenga este campo
+          title: place.title, // Asegúrate de que la API tenga este campo
+          imageUrl: place.image, // Asegúrate de que la API tenga este campo
         }));
 
         console.log(formattedPlaces); // Puedes verificar los datos transformados en la consola

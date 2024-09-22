@@ -3,6 +3,7 @@ import SwipeableCard from "@/components/swipeable-card";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import withAuth from '@/components/withAuth.js'
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const Movies = () => {
   const router = useRouter();
@@ -13,14 +14,14 @@ const Movies = () => {
   };
 
   useEffect(() => {
-    const url = 'https://imdb-top-100-movies.p.rapidapi.com/';
+    const url = `${API_URL}/movies`;
     const options = {
       method: "GET",
       headers: {
-        'x-rapidapi-key': '0bf3f5c62emsh6e57527787a48dfp16ded0jsnfd8264a51e32',
-        'x-rapidapi-host': 'imdb-top-100-movies.p.rapidapi.com'
+        "Content-Type": "application/json",
       }
     };
+
 
 
     const fetchMovies = async () => {
