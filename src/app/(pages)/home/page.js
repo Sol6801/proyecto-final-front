@@ -1,7 +1,9 @@
+'use client'
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import React from "react";
 import ItemCard from "@/components/item-card";
+import withAuth from "@/components/withAuth.js";
 
 
 const items = [
@@ -76,4 +78,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default withAuth(HomePage);

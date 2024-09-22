@@ -1,10 +1,12 @@
 "use client"; // Indica que este es un componente del cliente
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
+import useAuthStore from "@/store/useAuthStore.js";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const login = useAuthStore((state) => state.login)
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -29,12 +31,14 @@ const LoginPage = () => {
         const errorText = await res.text();
         throw new Error(`Error en la solicitud: ${errorText}`);
       }
-
-      const data = await res.json();
-      console.log("User logged in:", data);
+      const data = await res.json()
+      //if (data.success) {
+      //login(data.userId, data.token)
+      console.log("Sesión iniciada:", data)
       // Guarda el token en localStorage o en un estado global si es necesario
-      // localStorage.setItem('token', data.token);
-      router.push("/home"); // Redirige al usuario a la página de inicio
+      login(data.token);
+      router.push("/home");
+
     } catch (error) {
       console.error("An error occurred:", error);
       alert("Error al iniciar sesión. Verifica tus credenciales.");

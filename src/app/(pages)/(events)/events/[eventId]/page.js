@@ -2,7 +2,11 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Member from "@/components/member.js";
+<<<<<<< HEAD
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+=======
+import withAuth from '@/components/withAuth.js'
+>>>>>>> c548802b8500d8e3302066adedd92aee41c1a24e
 
 const EventPage = ({ params }) => {
   const router = useRouter();
@@ -108,4 +112,4 @@ const gridStyle = {
   padding: "20px",
 };
 
-export default EventPage;
+export default withAuth(EventPage);
