@@ -37,7 +37,7 @@ const EventPage = ({ params }) => {
     try {
       // const token = localStorage.getItem('token');
       const currentItem = items[currentIndex];
-      const response = await fetch(`${API_URL}/${category}/liked`, {
+      const response = await fetch(`${API_URL}/${eventId}/desicion`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -84,15 +84,11 @@ const EventPage = ({ params }) => {
             Empezá a planear!
           </h2>
 
-          <button onClick={goToCategories}>
-            <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+          <button onClick={goToCategories}className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
               Categorias
-            </a>
           </button>
-          <button onClick={handleReady}>
-            <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+          <button onClick={handleReady} className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
               Listo!
-            </a>
           </button>
         </section>
       </article>
