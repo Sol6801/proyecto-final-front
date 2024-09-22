@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
 
+
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

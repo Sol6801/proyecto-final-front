@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
 import useAuthStore from "@/store/useAuthStore.js";
+import useUserStore from "@/store/useUserStore.js";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const login = useAuthStore((state) => state.login)
+  const setUserId = useUserStore((state) => state.setUserId); 
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -35,9 +37,12 @@ const LoginPage = () => {
       //if (data.success) {
       //login(data.userId, data.token)
       console.log("Sesión iniciada:", data)
+      
+      useUserStore.getState().setUserId(data.data.id);
+      console.log(data.data.id);
       // Guarda el token en localStorage o en un estado global si es necesario
       login(data.token);
-      router.push("/home");
+      // router.push("/home");
 
     } catch (error) {
       console.error("An error occurred:", error);
