@@ -1,15 +1,28 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/store/useUserStore.js";
+import useEventStore from "@/store/useEventStore.js";
 
-const CreateEvent = (/*{ token }*/) => {
+const CreateEvent = () => {
+
+  const { userId } = useUserStore();
   const router = useRouter();
+  const setEventId = useEventStore((state) => state.setEventId); 
   const [eventData, setEventData] = useState({
     name: "",
     plannedDate: "",
     password: "",
-    userId: 1,
   });
+  
+  useEffect(() => {
+    // Actualiza el userId en eventData si cambia
+    setEventData((prevData) => ({
+      ...prevData,
+      userId, // Asegúrate de que userId esté en el estado
+    }));
+  }, [userId]);
+
 
   const handleChange = (e) => {
     setEventData({
@@ -29,22 +42,22 @@ const CreateEvent = (/*{ token }*/) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, // Envía el token para obtener el userId en el backend
       },
-      body: JSON.stringify(eventData),
+      body: JSON.stringify(eventData, userId),
     });
 
     const result = await response.json();
+    setEventId(result.id);
 
     if (response.ok) {
-      router.push("/login");
-      alert(`Evento creado con éxito. El ID del evento es: ${result.id}`);
+      // router.push(`/events/${result.id}`);
+      alert(`Evento creado con éxito. El ID del evento es: ${result.data.id}`);
     } else {
       alert("Error al crear el evento");
     }
   };
   return (
-    <section className="bg-gray-100 p-6 rounded-lg shadow-md w-70">
+    <section className="bg-gray-100 p-10 rounded-lg shadow-md w-70 absolute w-96 left-1/2 -translate-x-1/3 top-2/3 -translate-y-1/2">
     <h1 className="text-xl font-bold mb-4">Crear un nuevo evento</h1>
     <button onClick={() => router.back()} className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer">Cerrar ventana</button>
     <form onSubmit={handleSubmit} >

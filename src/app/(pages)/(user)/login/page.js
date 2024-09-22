@@ -12,6 +12,8 @@ const LoginPage = () => {
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
@@ -34,15 +36,13 @@ const LoginPage = () => {
         throw new Error(`Error en la solicitud: ${errorText}`);
       }
       const data = await res.json()
-      //if (data.success) {
-      //login(data.userId, data.token)
       console.log("Sesión iniciada:", data)
       
-      useUserStore.getState().setUserId(data.data.id);
-      console.log(data.data.id);
+      setUserId(data.data.id);
+      
       // Guarda el token en localStorage o en un estado global si es necesario
       login(data.token);
-      // router.push("/home");
+      router.push("/home");
 
     } catch (error) {
       console.error("An error occurred:", error);

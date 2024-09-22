@@ -1,15 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/store/useUserStore.js";
+// import useEventStore from "@/store/useEventStore.js";
 
-const JoinEvent = (/*{ token }*/) => {
+
+const JoinEvent = () => {
     const router = useRouter();
+    const { userId } = useUserStore();
   const [eventData, setEventData] = useState({
     password: "",
     id: "",
-    userId: 2,
+    userId,
   });
+
+
+
 
   const handleChange = (e) => {
     setEventData({
@@ -36,9 +43,10 @@ const JoinEvent = (/*{ token }*/) => {
 
     const result = await response.json();
 
+
     if (response.ok) {
-      alert(`Te has unido al evento con éxito. El ID del evento es: ${result.id}`);      
-      router.push(`/events/${eventId}`);
+      alert(`Te has unido al evento con éxito. El ID del evento es: ${eventData.id}`);      
+      router.push(`/events/${eventData.id}`);
     } else {
       alert("Error al unirse al evento");
     }

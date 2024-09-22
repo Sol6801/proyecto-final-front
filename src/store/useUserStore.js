@@ -1,8 +1,11 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 const useUserStore = create((set) => ({
-  userId: null,
-  setUserId: (id) => set({ userId: id }),
+  userId: typeof window !== 'undefined' ? Number(localStorage.getItem('userId')) : null,
+  setUserId: (id) => {
+    localStorage.setItem('userId', id); // Guardar en localStorage
+    set({ userId: Number(id) });
+  },
 }));
 
 export default useUserStore;
