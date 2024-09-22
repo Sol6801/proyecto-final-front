@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Member from "@/components/member.js";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
   const router = useRouter();
@@ -11,9 +12,6 @@ const EventPage = ({ params }) => {
     router.push(`/events/${eventId}/categories`);
   };
 
-  const ready = () => {
-    //*fetch post ready = true */
-  };
 
   // Simulación de lista de amigos
   const members = [
@@ -33,6 +31,34 @@ const EventPage = ({ params }) => {
       imageUrl: "https://randomuser.me/api/portraits/men/19.jpg",
     },
   ];
+
+  const handleReady = async () => {
+    try {
+      // const token = localStorage.getItem('token');
+      const currentItem = items[currentIndex];
+      const response = await fetch(`${API_URL}/${category}/liked`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          itemId: currentItem.id,
+          itemTitle: currentItem.title,
+          itemImage: currentItem.imageUrl,
+          category: category,
+        }),
+      });      
+      
+      const data = await response.json();
+      console.log(`${category} liked:`, data);
+      handleNext();
+    } catch (error) {
+      console.error(`Error saving ${category} like:`, error);
+      console.error("Error details:", error.message);
+    }
+  };
+
 
   return (
     <section className="bg-violet-400 grid flex-1 rounded-lg">
@@ -62,7 +88,7 @@ const EventPage = ({ params }) => {
               Categorias
             </a>
           </button>
-          <button onClick={ready}>
+          <button onClick={handleReady}>
             <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
               Listo!
             </a>
