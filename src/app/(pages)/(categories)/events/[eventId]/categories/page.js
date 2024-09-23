@@ -14,11 +14,11 @@ const Categories = ({ params }) => {
   };
 
   return (
-    <section className="h-screen bg-violet-400 grid place-items-center flex-1"  >
-      <h1 className="text-3xl font-bold text-center mb-12 text-white hover:text-[#130606df] hover:scale-105 transition-transform duration-300">
+    <section className="h-full bg-violet-400 grid place-items-center flex-1 pb-8"  >
+      <h1 className="text-3xl mt-10 font-bold text-center mb-12 text-white hover:text-[#130606df] hover:scale-105 transition-transform duration-300">
         Categorías del Evento {eventId}
       </h1> 
-      <section className="py-20 bg-gray-100 rounded-lg">
+      <section className="h-full flex align-center py-20 mb-12 bg-gray-100 rounded-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">
             Empezá a elegir dentro de cada categoría.
@@ -49,7 +49,7 @@ const Categories = ({ params }) => {
         </div>
       </section>
       <button onClick={goToEvent}>
-        <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+        <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg my-10 font-semibold hover:bg-gray-100">
           Ir Atrás
         </a>
       </button>

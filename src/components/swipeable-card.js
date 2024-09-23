@@ -85,7 +85,7 @@ const SwipeableCard = ({ items, category }) => {
   }
 
   return (
-    <section className="flex flex-row">
+    <section className="flex flex-row justify-around">
       <button onClick={handleDislike}>
         <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
           Dislike

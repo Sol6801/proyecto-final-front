@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Member from "@/components/member.js";
 import withAuth from "@/components/withAuth.js";
+import Chatbot from "@/components/chatbot";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
   const { eventId } = params;
+  const [likedMovies, setLikedMovies] = useState([]);
   const router = useRouter();
   const [eventUsers, setEventUsers] = useState([]);
 
@@ -31,7 +32,7 @@ const EventPage = ({ params }) => {
         if (Array.isArray(result.data)) {
           const users = result.data.map((item) => ({
             id: item.user.id,
-            username: item.user.username
+            username: item.user.username,
           }));
           setEventUsers(users);
         }
@@ -42,6 +43,12 @@ const EventPage = ({ params }) => {
 
     fetchEventUsers();
   }, []);
+
+  useEffect(() => {
+    fetch(`/api/events/${eventId}/movies/liked`)
+      .then((res) => res.json())
+      .then((data) => setLikedMovies(data));
+  }, [eventId]);
 
   const handleReady = async () => {
     try {
@@ -80,22 +87,22 @@ const EventPage = ({ params }) => {
           <h2 className="text-3xl font-bold text-center mb-12">Miembros:</h2>
 
           <div style={gridStyle}>
-
-          <nav>
-            <ul className="flex flex-col gap-10">
-              {eventUsers.length === 0 ? (
-                <p>No tienes miembros disponibles.</p>
-              ) : (
-                eventUsers.map((user) => (
-                  <li key={user.id}
+            <nav>
+              <ul className="flex flex-col gap-10">
+                {eventUsers.length === 0 ? (
+                  <p>No tienes miembros disponibles.</p>
+                ) : (
+                  eventUsers.map((user) => (
+                    <li
+                      key={user.id}
                       className="text-3xl bg-violet-300 hover:bg-violet-400 text-black font-bold py-2 px-4 rounded"
                     >
                       {user.username}
-                  </li>
-                ))
-              )}
-            </ul>
-          </nav>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </nav>
           </div>
 
           <h2 className="text-3xl font-bold text-center mb-12">
@@ -114,6 +121,13 @@ const EventPage = ({ params }) => {
           >
             Listo!
           </button>
+
+          <h2>Liked Movies</h2>
+          {likedMovies.map((movie) => (
+            <p key={movie.id}>{movie.title}</p>
+          ))}
+
+          {/* <Chatbot onMessageSend={handleChatMessage} eventId={eventId} /> */}
         </section>
       </article>
     </section>
