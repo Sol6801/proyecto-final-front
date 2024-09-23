@@ -2,9 +2,13 @@
 
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import useUserStore from "@/store/useUserStore.js";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SwipeableCard = ({ items, category }) => {
+  const { userId } = useUserStore();
+  
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -22,10 +26,10 @@ const SwipeableCard = ({ items, category }) => {
           // "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-          userId: 1,
+          userId,
           itemId: currentItem.id,
-          itemTitle: currentItem.title,
-          itemImage: currentItem.imageUrl,
+          itemName: currentItem.name,
+          itemImage: currentItem.urlImage,
           category: category,
         }),
       });
@@ -50,10 +54,10 @@ const SwipeableCard = ({ items, category }) => {
           // "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-          userId: 1,
+          userId,
           itemId: currentItem.id,
-          itemTitle: currentItem.title,
-          itemImage: currentItem.imageUrl,
+          itemName: currentItem.name,
+          itemImage: currentItem.urlImage,
           category: category,
         }),
       });
@@ -94,13 +98,13 @@ const SwipeableCard = ({ items, category }) => {
         {/* Verifica que items[currentIndex] tenga las propiedades necesarias */}
         <img
           className="w-full h-80 object-cover"
-          src={items[currentIndex].imageUrl || "/fallback-image.jpg"} // Usa una imagen de respaldo si no existe
-          alt={items[currentIndex].title || "Imagen no disponible"}
+          src={items[currentIndex].urlImage || "/fallback-image.jpg"} // Usa una imagen de respaldo si no existe
+          alt={items[currentIndex].name || "Imagen no disponible"}
         />
 
         <div className="p-4">
           <h3 className="text-xl font-bold mb-2">
-            {items[currentIndex].title || "Título no disponible"}
+            {items[currentIndex].name || "Título no disponible"}
           </h3>
         </div>
       </div>
