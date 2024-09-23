@@ -8,13 +8,16 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
   const { eventId } = params;
-  const [likedMovies, setLikedMovies] = useState([]);
   const router = useRouter();
   const [eventUsers, setEventUsers] = useState([]);
 
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
   };
+  const ready = () => {
+    router.push(`/events/${eventId}/result`);
+  };
+
 
   useEffect(() => {
     const fetchEventUsers = async () => {
@@ -42,40 +45,9 @@ const EventPage = ({ params }) => {
     };
 
     fetchEventUsers();
-  }, []);
+  },);
 
-  useEffect(() => {
-    fetch(`/api/events/${eventId}/movies/liked`)
-      .then((res) => res.json())
-      .then((data) => setLikedMovies(data));
-  }, [eventId]);
 
-  const handleReady = async () => {
-    try {
-      // const token = localStorage.getItem('token');
-      const currentItem = items[currentIndex];
-      const response = await fetch(`${API_URL}/${eventId}/desicion`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          // "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          itemId: currentItem.id,
-          itemTitle: currentItem.title,
-          itemImage: currentItem.imageUrl,
-          category: category,
-        }),
-      });
-
-      const data = await response.json();
-      console.log(`${category} liked:`, data);
-      handleNext();
-    } catch (error) {
-      console.error(`Error saving ${category} like:`, error);
-      console.error("Error details:", error.message);
-    }
-  };
 
   return (
     <section className="h-screen bg-violet-400 grid flex-1 rounded-lg">
@@ -116,18 +88,12 @@ const EventPage = ({ params }) => {
             Categorias
           </button>
           <button
-            onClick={handleReady}
+            onClick={ready}
             className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
           >
             Listo!
           </button>
 
-          <h2>Liked Movies</h2>
-          {likedMovies.map((movie) => (
-            <p key={movie.id}>{movie.title}</p>
-          ))}
-
-          {/* <Chatbot onMessageSend={handleChatMessage} eventId={eventId} /> */}
         </section>
       </article>
     </section>
