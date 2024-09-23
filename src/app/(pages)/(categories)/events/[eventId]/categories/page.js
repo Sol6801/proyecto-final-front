@@ -14,10 +14,10 @@ const Categories = ({ params }) => {
   };
 
   return (
-    <section className="h-screen bg-violet-400 grid place-items-center flex-1">
-      <h1 className="text-3xl font-bold text-center mb-12">
+    <section className="h-screen bg-violet-400 grid place-items-center flex-1"  >
+      <h1 className="text-3xl font-bold text-center mb-12 text-white hover:text-[#130606df] hover:scale-105 transition-transform duration-300">
         Categorías del Evento {eventId}
-      </h1>
+      </h1> 
       <section className="py-20 bg-gray-100 rounded-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">
@@ -28,21 +28,21 @@ const Categories = ({ params }) => {
               <ItemCard
                 category="Comidas"
                 description="Mmmmm... ¿Que quiero comer hoy?"
-                imageUrl="https://randomuser.me/api/portraits/women/44.jpg"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/4359/4359642.png"
               />
             </a>
             <a href="categories/places">
               <ItemCard
                 category="Lugares"
                 description="¿Donde vamos?"
-                imageUrl="https://randomuser.me/api/portraits/women/44.jpg"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/11074/11074673.png"
               />
             </a>
             <a href="categories/movies">
               <ItemCard
                 category="Peliculas"
                 description="¿Que quisieras ver?"
-                imageUrl="https://randomuser.me/api/portraits/women/44.jpg"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/7295/7295380.png"
               />
             </a>
           </div>
