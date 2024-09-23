@@ -77,13 +77,13 @@ const EventPage = ({ params }) => {
 
 
   return (
-    <section className="h-screenbg-violet-400 grid flex-1 rounded-lg">
+    <section className="h-screen bg-violet-400 grid flex-1 rounded-lg">
       <article>
-        <h2 className="text-3xl font-bold text-center mb-12">
+        <h1 className="pt-3 text-3xl font-bold text-center mb-12">
           Event Id:{params.eventId} Page{" "}
-        </h2>
+        </h1>
         <section>
-          <h1 className="text-3xl font-bold text-center mb-12">Miembros:</h1>
+          <h2 className="text-3xl font-bold text-center mb-12">Miembros:</h2>
 
           <div style={gridStyle}>
             {eventUsers.map((user) => (
