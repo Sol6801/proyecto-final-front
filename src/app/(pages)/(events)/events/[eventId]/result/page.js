@@ -1,71 +1,42 @@
 'use client';
 
-// import Result from "@/components/result";
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
-// import Chatbot from "@/components/chatbot";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const ResultPage = ({ params }) => {
   const { eventId } = params;
-  const router = useRouter();
 
-  useEffect(() => {
-    fetch(`/api/events/${eventId}/movies/mostLiked`)
-      .then((res) => res.json())
-      .then((data) => setLikedMovies(data));
-  }, [eventId]);
-  
   const [likedMovies, setLikedMovies] = useState([]);
 
+  useEffect(() => {
+    fetch(`${API_URL}/events/${eventId}/movies/mostLiked`)
+      .then((res) => res.json())
+      .then((data) => setLikedMovies(data))
+      .catch((error) => console.error("Error fetching liked movies:", error));
+  }, [eventId]);
 
-
-
-
-const handleReady = async () => {
-  try {
-    // const token = localStorage.getItem('token');
-    const currentItem = items[currentIndex];
-    const response = await fetch(`${API_URL}/${eventId}/desicion`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        // "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        itemId: currentItem.id,
-        itemTitle: currentItem.title,
-        itemImage: currentItem.imageUrl,
-        category: category,
-      }),
-    });
-
-    const data = await response.json();
-    console.log(`${category} liked:`, data);
-    handleNext();
-  } catch (error) {
-    console.error(`Error saving ${category} like:`, error);
-    console.error("Error details:", error.message);
-  }
+  return (
+    <section className="h-screen bg-violet-400 grid place-items-center flex-1 rounded-lg relative p-8">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Movies</h2>
+        {likedMovies.length > 0 ? (
+          <ul className="space-y-2">
+            {likedMovies.map((movie) => (
+              <li key={movie.movieId} className="bg-gray-100 p-3 rounded flex justify-between items-center">
+                <span className="font-semibold">{movie.title}</span>
+                <span className="text-sm text-gray-500">ID: {movie.movieId}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-center text-gray-600">No liked movies available yet.</p>
+        )}
+      </div>
+    </section>
+  );
 };
 
-
-return (
-  <section className="h-screen bg-violet-400 grid place-items-center flex-1 rounded-lg relative">
-    {/* <Result items={meals} category="meals"/> */}
-
-    
-    <h2>Liked Movies</h2>
-          {likedMovies.map((movie) => (
-            <p key={movie.id}>{movie.title}</p>
-          ))}
-
-          {/* <Chatbot onMessageSend={handleChatMessage} eventId={eventId} /> */}
-  </section>
-);
-};
-
-export default ResultPage;
+export default withAuth(ResultPage);
