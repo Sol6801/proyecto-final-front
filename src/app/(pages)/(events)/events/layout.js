@@ -77,7 +77,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
       }
 
       try {
-        const response = await fetch(`${API_URL}/users/:${userId}/events`);
+        const response = await fetch(`${API_URL}/users/${userId}/events`);
         if (!response.ok) {
           throw new Error('Failed to fetch user events');
         }
