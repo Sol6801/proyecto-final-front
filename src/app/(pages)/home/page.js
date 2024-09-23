@@ -10,19 +10,19 @@ const items = [
     id: 1,
     category: "Comidas",
     description: "Mmmmm... ¿Que quiero comer hoy?",
-    imageUrl: "https://randomuser.me/api/portraits/women/44.jpg",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/4359/4359642.png",
   },
   {
     id: 2,
     category: "Lugares",
     description: "¿Donde vamos?",
-    imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/11074/11074673.png",
   },
   {
     id: 3,
     category: "Peliculas",
     description: "¿Que quisieras ver?",
-    imageUrl: "https://randomuser.me/api/portraits/men/19.jpg",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/7295/7295380.png",
   },
 ];
 
@@ -47,7 +47,7 @@ const HomePage = () => {
               <ItemCard
                 category="Mis Eventos"
                 description="¡Invitá a tus amigos y empezá a planear!"
-                imageUrl="https://randomuser.me/api/portraits/women/44.jpg"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/8876/8876545.png"
               />
             </a>
           </div>
