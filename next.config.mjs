@@ -52,6 +52,12 @@ const nextConfig = {
         hostname: 'cdn-icons-png.flaticon.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        pathname: '/**',
+      },
+      
     ],
   },
 };
