@@ -30,12 +30,13 @@ const Meals = () => {
         // Mapea los resultados de la API a las claves que SwipeableCard necesita
         const formattedMeals = result.map((meal) => ({
           id: meal.id, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
-          title: meal.title, // Asegúrate de que la API tenga este campo
-          imageUrl: meal.image, // Asegúrate de que la API tenga este campo
+          name: meal.name, // Asegúrate de que la API tenga este campo
+          urlImage: meal.urlImage, // Asegúrate de que la API tenga este campo
         }));
 
-        console.log(formattedMeals); // Puedes verificar los datos transformados en la consola
+        console.log("Se obtuvieron las comidas"); // Puedes verificar los datos transformados en la consola
         setMeals(formattedMeals); // Guarda las películas formateadas en el estado
+
       } catch (error) {
         console.error("Error al obtener las comidas:", error);
       }

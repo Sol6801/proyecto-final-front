@@ -32,14 +32,14 @@ const Places = () => {
         // Mapea los resultados de la API a las claves que SwipeableCard necesita
         const formattedPlaces = result.map((place) => ({
           id: place.id, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
-          title: place.title, // Asegúrate de que la API tenga este campo
-          imageUrl: place.image, // Asegúrate de que la API tenga este campo
+          name: place.title, // Asegúrate de que la API tenga este campo
+          urlImage: place.urlImage, // Asegúrate de que la API tenga este campo
         }));
 
         console.log(formattedPlaces); // Puedes verificar los datos transformados en la consola
         setPlaces(formattedPlaces); // Guarda las películas formateadas en el estado
       } catch (error) {
-        console.error("Error al obtener las películas:", error);
+        console.error("Error al obtener los lugares:", error);
       }
     };
 
@@ -49,7 +49,7 @@ const Places = () => {
 
   return (
     <section className="w-screen flex flex-col bg-violet-400 rounded-lg">
-      <h1 className="text-3xl font-bold text-center mb-12">Peliculas</h1>
+      <h1 className="text-3xl font-bold text-center mb-12">Lugares</h1>
 
       <div>
         <SwipeableCard items={places} category="places" />

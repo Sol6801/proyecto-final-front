@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Member from "@/components/member.js";
 import withAuth from '@/components/withAuth.js'
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
