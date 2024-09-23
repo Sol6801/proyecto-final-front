@@ -5,16 +5,15 @@ import useUserStore from "@/store/useUserStore.js";
 import useEventStore from "@/store/useEventStore.js";
 
 const CreateEvent = () => {
-
   const { userId } = useUserStore();
   const router = useRouter();
-  const setEventId = useEventStore((state) => state.setEventId); 
+  const setEventId = useEventStore((state) => state.setEventId);
   const [eventData, setEventData] = useState({
     name: "",
     plannedDate: "",
     password: "",
   });
-  
+
   useEffect(() => {
     // Actualiza el userId en eventData si cambia
     setEventData((prevData) => ({
@@ -23,12 +22,15 @@ const CreateEvent = () => {
     }));
   }, [userId]);
 
-
   const handleChange = (e) => {
     setEventData({
       ...eventData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleClose = () => {
+    router.push(`/events`);
   };
 
   const handleSubmit = async (e) => {
@@ -57,55 +59,61 @@ const CreateEvent = () => {
     }
   };
   return (
-    <section className="bg-gray-100 p-10 rounded-lg shadow-md w-70 absolute w-96 left-1/2 -translate-x-1/3 top-2/3 -translate-y-1/2">
-    <h1 className="text-xl font-bold mb-4">Crear un nuevo evento</h1>
-    <button onClick={() => router.back()} className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer">Cerrar ventana</button>
-    <form onSubmit={handleSubmit} >
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Nombre del Evento
-        </label>
-        <input
-          type="text"
-          name="name"
-          value={eventData.name}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Fecha del Evento
-        </label>
-        <input
-          type="date"
-          name="plannedDate"
-          value={eventData.plannedDate}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Contraseña del Evento
-        </label>
-        <input
-          type="password"
-          name="password"
-          value={eventData.password}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-      </div>
+    <section className="bg-gray-100 px-10 py-3 my-3 rounded-lg shadow-md  w-70">
+      <h1 className="text-xl font-bold mb-4">Crear un nuevo evento</h1>
       <button
-        type="submit"
-        className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-        Crear Evento
+        onClick={handleClose}
+        className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer"
+      >
+        Cerrar ventana
       </button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2">
+            Nombre del Evento
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={eventData.name}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2">
+            Fecha del Evento
+          </label>
+          <input
+            type="date"
+            name="plannedDate"
+            value={eventData.plannedDate}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2">
+            Contraseña del Evento
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={eventData.password}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+        >
+          Crear Evento
+        </button>
+      </form>
     </section>
   );
 };
