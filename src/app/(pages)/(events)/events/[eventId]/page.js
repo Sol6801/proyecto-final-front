@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Member from "@/components/member.js";
 import withAuth from '@/components/withAuth.js'
@@ -7,32 +7,46 @@ import withAuth from '@/components/withAuth.js'
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
-  const router = useRouter();
   const { eventId } = params;
+  const router = useRouter();
+  const [eventUsers, setEventUsers] = useState([]);
+
 
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
   };
 
 
-  // Simulación de lista de amigos
-  const members = [
-    {
-      id: 1,
-      name: "Alice",
-      imageUrl: "https://randomuser.me/api/portraits/women/44.jpg",
-    },
-    {
-      id: 2,
-      name: "Bob",
-      imageUrl: "https://randomuser.me/api/portraits/men/32.jpg",
-    },
-    {
-      id: 3,
-      name: "Charlie",
-      imageUrl: "https://randomuser.me/api/portraits/men/19.jpg",
-    },
-  ];
+
+  useEffect(() => {
+    const fetchEventUsers = async () => {
+      const eventId = localStorage.getItem('eventId');
+      if (!eventId) {
+        console.error('Event ID not found in local storage');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/events/${eventId}/users`);
+        const result = await response.json();
+        console.log('Event users:', result);
+
+        if (Array.isArray(result.data)) {
+          const users = result.data.map(item => ({
+            id: item.user.id,
+            name: item.user.username,
+            eventId,
+          }));
+          setEventUsers(users);
+        }
+      } catch (error) {
+        console.error('Error fetching event users:', error);
+      }
+    };
+
+    fetchEventUsers();
+  }, []);
+
 
   const handleReady = async () => {
     try {
@@ -63,7 +77,7 @@ const EventPage = ({ params }) => {
 
 
   return (
-    <section className="bg-violet-400 grid flex-1 rounded-lg">
+    <section className="h-screenbg-violet-400 grid flex-1 rounded-lg">
       <article>
         <h2 className="text-3xl font-bold text-center mb-12">
           Event Id:{params.eventId} Page{" "}
@@ -72,11 +86,11 @@ const EventPage = ({ params }) => {
           <h1 className="text-3xl font-bold text-center mb-12">Miembros:</h1>
 
           <div style={gridStyle}>
-            {members.map((member) => (
+            {eventUsers.map((user) => (
               <Member
-                key={member.id}
-                name={member.name}
-                imageUrl={member.imageUrl}
+                key={user.id}
+                name={user.username}
+                imageUrl={user.imageUrl}
               />
             ))}
           </div>

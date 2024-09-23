@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import withAuth from '@/components/withAuth.js';
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function EventsLayout({ children, createEventModal, joinEventModal }) {
   const [userEvents, setUserEvents] = useState([]);
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     const fetchUserEvents = async () => {
