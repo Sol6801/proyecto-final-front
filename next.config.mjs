@@ -41,19 +41,17 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.foodandwine.com',
         pathname: '/**',
-        
       },
       {
         protocol: 'https',
         hostname: 'static.vecteezy.com',
-        pathname: '/**', 
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'cdn-icons-png.flaticon.com',
-        pathname: '/**', 
+        pathname: '/**',
       },
-
     ],
   },
 };
