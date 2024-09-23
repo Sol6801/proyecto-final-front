@@ -5,18 +5,18 @@ import { useRouter } from "next/navigation";
 import useUserStore from "@/store/useUserStore.js";
 // import useEventStore from "@/store/useEventStore.js";
 
-
 const JoinEvent = () => {
-    const router = useRouter();
-    const { userId } = useUserStore();
+  const router = useRouter();
+  const { userId } = useUserStore();
   const [eventData, setEventData] = useState({
     password: "",
     id: "",
     userId,
   });
 
-
-
+  const handleClose = () => {
+    router.push(`/events`);
+  };
 
   const handleChange = (e) => {
     setEventData({
@@ -43,51 +43,58 @@ const JoinEvent = () => {
 
     const result = await response.json();
 
-
     if (response.ok) {
-      alert(`Te has unido al evento con éxito. El ID del evento es: ${eventData.id}`);      
+      alert(
+        `Te has unido al evento con éxito. El ID del evento es: ${eventData.id}`
+      );
       router.push(`/events/${eventData.id}`);
     } else {
       alert("Error al unirse al evento");
     }
   };
   return (
-    <section className="bg-gray-100 p-6 rounded-lg shadow-md w-70 items-center">
+    <section className="bg-gray-100 p-6 rounded-lg shadow-md items-center w-70 px-10 py-3 my-3 ">
       <h1 className="text-xl font-bold m-4">Unirse a Evento</h1>
-      <button onClick={() => router.back()} className="bg-white text-violet-600 p-2 mb-2 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer">Cerrar ventana</button>
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Id del Evento
-        </label>
-        <input
-          type="number"
-          name="id"
-          value={eventData.id}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">
-          Contraseña del Evento
-        </label>
-        <input
-          type="password"
-          name="password"
-          value={eventData.password}
-          onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          required
-        />
-      </div>
       <button
-        type="submit"
-        className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-        Unirse al Evento
+        onClick={handleClose}
+        className="bg-white text-violet-600 p-2 mb-2 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer"
+      >
+        Cerrar ventana
       </button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2">
+            Id del Evento
+          </label>
+          <input
+            type="number"
+            name="id"
+            value={eventData.id}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2">
+            Contraseña del Evento
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={eventData.password}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+        >
+          Unirse al Evento
+        </button>
+      </form>
     </section>
   );
 };
