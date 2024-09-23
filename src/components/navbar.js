@@ -2,19 +2,15 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import useAuthStore from '../store/useAuthStore.js';
 
 const Navbar = () => {
   const router = useRouter();
+  const logout = useAuthStore((state) => state.logout);
 
-  const handleLogout = async () => {
-    const response = await fetch('/api/logout', {
-      method: 'POST',
-      credentials: 'include', // Incluir cookies
-    });
-  
-    if (response.ok) {
-      router.push('/login'); // Redirigir al login
-    }
+  const handleLogout = () => {
+    logout(); // Ejecuta la función de logout desde el store
+    router.push('/login'); // Redirige al usuario a la página de login
   };
 
   return (
@@ -42,9 +38,11 @@ const Navbar = () => {
               Usuario
             </a>
           </li>
-          <button onClick={handleLogout}>
-            <a className="hover:underline">Logout</a>
-          </button>
+          <li>
+            <button onClick={handleLogout} className="hover:underline">
+              Logout
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
