@@ -6,10 +6,9 @@ import withAuth from '@/components/withAuth.js'
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
-const Places = ({ params }) => {
+const Places = () => {
   const router = useRouter();
   const [places, setPlaces] = useState([]);
-  const { eventId } = params;// Asegúrate de que eventId esté en la URL
 
   const goToCategories = () => {
     router.push(`../categories`);
@@ -53,7 +52,7 @@ const Places = ({ params }) => {
       <h1 className="text-3xl font-bold text-center mb-12">Lugares</h1>
 
       <div>
-        <SwipeableCard items={places} category="places" eventId={eventId} />
+        <SwipeableCard items={places} category="places" />
       </div>
 
       <button onClick={goToCategories}>

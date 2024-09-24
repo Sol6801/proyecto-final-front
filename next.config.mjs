@@ -49,11 +49,6 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'm.media-amazon.com',
-        pathname: '/images/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'cdn-icons-png.flaticon.com',
         pathname: '/**',
       },
@@ -64,7 +59,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "commons.wikimedia.org", 
+        hostname: "commons.wikimedia.org",
         pathname: "/**",
       },
       {
@@ -106,112 +101,6 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.buenosairesfreewalks.com",
         pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "dynamic-media-cdn.tripadvisor.com",
-        pathname: "/media/**",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.shopify.com",
-        pathname: "/s/files/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.eatingwell.com", 
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.indega.com.py", 
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.essen.com.ar", 
-        pathname: "/**",
-      },
-      // Nuevos hostnames
-      {
-        protocol: "https",
-        hostname: "elferroviarioparrilla.com",
-        pathname: "/images/**",
-      },
-      {
-        protocol: "https",
-        hostname: "encrypted-tbn0.gstatic.com",
-        pathname: "/images/**",
-      },
-      {
-        protocol: "https",
-        hostname: "okdiario.com",
-        pathname: "/img/**",
-      },
-      {
-        protocol: "https",
-        hostname: "i.pinimg.com",
-        pathname: "/736x/**",
-      },
-      {
-        protocol: "https",
-        hostname: "locosxlaparrilla.com",
-        pathname: "/wp-content/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "almacenvicenteabsurdo.com.ar",
-        pathname: "/wp-content/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "blogger.googleusercontent.com",
-        pathname: "/img/**",
-      },
-      {
-        protocol: "https",
-        hostname: "storage.googleapis.com",
-        pathname: "/avena-recipes/**",
-      },
-      {
-        protocol: "https",
-        hostname: "media.glanacion.com",
-        pathname: "/resizer/**",
-      },
-      {
-        protocol: "https",
-        hostname: "mandolina.co",
-        pathname: "/wp-content/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "comedera.com",
-        pathname: "/wp-content/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.noticiasdemexico.mx",
-        pathname: "/u/fotografias/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.feriamasticar.com.ar",
-        pathname: "/wp-content/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.gastrolabweb.com",
-        pathname: "/u/fotografias/**",
-      },
-      {
-        protocol: "https",
-        hostname: "storage.googleapis.com",
-        pathname: "/avena-recipes/**",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn7.kiwilimon.com",
-        pathname: "/recetaimagen/**",
       },
     ],
   },
