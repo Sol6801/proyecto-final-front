@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'randomuser.me',
-        pathname: '/api/portraits/**',
+        pathname: '/**',
       },
       {
         protocol: 'https',
@@ -44,20 +44,9 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'static.vecteezy.com',
-        pathname: '/**',
+        hostname: 'm.media-amazon.com',
+        pathname: '/images/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'cdn-icons-png.flaticon.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'image.tmdb.org',
-        pathname: '/**',
-      },
-      
     ],
   },
 };
