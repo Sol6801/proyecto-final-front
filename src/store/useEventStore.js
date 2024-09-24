@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 const useEventStore = create((set) => ({
-  userId: typeof window !== 'undefined' ? Number(localStorage.getItem('eventId')) : null,
+  eventId: typeof window !== 'undefined' ? Number(localStorage.getItem('eventId')) : null,
   setEventId: (id) => {
     localStorage.setItem('eventId', id); // Guardar en localStorage
     set({ eventId: Number(id) });
