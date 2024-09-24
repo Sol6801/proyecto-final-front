@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
+import useAuthStore from "@/store/useUserAuthStore.js";
 import Chatbot from "@/components/chatbot";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -10,6 +11,7 @@ const EventPage = ({ params }) => {
   const { eventId } = params;
   const router = useRouter();
   const [eventUsers, setEventUsers] = useState([]);
+  const user = useAuthStore((state) => state.user);
 
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
@@ -38,6 +40,11 @@ const EventPage = ({ params }) => {
             username: item.user.username,
           }));
           setEventUsers(users);
+
+          if (!user.some((eventUser) => eventUser.id === user.id)) {
+            setError("no tienes permisos para ver este evento");
+            router.push(`/events`);
+          }
         }
       } catch (error) {
         console.error("Error fetching event users:", error);
@@ -45,7 +52,7 @@ const EventPage = ({ params }) => {
     };
 
     fetchEventUsers();
-  },);
+  }, []);
 
 
 

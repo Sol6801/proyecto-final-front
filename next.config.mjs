@@ -3,9 +3,15 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+<<<<<<< HEAD
         protocol: "https",
         hostname: "randomuser.me",
         pathname: "/api/portraits/**",
+=======
+        protocol: 'https',
+        hostname: 'randomuser.me',
+        pathname: '/**',
+>>>>>>> 7d73851b74e06de3760bf75b62bc95a639601402
       },
       {
         protocol: "https",
@@ -43,15 +49,22 @@ const nextConfig = {
         pathname: "/**",
       },
       {
+<<<<<<< HEAD
         protocol: "https",
         hostname: "static.vecteezy.com",
         pathname: "/**",
+=======
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        pathname: '/images/**',
+>>>>>>> 7d73851b74e06de3760bf75b62bc95a639601402
       },
       {
         protocol: "https",
         hostname: "cdn-icons-png.flaticon.com",
         pathname: "/**",
       },
+<<<<<<< HEAD
       {
         protocol: "https",
         hostname: "image.tmdb.org",
@@ -102,6 +115,8 @@ const nextConfig = {
         hostname: "www.buenosairesfreewalks.com",
         pathname: "/**",
       },
+=======
+>>>>>>> 7d73851b74e06de3760bf75b62bc95a639601402
     ],
   },
 };
