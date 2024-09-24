@@ -69,7 +69,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
             </ul>
           </nav>
         </aside>
-        <div className="bg-violet-400 place-items-center flex-1 flex px-20 h-full items-center rounded-lg">
+        <div className="bg-violet-400 place-items-center flex-1 flex h-full items-center rounded-lg">
           {children}
           {createEventModal}
           {joinEventModal}
