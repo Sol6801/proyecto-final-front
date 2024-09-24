@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import useUserStore from "@/store/useUserStore.js";
-import useEventStore from "@/store/useEventStore.js";
 import Image from "next/image";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const SwipeableCard = ({ items, category }) => {
-  const { eventId } = useEventStore();
+const SwipeableCard = ({ items, category, eventId }) => {
   const { userId } = useUserStore();
+  
+  console.log(eventId);
   
   const [currentIndex, setCurrentIndex] = useState(0);
 

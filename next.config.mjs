@@ -112,6 +112,11 @@ const nextConfig = {
           hostname: "dynamic-media-cdn.tripadvisor.com",
           pathname: "/media/**",
         },
+        {
+          protocol: "https",
+          hostname: "cdn.shopify.com",
+          pathname: "/s/files/**",
+        },
     ],
   },
 };

@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
-const useEventStore = create((set) => ({
+const useUserStore = create((set) => ({
   eventId: typeof window !== 'undefined' ? Number(localStorage.getItem('eventId')) : null,
-  setEventId: (id) => {
+  setUserId: (id) => {
     localStorage.setItem('eventId', id); // Guardar en localStorage
     set({ eventId: Number(id) });
   },
 }));
 
-export default useEventStore;
+export default useUserStore;
