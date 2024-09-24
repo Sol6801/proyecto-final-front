@@ -46,26 +46,17 @@ const nextConfig = {
         protocol: "https",
         hostname: "static.vecteezy.com",
         pathname: "/**",
-<<<<<<< HEAD
-=======
+      },
+      {
         protocol: 'https',
         hostname: 'm.media-amazon.com',
         pathname: '/images/**',
->>>>>>> 9b1561955da5feb01ace6a84c8cf8a37873554b8
       },
       {
         protocol: 'https',
         hostname: 'cdn-icons-png.flaticon.com',
         pathname: '/**',
       },
-<<<<<<< HEAD
-=======
-      {
-        protocol: "https",
-        hostname: "cdn-icons-png.flaticon.com",
-        pathname: "/**",
-      },
->>>>>>> 9b1561955da5feb01ace6a84c8cf8a37873554b8
       {
         protocol: "https",
         hostname: "image.tmdb.org",
@@ -116,14 +107,11 @@ const nextConfig = {
         hostname: "www.buenosairesfreewalks.com",
         pathname: "/**",
       },
-<<<<<<< HEAD
-=======
         {
           protocol: "https",
           hostname: "dynamic-media-cdn.tripadvisor.com",
           pathname: "/media/**",
         },
->>>>>>> 9b1561955da5feb01ace6a84c8cf8a37873554b8
     ],
   },
 };
