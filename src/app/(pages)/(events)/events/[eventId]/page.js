@@ -20,7 +20,6 @@ const EventPage = ({ params }) => {
     router.push(`/events/${eventId}/result`);
   };
 
-
   useEffect(() => {
     const fetchEventUsers = async () => {
       // const eventId = localStorage.getItem('eventId');
@@ -54,27 +53,25 @@ const EventPage = ({ params }) => {
     fetchEventUsers();
   }, []);
 
-
-
   return (
     <section className="h-screen bg-violet-400 grid flex-1 rounded-lg">
       <article>
-        <h1 className="pt-3 text-3xl font-bold text-center mb-12">
-          Event Id:{params.eventId} Page{" "}
+        <h1 className="pt-3 text-4xl font-bold text-center m-12">
+          Event Id:{params.eventId}
         </h1>
         <section>
           <h2 className="text-3xl font-bold text-center mb-12">Miembros:</h2>
 
-          <div style={gridStyle}>
+          <div className="my-10">
             <nav>
-              <ul className="flex flex-col gap-10">
+              <ul className="flex flex-row items-center justify-center gap-8">
                 {eventUsers.length === 0 ? (
                   <p>No tienes miembros disponibles.</p>
                 ) : (
                   eventUsers.map((user) => (
                     <li
                       key={user.id}
-                      className="text-3xl bg-violet-300 hover:bg-violet-400 text-black font-bold py-2 px-4 rounded"
+                      className="text-3xl bg-violet-300 text-black font-bold py-2 px-4 rounded"
                     >
                       {user.username}
                     </li>
@@ -87,20 +84,20 @@ const EventPage = ({ params }) => {
           <h2 className="text-3xl font-bold text-center mb-12">
             Empezá a planear!
           </h2>
-
-          <button
-            onClick={goToCategories}
-            className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-          >
-            Categorias
-          </button>
-          <button
-            onClick={ready}
-            className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-          >
-            Listo!
-          </button>
-
+          <div className="flex flex-row items-center justify-center gap-8">
+            <button
+              onClick={goToCategories}
+              className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+            >
+              Categorias
+            </button>
+            <button
+              onClick={ready}
+              className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+            >
+              Listo!
+            </button>
+          </div>
         </section>
       </article>
     </section>
