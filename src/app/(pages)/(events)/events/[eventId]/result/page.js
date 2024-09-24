@@ -121,8 +121,8 @@ const ResultPage = ({ params }) => {
   if (error) return <div className="h-screen bg-violet-400 grid place-items-center">Error: {error}</div>;
 
   return (
-    <section className="h-full bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full m-5">
+    <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-96 m-5">
         <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Movies</h2>
 
           {likedMovies.length > 0 ? (
@@ -153,7 +153,7 @@ const ResultPage = ({ params }) => {
             <p className="text-center text-gray-600">No hay películas gustadas disponibles aún.</p>
           )}
       </div>
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full m-5">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-96 m-5">
         <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Meals</h2>
 
           {likedMeals.length > 0 ? (
@@ -184,7 +184,7 @@ const ResultPage = ({ params }) => {
             <p className="text-center text-gray-600">No hay comidas gustadas disponibles aún.</p>
           )}
       </div>
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full m-5">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-96 m-5">
         <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Places</h2>
 
           {likedPlaces.length > 0 ? (
