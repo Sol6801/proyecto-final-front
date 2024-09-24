@@ -5,9 +5,11 @@ import { useState, useEffect } from "react";
 import withAuth from '@/components/withAuth.js'
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const Movies = () => {
+const Movies = ({ params }) => {
   const router = useRouter();
   const [movies, setMovies] = useState([]);
+  const { eventId } = params;// Asegúrate de que eventId esté en la URL
+
 
   const goToCategories = () => {
     router.push(`../categories`);
@@ -52,7 +54,7 @@ const Movies = () => {
       <h1 className="text-3xl font-bold text-center mb-12">Peliculas</h1>
 
       <div>
-        <SwipeableCard items={movies} category="movies" />
+        <SwipeableCard items={movies} category="movies" eventId={eventId} />
       </div>
 
       <button onClick={goToCategories}>
