@@ -3,11 +3,13 @@
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import useUserStore from "@/store/useUserStore.js";
+import useEventStore from "@/store/useEventStore.js";
 import Image from "next/image";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SwipeableCard = ({ items, category }) => {
+  const { eventId } = useEventStore();
   const { userId } = useUserStore();
   
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,7 +22,7 @@ const SwipeableCard = ({ items, category }) => {
     try {
       // const token = localStorage.getItem('token');
       const currentItem = items[currentIndex];
-      const response = await fetch(`${API_URL}/${category}/liked`, {
+      const response = await fetch(`${API_URL}/events/${eventId}/${category}/liked`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +30,7 @@ const SwipeableCard = ({ items, category }) => {
         },
         body: JSON.stringify({
           userId,
+          eventId,
           itemId: currentItem.id,
           itemName: currentItem.name,
           itemImage: currentItem.urlImage,
@@ -48,7 +51,7 @@ const SwipeableCard = ({ items, category }) => {
     try {
       // const token = localStorage.getItem('token');
       const currentItem = items[currentIndex];
-      const response = await fetch(`${API_URL}/${category}/disliked`, {
+      const response = await fetch(`${API_URL}/events/${eventId}/${category}/disliked`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,6 +59,7 @@ const SwipeableCard = ({ items, category }) => {
         },
         body: JSON.stringify({
           userId,
+          eventId,
           itemId: currentItem.id,
           itemName: currentItem.name,
           itemImage: currentItem.urlImage,
@@ -97,10 +101,12 @@ const SwipeableCard = ({ items, category }) => {
         className="w-full max-w-sm mx-auto h-96 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
       >
         {/* Verifica que items[currentIndex] tenga las propiedades necesarias */}
-        <img
+        <Image
           className="w-full h-80 object-cover"
           src={items[currentIndex].urlImage || "/fallback-image.jpg"} // Usa una imagen de respaldo si no existe
           alt={items[currentIndex].name || "Imagen no disponible"}
+          width={500} 
+          height={400}
         />
 
         <div className="p-4">
