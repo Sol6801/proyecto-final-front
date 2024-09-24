@@ -104,13 +104,5 @@ const EventPage = ({ params }) => {
   );
 };
 
-// Estilo inline para una cuadrícula de tarjetas
-const gridStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(3, 1fr)",
-  gap: "20px",
-  justifyItems: "center",
-  padding: "20px",
-};
 
 export default withAuth(EventPage);
