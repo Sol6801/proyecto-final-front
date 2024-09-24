@@ -33,11 +33,11 @@ const Navbar = () => {
               Eventos
             </a>
           </li>
-          <li>
+          {/* <li>
             <a href="/user" className="hover:underline">
               Usuario
             </a>
-          </li>
+          </li> */}
           <li>
             <button onClick={handleLogout} className="hover:underline">
               Logout
