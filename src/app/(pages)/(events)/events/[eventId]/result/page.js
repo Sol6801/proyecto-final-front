@@ -125,6 +125,8 @@ const ResultPage = ({ params }) => {
       });
   }, [eventId]);
 
+  
+
   if (loading) return <div className="h-screen bg-violet-400 grid place-items-center">Cargando resultados...</div>;
   if (error) return <div className="h-screen bg-violet-400 grid place-items-center">Error: {error}</div>;
 
@@ -132,7 +134,7 @@ const ResultPage = ({ params }) => {
     <section>
     <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-80 m-5">
-        <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Movies</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Peliculas Mas Likeadas</h2>
 
           {likedMovies.length > 0 ? (
             <>
@@ -163,7 +165,7 @@ const ResultPage = ({ params }) => {
           )}
       </div>
       <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-80 m-5">
-        <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Meals</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Comidas Mas Likeadas</h2>
 
           {likedMeals.length > 0 ? (
             <>
@@ -194,7 +196,7 @@ const ResultPage = ({ params }) => {
           )}
       </div>
       <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-80 m-5">
-        <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Places</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Lugares Mas Likeados</h2>
 
           {likedPlaces.length > 0 ? (
             <>
