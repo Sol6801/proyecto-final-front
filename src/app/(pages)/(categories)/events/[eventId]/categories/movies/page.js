@@ -50,10 +50,10 @@ const Movies = ({ params }) => {
 
 
   return (
-    <section className="w-screen h-screen flex flex-col bg-violet-400 rounded-lg">
-      <h1 className="text-3xl font-bold text-center mb-12">Peliculas</h1>
+    <section className="w-screen h-full flex flex-col justify-center items-center pb-5 bg-violet-400 rounded-lg">
+      <h1 className="text-3xl font-bold text-center my-6"> Peliculas</h1>
 
-      <div>
+      <div className="mb-5">
         <SwipeableCard items={movies} category="movies" eventId={eventId} />
       </div>
 

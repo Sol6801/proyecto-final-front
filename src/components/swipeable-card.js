@@ -90,7 +90,7 @@ const SwipeableCard = ({ items, category, eventId }) => {
   }
 
   return (
-    <section className="flex flex-row">
+    <section className="flex flex-row justify-center items-center gap-10">
       <button onClick={handleDislike}>
         <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
           Dislike
@@ -98,15 +98,15 @@ const SwipeableCard = ({ items, category, eventId }) => {
       </button>
       <div
         {...handlers}
-        className="w-full max-w-sm mx-auto h-96 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
+        className="flex flex-col justify-evenly min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
       >
         {/* Verifica que items[currentIndex] tenga las propiedades necesarias */}
         <Image
-          className="w-full h-80 object-cover"
+          className="object-cover"
           src={items[currentIndex].urlImage || "/fallback-image.jpg"} // Usa una imagen de respaldo si no existe
           alt={items[currentIndex].name || "Imagen no disponible"}
-          width={500} 
-          height={400}
+          width={400} 
+          height={800}
         />
 
         <div className="p-4">
