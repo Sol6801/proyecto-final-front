@@ -1,9 +1,9 @@
 export default function LoginLayout({ children }) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <main className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+    //<div className="h-screen flex items-center justify-center py-20 bg-gradient-to-b from-violet-500 to-violet-200">
+      <main className="w-full h-screen flex items-center justify-center p-8 shadow-md bg-gradient-to-b from-violet-500 to-violet-200">
         {children}
       </main>
-    </div>
+    //</div>
   );
 }

@@ -46,7 +46,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
+    <div className="flex items-center justify-center bg-gray-100 rounded-lg">
       <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-bold mb-4">Registro</h2>
         <form onSubmit={handleSubmit}>
@@ -146,7 +146,7 @@ const RegisterPage = () => {
               required
             />
           </div>
-          <p>Los campos con (*) son obligatorios</p>
+          <p className="text-sm text-slate-500">Los campos con (*) son obligatorios</p>
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700"
