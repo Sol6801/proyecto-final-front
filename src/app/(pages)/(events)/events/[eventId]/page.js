@@ -54,7 +54,7 @@ const EventPage = ({ params }) => {
   }, []);
 
   return (
-    <section className="h-screen bg-violet-400 grid flex-1 rounded-lg">
+    <section className="p-5 bg-violet-400 h-full min-h-screen grid flex-1 rounded-lg">
       <article>
         <h1 className="pt-3 text-4xl font-bold text-center m-12">
           Event Id: {params.eventId}

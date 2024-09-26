@@ -46,7 +46,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
     <>
       <Navbar />
       {userEvents.length === 0 ? (
-        <div className="bg-violet-400 place-items-center flex-1 flex flex-col h-svh items-center">
+        <div className="bg-violet-400 place-items-center flex-1 flex flex-col h-full min-h-screen items-center">
           <section className=" py-10 text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
                 Todavía no tenés eventos!
@@ -60,13 +60,13 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
         {joinEventModal}
       </div>
       ) : (
-        <div className="flex flex-col bg-gray-100 mx-auto p-4 gap-4 md:h-screen md:flex-row">
-        <aside className="bg-violet-600 px-20 grid place-items-center rounded-lg relative">
+        <div className="flex flex-col bg-gray-100 mx-auto p-4 gap-4 h-full min-h-screen md:flex-row">
+        <aside className="bg-violet-600 md:max-w-80 px-20 grid place-items-center rounded-lg relative order-1 md:order-0">
           <span className="absolute top-4 left-4">
             <h1 className="text-xl p-1 text-center">Selecciona un evento para verlo</h1>
           </span>
           <nav>
-            <ul className="flex flex-col gap-10">
+            <ul className="flex flex-col py-10 my-5 gap-10 ">
               {
               userEvents.map((event) => (
                   <li key={event.id}>
@@ -82,10 +82,8 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
             </ul>
           </nav>
         </aside>
-        <div className="bg-violet-400 place-items-center flex-1 flex h-full items-center rounded-lg">
+        <div className="bg-violet-400 place-items-center flex-1 flex items-center rounded-lg order-0 md:order-1">
           {children}
-          {createEventModal}
-          {joinEventModal}
         </div>
       </div>
       )}
