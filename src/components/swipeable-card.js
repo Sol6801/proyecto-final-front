@@ -87,15 +87,13 @@ const SwipeableCard = ({ items, category, eventId }) => {
 
   if (items.length === 0 || !items[currentIndex]) {
     return (
-<div className="flex justify-center items-center min-h-full">
-  <div className="relative w-16 h-16">
-    <div className="w-full h-full border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-    <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-slow"></div>
-    <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-100 border-t-transparent rounded-full animate-spin-reverse"></div>
-  </div>
-</div>
-
-    
+      <div className="flex justify-center items-center min-h-full">
+        <div className="relative w-16 h-16">
+          <div className="w-full h-full border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-slow"></div>
+          <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-100 border-t-transparent rounded-full animate-spin-reverse"></div>
+        </div>
+      </div>
     )
   }
 
