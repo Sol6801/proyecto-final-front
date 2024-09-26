@@ -213,6 +213,11 @@ const nextConfig = {
         hostname: "cdn7.kiwilimon.com",
         pathname: "/recetaimagen/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn-icons-png.freepik.com",
+        pathname: "/**",
+      },
     ],
   },
 };
