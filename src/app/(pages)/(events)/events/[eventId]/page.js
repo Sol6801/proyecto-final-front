@@ -57,14 +57,14 @@ const EventPage = ({ params }) => {
     <section className="h-screen bg-violet-400 grid flex-1 rounded-lg">
       <article>
         <h1 className="pt-3 text-4xl font-bold text-center m-12">
-          Event Id:{params.eventId}
+          Event Id: {params.eventId}
         </h1>
         <section>
           <h2 className="text-3xl font-bold text-center mb-12">Miembros:</h2>
 
           <div className="my-10">
             <nav>
-              <ul className="flex flex-row items-center justify-center gap-8">
+              <ul className="flex flex-col items-center justify-center gap-8 md:flex-row">
                 {eventUsers.length === 0 ? (
                   <p>No tienes miembros disponibles.</p>
                 ) : (
@@ -84,16 +84,16 @@ const EventPage = ({ params }) => {
           <h2 className="text-3xl font-bold text-center mb-12">
             Empezá a planear!
           </h2>
-          <div className="flex flex-row items-center justify-center gap-8">
+          <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
             <button
               onClick={goToCategories}
-              className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+              className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
             >
               Categorias
             </button>
             <button
               onClick={ready}
-              className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+              className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
             >
               Listo!
             </button>

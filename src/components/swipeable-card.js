@@ -86,41 +86,66 @@ const SwipeableCard = ({ items, category, eventId }) => {
   });
 
   if (items.length === 0 || !items[currentIndex]) {
-    return <h2>No hay elementos disponibles para mostrar.</h2>;
+    return (
+      <div className='h-screen'>
+        <h2>No hay elementos disponibles para mostrar.</h2>
+      </div>
+    )
   }
 
   return (
-    <section className="flex flex-row justify-center items-center gap-10">
-      <button onClick={handleDislike}>
-        <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-          Dislike
-        </a>
-      </button>
-      <div
-        {...handlers}
-        className="flex flex-col justify-evenly min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer"
-      >
-        <Image
-          className="object-cover"
-          src={items[currentIndex].urlImage || "/fallback-image.jpg"}
-          alt={items[currentIndex].name || "Imagen no disponible"}
-          width={400} 
-          height={800}
-        />
+    <section className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+      <button
+      onClick={handleDislike}
+      className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+    >
+      Dislike
+    </button>
+  {/* Imagen centrada en todas las pantallas */}
+  <div
+    {...handlers}
+    className="flex flex-col justify-evenly min-w-80 md:min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden cursor-pointer mx-20"
+  >
+    <Image
+      className="object-cover"
+      src={items[currentIndex].urlImage || "/fallback-image.jpg"}
+      alt={items[currentIndex].name || "Imagen no disponible"}
+      width={400}
+      height={800}
+    />
+    <div className="p-4">
+      <h3 className="text-xl font-bold mb-2">
+        {items[currentIndex].name || "Título no disponible"}
+      </h3>
+    </div>
+  </div>
 
-        <div className="p-4">
-          <h3 className="text-xl font-bold mb-2">
-            {items[currentIndex].name || "Título no disponible"}
-          </h3>
-        </div>
-      </div>
+  <button
+      onClick={handleLike}
+      className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+    >
+      Like
+    </button>
 
-      <button onClick={handleLike}>
-        <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
-          Like
-        </a>
-      </button>
-    </section>
+  {/* Contenedor de botones */}
+  <div className="flex justify-around w-screen md:w-auto md:hidden">
+    <button
+      onClick={handleDislike}
+      className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+    >
+      Dislike
+    </button>
+
+    <button
+      onClick={handleLike}
+      className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+    >
+      Like
+    </button>
+  </div>
+</section>
+
+
   );
 };
 

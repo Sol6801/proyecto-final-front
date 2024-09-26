@@ -15,8 +15,8 @@ const Events = () => {
   };
 
   return (
-    <section className=" h-screen bg-violet-400 grid place-items-center flex-1 rounded-lg">
-      <div className="flex flex-row items-center justify-center gap-8">
+    <section className=" bg-violet-400 place-items-center flex-1 rounded-lg h-screen grid">
+      <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
         <button onClick={createEvent}>
           <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
             Crear Evento

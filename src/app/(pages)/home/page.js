@@ -32,8 +32,8 @@ const HomePage = () => {
     <div>
       
       <Navbar />
-      <section className="flex flex-col items-center justify-center py-20 bg-gradient-to-b from-violet-500 to-violet-200 text-white">
-        <h1 className="text-5xl font-extrabold mb-4">Planner Buddy</h1>
+      <section className="flex flex-col items-center justify-center py-40 bg-gradient-to-b from-violet-500 to-violet-200 text-white md:py-20">
+        <h1 className="text-5xl font-extrabold mb-4 text-center">Planner Buddy</h1>
         <p className="text-xl mb-8">Tu compa el que planea ;)</p>
       </section>
 

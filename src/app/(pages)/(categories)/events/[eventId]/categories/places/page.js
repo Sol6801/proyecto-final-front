@@ -49,17 +49,15 @@ const Places = ({ params }) => {
 
 
   return (
-    <section className="w-screen h-screen flex flex-col bg-violet-400 rounded-lg">
+    <section className="w-full h-full min-h-screen flex flex-col items-center justify-center bg-violet-400">
       <h1 className="text-3xl font-bold text-center mb-12">Lugares</h1>
 
       <div>
         <SwipeableCard items={places} category="places" eventId={eventId} />
       </div>
 
-      <button onClick={goToCategories}>
-        <a className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100">
+      <button onClick={goToCategories} className="max-w-32 text-center bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 m-5">
           Ir Atrás
-        </a>
       </button>
     </section>
   );

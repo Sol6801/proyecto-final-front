@@ -45,17 +45,30 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
   return (
     <>
       <Navbar />
-      <div className="h-full flex bg-gray-100 mx-auto p-4 gap-4">
+      {userEvents.length === 0 ? (
+        <div className="bg-violet-400 place-items-center flex-1 flex flex-col h-svh items-center">
+          <section className=" py-10 text-center">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
+                Todavía no tenés eventos!
+              </h2>
+              <h3 className="text-xl sm:text-2xl md:text-3xl text-white font-semibold opacity-90 mb-6">
+                Empezá a planear ya!
+              </h3>
+          </section>
+        {children}
+        {createEventModal}
+        {joinEventModal}
+      </div>
+      ) : (
+        <div className="flex flex-col bg-gray-100 mx-auto p-4 gap-4 md:h-screen md:flex-row">
         <aside className="bg-violet-600 px-20 grid place-items-center rounded-lg relative">
           <span className="absolute top-4 left-4">
             <h1 className="text-xl p-1 text-center">Selecciona un evento para verlo</h1>
           </span>
           <nav>
             <ul className="flex flex-col gap-10">
-              {userEvents.length === 0 ? (
-                <p>No tienes eventos disponibles.</p>
-              ) : (
-                userEvents.map((event) => (
+              {
+              userEvents.map((event) => (
                   <li key={event.id}>
                     <button
                       onClick={() => handleEventClick(event.id)}
@@ -65,7 +78,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
                     </button>
                   </li>
                 ))
-              )}
+              }
             </ul>
           </nav>
         </aside>
@@ -75,6 +88,9 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
           {joinEventModal}
         </div>
       </div>
+      )}
+      
+        
       <Footer />
     </>
   );
