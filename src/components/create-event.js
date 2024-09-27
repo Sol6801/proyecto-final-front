@@ -12,6 +12,7 @@ const CreateEvent = () => {
     name: "",
     plannedDate: "",
     password: "",
+    userId,
   });
 
   useEffect(() => {
@@ -52,12 +53,28 @@ const CreateEvent = () => {
     setEventId(result.id);
 
     if (response.ok) {
-      // router.push(`/events/${result.id}`);
       alert(`Evento creado con éxito. El ID del evento es: ${result.data.id}`);
     } else {
       alert("Error al crear el evento");
     }
+    const joinResponse = await fetch(`${API_URL}/joinEvent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: result.data.id,
+        password: eventData.password,
+        userId,
+      }),
+    });
+    if (joinResponse.ok) {
+      router.push(`/events/${result.data.id}`);
+    }else{
+      alert("Error al unirse al evento");
+    }
   };
+
   return (
     <section className="bg-gray-100 px-10 py-3 my-3 rounded-lg shadow-md  w-70">
       <h1 className="text-xl font-bold mb-4">Crear un nuevo evento</h1>
