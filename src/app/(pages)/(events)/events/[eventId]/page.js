@@ -3,15 +3,18 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
 import useAuthStore from "@/store/useUserAuthStore.js";
+import useUserStore from "@/store/useUserStore.js";
 // import Chatbot from "@/components/chatbot";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
   const { eventId } = params;
+  const { userId } = useUserStore();
   const router = useRouter();
   const [eventUsers, setEventUsers] = useState([]);
   const user = useAuthStore((state) => state.user);
+  const [isCreator, setIsCreator] = useState();
 
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
@@ -25,11 +28,6 @@ const EventPage = ({ params }) => {
 
   useEffect(() => {
     const fetchEventUsers = async () => {
-      // const eventId = localStorage.getItem('eventId');
-      // if (!eventId) {
-      //   console.error("Event ID not found in local storage");
-      //   return;
-      // }
 
       try {
         const response = await fetch(`${API_URL}/events/${eventId}/users`);
@@ -42,6 +40,22 @@ const EventPage = ({ params }) => {
             username: item.user.username,
           }));
           setEventUsers(users);
+
+
+          const event = await fetch(`${API_URL}/events/${eventId}`);
+          const eventData = await event.json();
+          console.log("Event data:", eventData);
+          setIsCreator(userId === eventData.data.userId);
+          console.log("number:", userId, eventData.data.userId);
+          
+        
+          // console.log("Event data creator:", users.creator)
+          // console.log("Event data creator:", id)
+          console.log("USUARIOOOOOO:", userId)
+          // console.log("Event data creator:", eventData.creator)
+          console.log("Event data creator:", eventData.data.userId)
+          console.log("Is creator:", isCreator);
+
 
           if (!user.some((eventUser) => eventUser.id === user.id)) {
             setError("no tienes permisos para ver este evento");
@@ -58,6 +72,27 @@ const EventPage = ({ params }) => {
 
 
   //*intento de delete event, falta find many users_in_event y eliminar todos los regitros de dicha tabla para evitar conflictos de key */
+  // const deleteEvent = async () => {
+  //   try {
+  //     const response = await fetch(`${API_URL}/events/${eventId}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         eventId
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log(`Event ${eventId} deleted successfully:`, data);
+  //     // handleGoToEvent();
+  //   } catch (error) {
+  //     console.error(`Error deleting event: ${eventId}`, error);
+  //     console.error("Error details:", error.message);
+  //   }
+  // };
+
   const deleteEvent = async () => {
     try {
       const response = await fetch(`${API_URL}/events/${eventId}`, {
@@ -66,10 +101,14 @@ const EventPage = ({ params }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,
+          userId,
           eventId
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const data = await response.json();
       console.log(`Event ${eventId} deleted successfully:`, data);
@@ -77,6 +116,7 @@ const EventPage = ({ params }) => {
     } catch (error) {
       console.error(`Error deleting event: ${eventId}`, error);
       console.error("Error details:", error.message);
+      // Handle the error (e.g., show an error message to the user)
     }
   };
 
@@ -84,13 +124,13 @@ const EventPage = ({ params }) => {
 
   const leaveEvent = async () => {
     try {
-      const response = await fetch(`${API_URL}/events/${eventId}`, { //*la url es distinta */
+      const response = await fetch(`${API_URL}/events/${eventId}/users/${userId}`, { 
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user,
+          userId,
           eventId,
         }),
       });
@@ -151,19 +191,23 @@ const EventPage = ({ params }) => {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-8 my-10 md:flex-row">
-            <button
-              onClick={deleteEvent} //*el unico usuario que ve este boton es el creador del evento, y el creador del evento no puede salir del evento, solo eliminarlo*/
-              className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-            >
-              Eliminar Evento
-            </button>
-            <button
-              onClick={leaveEvent}  //*los usuarios pueden salir de un grupo pero no eliminarlo */
-              className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-            >
-              Salir del Evento
-            </button>
+            {isCreator ? (
+              <button
+                onClick={deleteEvent}
+                className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+              >
+                Eliminar Evento
+              </button>
+            ) : (
+              <button
+                onClick={leaveEvent}
+                className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+              >
+                Salir del Evento
+              </button>
+            )}
           </div>
+
         </section>
       </article>
     </section>
@@ -172,3 +216,18 @@ const EventPage = ({ params }) => {
 
 
 export default withAuth(EventPage);
+
+          // <div className="flex flex-col items-center justify-center gap-8 my-10 md:flex-row">
+          //   <button
+          //     onClick={deleteEvent} //*el unico usuario que ve este boton es el creador del evento, y el creador del evento no puede salir del evento, solo eliminarlo*/
+          //     className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          //   >
+          //     Eliminar Evento
+          //   </button>
+          //   <button
+          //     onClick={leaveEvent}  //*los usuarios pueden salir de un grupo pero no eliminarlo */
+          //     className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          //   >
+          //     Salir del Evento
+          //   </button>
+          // </div>
