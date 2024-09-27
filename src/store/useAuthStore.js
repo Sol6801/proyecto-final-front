@@ -13,7 +13,7 @@ const useAuthStore = create(
         }),
         {
             name: 'auth-storage',
-            getStorage: () => (typeof window !== 'undefined' ? localStorage : null), // Asegura que use localStorage en el cliente
+            getStorage: () => (typeof window !== 'undefined' ? localStorage : null),
         }
     )
 )

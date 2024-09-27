@@ -3,7 +3,7 @@ import { create } from 'zustand';
 const useUserStore = create((set) => ({
   userId: typeof window !== 'undefined' ? Number(localStorage.getItem('userId')) : null,
   setUserId: (id) => {
-    localStorage.setItem('userId', id); // Guardar en localStorage
+    localStorage.setItem('userId', id); 
     set({ userId: Number(id) });
   },
 }));

@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de que esto es un componente del cliente
+"use client";
 
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -9,8 +9,8 @@ const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = () => {
-    logout(); // Ejecuta la función de logout desde el store
-    router.push('/login'); // Redirige al usuario a la página de login
+    logout();
+    router.push('/login');
   };
 
   return (
