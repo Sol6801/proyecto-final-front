@@ -34,7 +34,7 @@ const withAuth = (WrappedComponent) => {
         }
 
         if (!isAuthenticated) {
-            router.push("/login");
+            router.replace("/login");
         }
 
         return <WrappedComponent {...props} userToken={userToken} />

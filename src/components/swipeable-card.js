@@ -12,6 +12,8 @@ const SwipeableCard = ({ items, category, eventId }) => {
   const { userId } = useUserStore();
   const { setIndex, getIndex } = useCategoryIndexStore();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false); // Loader state
+  const [swipeDirection, setSwipeDirection] = useState(""); // Animation state
 
   useEffect(() => {
     const savedIndex = getIndex(eventId, category);
@@ -22,59 +24,71 @@ const SwipeableCard = ({ items, category, eventId }) => {
     const newIndex = (currentIndex + 1) % items.length;
     setCurrentIndex(newIndex);
     setIndex(eventId, category, newIndex);
+    setIsProcessing(false); // Reset loader state after fetch completes
+    setSwipeDirection(""); // Reset animation state
   };
 
   const handleLike = async () => {
+    setIsProcessing(true);
+    setSwipeDirection("right"); // Set direction for animation
+
     try {
       const currentItem = items[currentIndex];
-      const response = await fetch(`${API_URL}/events/${eventId}/${category}/liked`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          eventId,
-          itemId: currentItem.id,
-          itemName: currentItem.name,
-          itemImage: currentItem.urlImage,
-          category: category,
-        }),
-      });
+      const response = await fetch(
+        `${API_URL}/events/${eventId}/${category}/liked`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            eventId,
+            itemId: currentItem.id,
+            itemName: currentItem.name,
+            itemImage: currentItem.urlImage,
+            category: category,
+          }),
+        }
+      );
 
       const data = await response.json();
       console.log(`${category} liked:`, data);
       handleNext();
     } catch (error) {
       console.error(`Error saving ${category} like:`, error);
-      console.error("Error details:", error.message);
     }
   };
 
   const handleDislike = async () => {
+    setIsProcessing(true);
+    setSwipeDirection("left"); // Set direction for animation
+
     try {
       const currentItem = items[currentIndex];
-      const response = await fetch(`${API_URL}/events/${eventId}/${category}/disliked`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          eventId,
-          itemId: currentItem.id,
-          itemName: currentItem.name,
-          itemImage: currentItem.urlImage,
-          category: category,
-        }),
-      });
+      const response = await fetch(
+        `${API_URL}/events/${eventId}/${category}/disliked`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            eventId,
+            itemId: currentItem.id,
+            itemName: currentItem.name,
+            itemImage: currentItem.urlImage,
+            category: category,
+          }),
+        }
+      );
 
       const data = await response.json();
       console.log(`${category} disliked:`, data);
       handleNext();
     } catch (error) {
       console.error(`Error saving ${category} dislike:`, error);
-      console.error("Error details:", error.message);
     }
   };
 
@@ -85,71 +99,89 @@ const SwipeableCard = ({ items, category, eventId }) => {
     trackMouse: true,
   });
 
+  // Loader styles (red for dislike, green for like)
+  const loaderColor = swipeDirection === "left" ? "bg-red-500" : "bg-green-500";
+
   if (items.length === 0 || !items[currentIndex]) {
     return (
-      <div className="flex justify-center items-center min-h-full">
+      <div id="loader" className="flex justify-center items-center min-h-full">
         <div className="relative w-16 h-16">
           <div className="w-full h-full border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-            <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-slow"></div>
+          <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-slow"></div>
           <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-100 border-t-transparent rounded-full animate-spin-reverse"></div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <section className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+      {isProcessing && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 h-screen w-screen">
+          <div className="relative w-24 h-24 bg-opacity-25 rounded-lg shadow-lg flex items-center justify-center">
+          <div className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin ${loaderColor}`}></div>
+          <div className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow ${swipeDirection === 'left' ? 'border-red-300' : 'border-green-300'}`}></div>
+          <div className={`absolute inset-0 m-auto w-8 h-8 border-4  border-t-transparent rounded-full animate-spin-reverse ${swipeDirection === 'left' ? 'border-red-100' : 'border-green-100'}`}></div>
+          </div>
+        </div>
+      )}
+
       <button
-      onClick={handleDislike}
-      className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-    >
-      Dislike
-    </button>
-  {/* Imagen centrada en todas las pantallas */}
-  <div
-    {...handlers}
-    className="flex flex-col justify-evenly min-w-80 md:min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden cursor-pointer"
-  >
-    <Image
-      className="object-cover"
-      src={items[currentIndex].urlImage || "/fallback-image.jpg"}
-      alt={items[currentIndex].name || "Imagen no disponible"}
-      width={400}
-      height={800}
-    />
-    <div className="p-4">
-      <h3 className="text-xl font-bold mb-2">
-        {items[currentIndex].name || "Título no disponible"}
-      </h3>
-    </div>
-  </div>
+        onClick={handleDislike}
+        className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+      >
+        Dislike
+      </button>
 
-  <button
-      onClick={handleLike}
-      className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-    >
-      Like
-    </button>
+      {/* Imagen centrada en todas las pantallas */}
+      <div
+        {...handlers}
+        className={`flex flex-col justify-evenly min-w-80 md:min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition-transform duration-500 ${
+          swipeDirection === "left"
+            ? "animate-swipe-left"
+            : swipeDirection === "right"
+            ? "animate-swipe-right"
+            : ""
+        }`}
+      >
+        <Image
+          className="object-cover"
+          src={items[currentIndex].urlImage || "/fallback-image.jpg"}
+          alt={items[currentIndex].name || "Imagen no disponible"}
+          width={400}
+          height={600}
+        />
+        <div className="p-4">
+          <h3 className="text-xl font-bold mb-2">
+            {items[currentIndex].name || "Título no disponible"}
+          </h3>
+        </div>
+      </div>
 
-  {/* Contenedor de botones */}
-  <div className="flex justify-around w-screen md:w-auto md:hidden">
-    <button
-      onClick={handleDislike}
-      className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-    >
-      Dislike
-    </button>
+      <button
+        onClick={handleLike}
+        className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+      >
+        Like
+      </button>
 
-    <button
-      onClick={handleLike}
-      className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-    >
-      Like
-    </button>
-  </div>
-</section>
+      {/* Contenedor de botones */}
+      <div className="flex justify-around w-screen md:w-auto md:hidden">
+        <button
+          onClick={handleDislike}
+          className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+        >
+          Dislike
+        </button>
 
-
+        <button
+          onClick={handleLike}
+          className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+        >
+          Like
+        </button>
+      </div>
+    </section>
   );
 };
 
