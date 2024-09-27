@@ -217,7 +217,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn-icons-png.freepik.com",
         pathname: "/**",
-      }
+      },
     ],
   },
 };

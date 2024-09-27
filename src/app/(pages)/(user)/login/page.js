@@ -1,4 +1,4 @@
-"use client"; // Indica que este es un componente del cliente
+"use client"; 
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
 import useAuthStore from "@/store/useAuthStore.js";
@@ -7,7 +7,7 @@ import useUserStore from "@/store/useUserStore.js";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
+  const [errorMessage, setErrorMessage] = useState(""); 
   const login = useAuthStore((state) => state.login);
   const setUserId = useUserStore((state) => state.setUserId);
   const router = useRouter();
@@ -17,7 +17,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage(""); // Limpiar cualquier error anterior
+    setErrorMessage(""); 
 
     const userData = {
       email,
