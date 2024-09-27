@@ -28,15 +28,13 @@ const JoinEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Utiliza la variable de entorno para la URL de la API
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    // Envía una solicitud POST al backend para crear el evento
     const response = await fetch(`${API_URL}/joinEvent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, // Envía el token para obtener el userId en el backend
+        // Authorization: `Bearer ${token}`, 
       },
       body: JSON.stringify(eventData),
     });

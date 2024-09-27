@@ -16,10 +16,9 @@ const CreateEvent = () => {
   });
 
   useEffect(() => {
-    // Actualiza el userId en eventData si cambia
     setEventData((prevData) => ({
       ...prevData,
-      userId, // Asegúrate de que userId esté en el estado
+      userId,
     }));
   }, [userId]);
 
@@ -37,10 +36,8 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Utiliza la variable de entorno para la URL de la API
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    // Envía una solicitud POST al backend para crear el evento
     const response = await fetch(`${API_URL}/createEvent`, {
       method: "POST",
       headers: {
@@ -70,7 +67,7 @@ const CreateEvent = () => {
     });
     if (joinResponse.ok) {
       router.push(`/events/${result.data.id}`);
-    }else{
+    } else {
       alert("Error al unirse al evento");
     }
   };

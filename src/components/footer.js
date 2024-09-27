@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de que esto es un componente del cliente
+"use client";
 
 import React from "react";
 

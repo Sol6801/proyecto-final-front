@@ -9,7 +9,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const Places = ({ params }) => {
   const router = useRouter();
   const [places, setPlaces] = useState([]);
-  const { eventId } = params;// Asegúrate de que eventId esté en la URL
+  const { eventId } = params;
 
   const goToCategories = () => {
     router.push(`../categories`);
@@ -30,15 +30,14 @@ const Places = ({ params }) => {
         const response = await fetch(url, options);
         const result = await response.json();
 
-        // Mapea los resultados de la API a las claves que SwipeableCard necesita
         const formattedPlaces = result.map((place) => ({
-          id: place.id, // Asegúrate de usar un identificador único, ya sea el que venga de la API o el índice
-          name: place.title, // Asegúrate de que la API tenga este campo
-          urlImage: place.urlImage, // Asegúrate de que la API tenga este campo
+          id: place.id,
+          name: place.title,
+          urlImage: place.urlImage,
         }));
 
-        console.log(formattedPlaces); // Puedes verificar los datos transformados en la consola
-        setPlaces(formattedPlaces); // Guarda las películas formateadas en el estado
+        console.log(formattedPlaces);
+        setPlaces(formattedPlaces);
       } catch (error) {
         console.error("Error al obtener los lugares:", error);
       }
@@ -57,7 +56,7 @@ const Places = ({ params }) => {
       </div>
 
       <button onClick={goToCategories} className="max-w-32 text-center bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 m-5">
-          Ir Atrás
+        Ir Atrás
       </button>
     </section>
   );

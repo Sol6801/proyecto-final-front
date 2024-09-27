@@ -14,7 +14,7 @@ const withAuth = (WrappedComponent) => {
         useEffect(() => {
             const storedToken = localStorage.getItem('auth-storage');
             if (!storedToken && !isAuthenticated) {
-                // Redirigir al login si no hay token y no está autenticado
+                // redirigir al login si no hay token y no está autenticado
                 router.replace('/login');
             } else {
                 setIsLoading(false)
@@ -30,7 +30,7 @@ const withAuth = (WrappedComponent) => {
                   <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
                 </div>
               </div>
-              )// O tu componente de carga preferido
+              )
         }
 
         if (!isAuthenticated) {
