@@ -60,22 +60,6 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
               </div>
             </div>
           </section>
-<<<<<<< HEAD
-        {children}
-        {createEventModal}
-        {joinEventModal}
-      </div>
-      ) : (
-        <div className="flex flex-col bg-gray-100 mx-auto p-4 gap-4 md:h-screen md:flex-row">
-        <aside className="bg-violet-600 px-20 grid place-items-center rounded-lg relative">
-          <span className="absolute top-4 left-4">
-            <h1 className="text-xl p-1 text-center text-white hover:border-t-gray-600">Selecciona un evento para verlo</h1>
-          </span>
-          <nav>
-            <ul className="flex flex-col gap-10">
-              {
-              userEvents.map((event) => (
-=======
         </div>
       )}
 
@@ -104,7 +88,6 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
             <nav>
               <ul className="flex flex-col py-10 my-5 gap-10">
                 {userEvents.map((event) => (
->>>>>>> d52fc9e2196395e5df05fc0ddf78a06f29c4658b
                   <li key={event.id}>
                     <button
                       onClick={() => handleEventClick(event.id)}
