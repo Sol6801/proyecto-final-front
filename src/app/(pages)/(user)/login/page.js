@@ -7,6 +7,7 @@ import useUserStore from "@/store/useUserStore.js";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
   const login = useAuthStore((state) => state.login);
   const setUserId = useUserStore((state) => state.setUserId);
   const router = useRouter();
@@ -16,6 +17,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage(""); // Limpiar cualquier error anterior
+
     const userData = {
       email,
       password,
@@ -23,7 +26,6 @@ const LoginPage = () => {
 
     try {
       const res = await fetch(`${API_URL}/login`, {
-        // Cambia a POST y usa el endpoint de login
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,14 +39,14 @@ const LoginPage = () => {
       }
 
       const data = await res.json();
-      console.log("Sesión iniciada:", data);
-
       setUserId(data.data.id); // Guardar el ID en el store y en localStorage
       login(data.token); // Guarda el token en el estado global
       router.push("/home"); // Redirige a la página principal
     } catch (error) {
+      setErrorMessage("Error al iniciar sesión. Verifica tus credenciales."); // Mostrar mensaje de error
       console.error("An error occurred:", error);
-      alert("Error al iniciar sesión. Verifica tus credenciales.");
+    } finally {
+      setIsLoading(false); // Resetear el estado de carga
     }
   };
 
@@ -63,10 +65,15 @@ const LoginPage = () => {
           </section>
         </div>
       )}
-      {!isLoading && ( 
+      {!isLoading && (
         <div className="flex items-center justify-center bg-gray-100 rounded-lg">
           <div className="w-full max-w-md p-8 bg-white rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Iniciar Sesion</h2>
+            <h2 className="text-2xl font-bold mb-4">Iniciar Sesión</h2>
+            {errorMessage && (
+              <div className="mb-4 text-red-500 text-sm font-medium">
+                {errorMessage}
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
@@ -80,7 +87,7 @@ const LoginPage = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
               </div>
@@ -105,13 +112,13 @@ const LoginPage = () => {
                 className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isLoading} // Deshabilitar el botón si está en modo de carga
               >
-                Iniciar Sesion
+                Iniciar Sesión
               </button>
             </form>
             <p className="mt-4 text-sm text-gray-600">
               Si no tienes una cuenta{" "}
               <a href="/register" className="text-indigo-600 hover:underline">
-                Registrate
+                Regístrate
               </a>
             </p>
           </div>
