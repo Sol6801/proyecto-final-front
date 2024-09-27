@@ -19,7 +19,7 @@ const EventPage = ({ params }) => {
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
   };
-  const ready = () => {
+  const goToResult = () => {
     router.push(`/events/${eventId}/result`);
   };
   const handleGoToEvent = () => {
@@ -49,10 +49,7 @@ const EventPage = ({ params }) => {
           console.log("number:", userId, eventData.data.userId);
           
         
-          // console.log("Event data creator:", users.creator)
-          // console.log("Event data creator:", id)
           console.log("USUARIOOOOOO:", userId)
-          // console.log("Event data creator:", eventData.creator)
           console.log("Event data creator:", eventData.data.userId)
           console.log("Is creator:", isCreator);
 
@@ -72,26 +69,6 @@ const EventPage = ({ params }) => {
 
 
   //*intento de delete event, falta find many users_in_event y eliminar todos los regitros de dicha tabla para evitar conflictos de key */
-  // const deleteEvent = async () => {
-  //   try {
-  //     const response = await fetch(`${API_URL}/events/${eventId}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         eventId
-  //       }),
-  //     });
-
-  //     const data = await response.json();
-  //     console.log(`Event ${eventId} deleted successfully:`, data);
-  //     // handleGoToEvent();
-  //   } catch (error) {
-  //     console.error(`Error deleting event: ${eventId}`, error);
-  //     console.error("Error details:", error.message);
-  //   }
-  // };
 
   const deleteEvent = async () => {
     try {
@@ -116,7 +93,6 @@ const EventPage = ({ params }) => {
     } catch (error) {
       console.error(`Error deleting event: ${eventId}`, error);
       console.error("Error details:", error.message);
-      // Handle the error (e.g., show an error message to the user)
     }
   };
 
@@ -183,10 +159,10 @@ const EventPage = ({ params }) => {
               Categorias
             </button>
             <button
-              onClick={ready}
+              onClick={goToResult}
               className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
             >
-              Listo!
+              Ir a Resultados
             </button>
           </div>
 
@@ -216,18 +192,3 @@ const EventPage = ({ params }) => {
 
 
 export default withAuth(EventPage);
-
-          // <div className="flex flex-col items-center justify-center gap-8 my-10 md:flex-row">
-          //   <button
-          //     onClick={deleteEvent} //*el unico usuario que ve este boton es el creador del evento, y el creador del evento no puede salir del evento, solo eliminarlo*/
-          //     className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-          //   >
-          //     Eliminar Evento
-          //   </button>
-          //   <button
-          //     onClick={leaveEvent}  //*los usuarios pueden salir de un grupo pero no eliminarlo */
-          //     className="min-w-60 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-          //   >
-          //     Salir del Evento
-          //   </button>
-          // </div>
