@@ -32,9 +32,10 @@ const HomePage = () => {
     <div>
       
       <Navbar />
-      <section className="flex flex-col items-center justify-center py-40 bg-gradient-to-b from-violet-500 to-violet-200 text-white md:py-20">
-        <h1 className="text-5xl font-extrabold mb-4 text-center">Planner Buddy</h1>
-        <p className="text-xl mb-8">Tu compa el que planea ;)</p>
+      <section className="min-h-dvh flex flex-col items-center justify-center py-40 bg-gradient-to-b from-violet-500 to-violet-200 text-white md:py-20">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-center">Planner Buddy</h1>
+        <p className="text-xl mb-8 md:text-2xl">Tu compa el que planea ;)</p>
+      
       </section>
 
       <section className="py-20 bg-gray-100">

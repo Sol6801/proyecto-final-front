@@ -11,11 +11,13 @@ const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [loading, setLoading] = useState(false)
   const router = useRouter(); // Usa el hook del cliente para la navegación
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     // const router = useRouter();
     const birthDateObject = new Date(birthDate);
 
@@ -44,10 +46,28 @@ const RegisterPage = () => {
       console.error("An error occurred:", error);
     }
   };
-
+  
+  
   return (
+    <>
+    {loading && ( 
+      <div className="bg-gradient-to-b from-violet-500 to-violet-200 place-items-center flex-1 flex flex-col h-full min-h-screen items-center">
+          <section className="py-10 text-center">
+            <div className="w-full h-screen flex justify-center items-center min-h-full">
+              <div className="relative w-16 h-16">
+                <div className="w-full h-full border-4 border-purple-900 border-t-transparent rounded-full animate-spin"></div>
+                <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin-slow"></div>
+                <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+  )}
+
+  {!loading && (
+
     <div className="flex items-center justify-center bg-gray-100 rounded-lg">
-      <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+      <div className="w-screen md:w-full max-w-md p-8 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-bold mb-4">Registro</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -162,6 +182,8 @@ const RegisterPage = () => {
         </p>
       </div>
     </div>
+  )}
+    </>
   );
 };
 
