@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
 import useAuthStore from "@/store/useUserAuthStore.js";
 import useUserStore from "@/store/useUserStore.js";
-// import Chatbot from "@/components/chatbot";
+import DecisionManager from "@/components/decision.js";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -180,6 +180,7 @@ const EventPage = ({ params }) => {
             ¡Empieza a planear!
           </h2>
 
+          <DecisionManager eventId={eventId} />
           <div className="flex flex-col items-center justify-center gap-6 mb-10 md:flex-row">
             <button
               onClick={goToCategories}
