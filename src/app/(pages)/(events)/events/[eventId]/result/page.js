@@ -241,6 +241,59 @@
 
 // export default withAuth(DecisionPage);
 
+// 'use client';
+
+// import { useRouter } from "next/navigation";
+// import withAuth from "@/components/withAuth.js";
+// import LikedItemsChart from "@/components/result.js";
+// import DecisionManager from "@/components/decision.js";
+
+// const DecisionPage = ({ params }) => {
+//   const router = useRouter();
+//   const { eventId } = params;
+
+//   const goToEvent = () => {
+//     router.push(`/events/${eventId}`);
+//   };
+
+//   const handleIA = () => {
+//     router.push(`/events/${eventId}/result/ia`);
+//   };
+
+//   return (
+//     <section>
+//       <DecisionManager eventId={eventId} />
+//       <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
+//         <LikedItemsChart eventId={eventId} category={'meals'} />
+//         <LikedItemsChart eventId={eventId} category={'places'} />
+//         <LikedItemsChart eventId={eventId} category={'movies'} />
+//       </section>
+//       <div className="flex flex-row items-center justify-center gap-8 py-8">
+//         <button
+//           onClick={goToEvent}
+//           className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+//         >
+//           Volver al Evento
+//         </button>
+//         <button
+//           onClick={() => document.getElementById("decision-btn").click()}
+//           className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+//         >
+//           Listo!
+//         </button>
+//         <button
+//           onClick={handleIA}
+//           className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+//         >
+//           Generá tu recomendación con IA 🌟
+//         </button>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default withAuth(DecisionPage);
+
 'use client';
 
 import { useRouter } from "next/navigation";
@@ -264,9 +317,9 @@ const DecisionPage = ({ params }) => {
     <section>
       <DecisionManager eventId={eventId} />
       <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
-        <LikedItemsChart eventId={eventId} category={'movies'} />
         <LikedItemsChart eventId={eventId} category={'meals'} />
         <LikedItemsChart eventId={eventId} category={'places'} />
+        <LikedItemsChart eventId={eventId} category={'movies'} />
       </section>
       <div className="flex flex-row items-center justify-center gap-8 py-8">
         <button
@@ -274,12 +327,6 @@ const DecisionPage = ({ params }) => {
           className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
         >
           Volver al Evento
-        </button>
-        <button
-          onClick={() => document.getElementById("decision-btn").click()}
-          className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-        >
-          Listo!
         </button>
         <button
           onClick={handleIA}

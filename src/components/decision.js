@@ -168,16 +168,16 @@ const DecisionManager = ({ eventId }) => {
     return <div>Loading...</div>;
   }
 
-  if (noDecision) {
-    return <div>No hay decisiones tomadas aún. Por favor, crea una decisión.</div>;
-  }
+//   if (noDecision) {
+//     return <div>No hay decisiones tomadas aún. Por favor, crea una decisión.</div>;
+//   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+console.log("decision", decision);
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-full">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-screen">
       <h2 className="text-2xl font-bold mb-4">Event Decision</h2>
       {decision ? (
         <div className="grid grid-cols-3 gap-4">
@@ -196,17 +196,29 @@ const DecisionManager = ({ eventId }) => {
           ))}
         </div>
       ) : (
+        <div>
         <p>No decision has been made yet.</p>
-      )}
+      {decision ? (
       <button
         id="decision-btn"
         onClick={createDecision}
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
         disabled={loading}
         style={{ display: 'none' }}
       >
-        {decision ? 'Update Decision' : 'Create Decision'}
+        Fijar Decisión
       </button>
+      ) : (
+          <button
+        id="decision-btn"
+        onClick={createDecision}
+        className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+        disabled={loading}
+        style={{ display: 'block' }}
+      > Fijar Decisión </button>
+      )}
+      </div>
+    )}
     </div>
   );
 };
