@@ -16,7 +16,7 @@ const LandingPage = () => {
         </a>
         </button>
         <br />
-        <button className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 min-w-40">
+        <button className="bg-violet-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 min-w-40">
         <a
           href="/register"
         >
