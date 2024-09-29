@@ -57,7 +57,7 @@ const LikedItemsChart = ({ eventId, category }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-2">
-      <h2 className="text-2xl font-bold mb-4 text-center">
+      <h2 className="text-2xl font-bold mb-4 text-center md:text-lg">
         {categoryTitles[category]} con más Likes
       </h2>
 
@@ -75,7 +75,7 @@ const LikedItemsChart = ({ eventId, category }) => {
             {likedItems.map((item) => (
               <li
                 key={item[`${category.slice(0, -1)}Id`]}
-                className="bg-gray-100 p-3 rounded flex flex-col justify-between items-center"
+                className="bg-gray-100 p-3 rounded flex flex-col items-center justify-between"
               >
                 <Image
                   src={item.urlImage}

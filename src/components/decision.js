@@ -224,6 +224,7 @@ const DecisionManager = ({ eventId, creator }) => {
         <div className="text-center">
           <p className="text-gray-500 mb-4">No decision has been made yet.</p>
           {creator ? (
+            
             <button
               id="decision-btn"
               onClick={createDecision}
