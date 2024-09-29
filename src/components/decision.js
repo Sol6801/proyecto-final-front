@@ -105,7 +105,7 @@ import Image from 'next/image';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const DecisionManager = ({ eventId }) => {
+const DecisionManager = ({ eventId, creator }) => {
   const [decision, setDecision] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -181,8 +181,8 @@ const DecisionManager = ({ eventId }) => {
     meal: 'Comida',
     place: 'Lugar'
   };
+  console.log('isCreator', creator);
   
-console.log("decision", decision);
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 w-max m-5">
       <h2 className="text-2xl font-bold mb-4">Event Decision</h2>
@@ -205,13 +205,13 @@ console.log("decision", decision);
       ) : (
         <div>
         <p>No decision has been made yet.</p>
-      {decision ? (
+      {creator ? (
       <button
         id="decision-btn"
         onClick={createDecision}
         className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
         disabled={loading}
-        style={{ display: 'none' }}
+        style={{ display: 'block' }}
       >
         Fijar Decisión
       </button>
@@ -221,7 +221,7 @@ console.log("decision", decision);
         onClick={createDecision}
         className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
         disabled={loading}
-        style={{ display: 'block' }}
+        style={{ display: 'none' }}
       > Fijar Decisión </button>
       )}
       </div>

@@ -300,11 +300,18 @@ import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
 import LikedItemsChart from "@/components/result.js";
 import DecisionManager from "@/components/decision.js";
+import { useState, useEffect } from "react";
+import useUserStore from "@/store/useUserStore.js";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 
 const DecisionPage = ({ params }) => {
   const router = useRouter();
   const { eventId } = params;
-
+  const { userId } = useUserStore();
+  const [isCreator, setIsCreator] = useState(false);
+  
   const goToEvent = () => {
     router.push(`/events/${eventId}`);
   };
@@ -313,13 +320,46 @@ const DecisionPage = ({ params }) => {
     router.push(`/events/${eventId}/result/ia`);
   };
 
+//* */
+
+useEffect(() => {
+    const getEventInfo = async () => {
+      try {
+        const response = await fetch(`${API_URL}/events/${eventId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log(`Event ${eventId} retrieved successfully:`, data);
+        
+        setIsCreator(userId === data.data.userId);
+        console.log('isCreator', isCreator);
+      } catch (error) {
+        console.error(`Error getting event: ${eventId}`, error);
+        console.error("Error details:", error.message);
+      }
+    };
+
+    getEventInfo();
+  }, []);
+
+//* */
+
+
   return (
     <section>
       <DecisionManager eventId={eventId} />
       <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg w-fit relative justify-evenly">
-        <LikedItemsChart eventId={eventId} category={'movies'} />
-        <LikedItemsChart eventId={eventId} category={'meals'} />
-        <LikedItemsChart eventId={eventId} category={'places'} />
+        <LikedItemsChart eventId={eventId} category={'movies'} creator={isCreator} />
+        <LikedItemsChart eventId={eventId} category={'meals'} creator={isCreator} />
+        <LikedItemsChart eventId={eventId} category={'places'} creator={isCreator} />
       </section>
       <div className="flex flex-row items-center justify-center gap-8 py-8">
         <button
