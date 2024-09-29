@@ -71,7 +71,7 @@ const LikedItemsChart = ({ eventId, category }) => {
               <Bar dataKey="likes" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
-          <ul className="mt-6 space-y-2">
+          <div className="mt-6 space-y-2">
             {likedItems.map((item) => (
               <li
                 key={item[`${category.slice(0, -1)}Id`]}
@@ -89,7 +89,7 @@ const LikedItemsChart = ({ eventId, category }) => {
                 </span>
               </li>
             ))}
-          </ul>
+          </div>
         </>
       ) : (
         <p className="text-center text-gray-600">
