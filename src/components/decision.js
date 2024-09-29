@@ -109,12 +109,12 @@ const DecisionManager = ({ eventId }) => {
   const [decision, setDecision] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [noDecision, setNoDecision] = useState(false); // Nuevo estado para manejar cuando no hay decisiones
+  // const [noDecision, setNoDecision] = useState(false); // Nuevo estado para manejar cuando no hay decisiones
 
   const getDecision = async () => {
     setLoading(true);
     setError(null);
-    setNoDecision(false); // Resetear el estado de noDecision
+    // setNoDecision(false); // Resetear el estado de noDecision
     try {
       const response = await fetch(`${API_URL}/events/${eventId}/decision`);
       if (!response.ok) {
@@ -175,15 +175,22 @@ const DecisionManager = ({ eventId }) => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  const categoryTitles = {
+    movie: 'Película',
+    meal: 'Comida',
+    place: 'Lugar'
+  };
+  
 console.log("decision", decision);
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-screen">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-max m-5">
       <h2 className="text-2xl font-bold mb-4">Event Decision</h2>
       {decision ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="flex flex-row justify-evenly gap-4 ">
           {['movie', 'meal', 'place'].map((category) => (
             <div key={category} className="border rounded p-4">
-              <h3 className="text-xl font-semibold mb-2 capitalize">{category}</h3>
+              <h3 className="text-xl font-semibold mb-2 capitalize">{categoryTitles[category]}</h3>
               <Image
                 src={decision[category].urlImage}
                 alt={decision[category].title}

@@ -28,6 +28,13 @@ const Categories = ({ params }) => {
             Empezá a elegir dentro de cada categoría.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+            <a href="categories/movies">
+              <ItemCard
+                category="Peliculas"
+                description="¿Que quisieras ver?"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/7295/7295380.png"
+              />
+            </a>
             <a href="categories/meals">
               <ItemCard
                 category="Comidas"
@@ -40,13 +47,6 @@ const Categories = ({ params }) => {
                 category="Lugares"
                 description="¿Donde vamos?"
                 imageUrl="https://cdn-icons-png.flaticon.com/512/11074/11074673.png"
-              />
-            </a>
-            <a href="categories/movies">
-              <ItemCard
-                category="Peliculas"
-                description="¿Que quisieras ver?"
-                imageUrl="https://cdn-icons-png.flaticon.com/512/7295/7295380.png"
               />
             </a>
           </div>

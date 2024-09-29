@@ -81,12 +81,12 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
 
       {!loader && userEvents.length > 0 && (
         <div className="flex flex-col bg-gradient-to-b from-violet-200 to-violet-200 mx-auto p-4 gap-4 h-full min-h-screen md:flex-row">
-          <aside className="bg-violet-600 md:max-w-80 px-20 grid place-items-center rounded-lg relative order-1 md:order-0">
+          <aside className="bg-violet-600 md:max-w-72 px-5 grid place-items-center rounded-lg relative order-1 md:order-0">
             <span className="absolute top-4 left-4">
               <h1 className="text-xl p-1 text-center">Selecciona un evento para verlo</h1>
             </span>
             <nav>
-              <ul className="flex flex-col py-10 my-5 gap-10">
+              <ul className="flex flex-col py-5 my-5 gap-10">
                 {userEvents.map((event) => (
                   <li key={event.id}>
                     <button

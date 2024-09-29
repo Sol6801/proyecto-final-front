@@ -28,6 +28,11 @@ const EventPage = ({ params }) => {
     router.push(`/events`);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('es-ES', options);
+  };
+
   useEffect(() => {
     const fetchEventUsers = async () => {
       try {
@@ -46,11 +51,7 @@ const EventPage = ({ params }) => {
           const eventData = await event.json();
           console.log("Event data:", eventData);
           setIsCreator(userId === eventData.data.userId);
-          console.log("number:", userId, eventData.data.userId);
           setEvent(eventData.data)
-          console.log("USUARIOOOOOO:", userId);
-          console.log("Event data creator:", eventData.data.userId);
-          console.log("Is creator:", isCreator);
 
           if (!user.some((eventUser) => eventUser.id === user.id)) {
             setError("no tienes permisos para ver este evento");
@@ -143,6 +144,9 @@ const EventPage = ({ params }) => {
         <h1 className="pt-3 text-5xl font-extrabold text-center text-white mb-8">
           {event.name}
         </h1>
+        <h2 className="pt-3 text-2xl font-extrabold text-center text-white mb-8">
+        {formatDate(event.plannedDate)}
+        </h2>
         <div className="text-center p-6">
           <p className="text-xl">Pasales este ID a tus amigos para que se unan!</p>
           <p className="text-3xl">{eventId}</p>

@@ -39,7 +39,7 @@ const LikedItemsChart = ({ eventId, category }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-80 m-5">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-3/4 m-5">
       <h2 className="text-2xl font-bold mb-4 text-center">{categoryTitles[category]} con más Likes</h2>
 
       {likedItems.length > 0 ? (
@@ -54,14 +54,14 @@ const LikedItemsChart = ({ eventId, category }) => {
           </ResponsiveContainer>
           <ul className="mt-6 space-y-2">
             {likedItems.map((item) => (
-              <li key={item[`${category.slice(0, -1)}Id`]} className="bg-gray-100 p-3 rounded flex justify-between items-center">
+              <li key={item[`${category.slice(0, -1)}Id`]} className="bg-gray-100 p-3 rounded flex flex-col justify-between items-center">
                 <Image 
                   src={item.urlImage}
                   alt={item.title}
                   width={150}
                   height={300}
                 />
-                <span className="font-semibold">{item.title}</span>
+                <span className="font-semibold p-3">{item.title}</span>
                 <span className="text-sm text-gray-500">Likes: {item.likes}</span>
               </li>
             ))}

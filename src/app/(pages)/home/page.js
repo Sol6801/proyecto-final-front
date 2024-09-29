@@ -5,26 +5,26 @@ import React from "react";
 import ItemCard from "@/components/item-card";
 import withAuth from "@/components/withAuth.js";
 
-const items = [
-  {
-    id: 1,
-    category: "Comidas",
-    description: "Mmmmm... ¿Que quiero comer hoy?",
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/4359/4359642.png",
-  },
-  {
-    id: 2,
-    category: "Lugares",
-    description: "¿Donde vamos?",
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/11074/11074673.png",
-  },
-  {
-    id: 3,
-    category: "Peliculas",
-    description: "¿Que quisieras ver?",
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/7295/7295380.png",
-  },
-];
+// const items = [
+//   {
+//     id: 1,
+//     category: "Peliculas",
+//     description: "¿Que quisieras ver?",
+//     imageUrl: "https://cdn-icons-png.flaticon.com/512/7295/7295380.png",
+//   },
+//   {
+//     id: 2,
+//     category: "Comidas",
+//     description: "Mmmmm... ¿Que quiero comer hoy?",
+//     imageUrl: "https://cdn-icons-png.flaticon.com/512/4359/4359642.png",
+//   },
+//   {
+//     id: 3,
+//     category: "Lugares",
+//     description: "¿Donde vamos?",
+//     imageUrl: "https://cdn-icons-png.flaticon.com/512/11074/11074673.png",
+//   },
+// ];
 
 const HomePage = () => {
 
@@ -61,7 +61,7 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold text-center mb-12">
             Elegí con tus amigos entre las diferentes categorías...
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
             {items.map((item) => (
               <ItemCard
                 key={item.id}
@@ -70,7 +70,31 @@ const HomePage = () => {
                 imageUrl={item.imageUrl}
               />
             ))}
+          </div> */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+            <a href="categories/movies">
+              <ItemCard
+                category="Peliculas"
+                description="¿Que quisieras ver?"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/7295/7295380.png"
+              />
+            </a>
+            <a href="categories/meals">
+              <ItemCard
+                category="Comidas"
+                description="Mmmmm... ¿Que quiero comer hoy?"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/4359/4359642.png"
+              />
+            </a>
+            <a href="categories/places">
+              <ItemCard
+                category="Lugares"
+                description="¿Donde vamos?"
+                imageUrl="https://cdn-icons-png.flaticon.com/512/11074/11074673.png"
+              />
+            </a>
           </div>
+          
           <div></div>
         </div>
       </section>

@@ -316,10 +316,10 @@ const DecisionPage = ({ params }) => {
   return (
     <section>
       <DecisionManager eventId={eventId} />
-      <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
+      <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg w-fit relative justify-evenly">
+        <LikedItemsChart eventId={eventId} category={'movies'} />
         <LikedItemsChart eventId={eventId} category={'meals'} />
         <LikedItemsChart eventId={eventId} category={'places'} />
-        <LikedItemsChart eventId={eventId} category={'movies'} />
       </section>
       <div className="flex flex-row items-center justify-center gap-8 py-8">
         <button
