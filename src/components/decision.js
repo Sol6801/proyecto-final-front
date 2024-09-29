@@ -192,9 +192,11 @@ const DecisionManager = ({ eventId, creator }) => {
 
   return (
     <div className="bg-white rounded-lg py-5 px-2">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
-        Event Decision
-      </h2>
+      <div className="text-center">
+        <h2 className="text-3xl bg-violet-200 rounded-lg shadow-md font-extrabold mb-4 text-indigo-600 inline-block p-4">
+          Decisión final:
+        </h2>
+      </div>
       {decision ? (
         <div className="flex flex-col md:flex-row justify-evenly gap-8">
           {["movie", "meal", "place"].map((category) => (
