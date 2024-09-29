@@ -109,12 +109,12 @@ const DecisionManager = ({ eventId }) => {
   const [decision, setDecision] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  // const [noDecision, setNoDecision] = useState(false); // Nuevo estado para manejar cuando no hay decisiones
+  const [noDecision, setNoDecision] = useState(false); // Nuevo estado para manejar cuando no hay decisiones
 
   const getDecision = async () => {
     setLoading(true);
     setError(null);
-    // setNoDecision(false); // Resetear el estado de noDecision
+    setNoDecision(false); // Resetear el estado de noDecision
     try {
       const response = await fetch(`${API_URL}/events/${eventId}/decision`);
       if (!response.ok) {
