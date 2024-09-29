@@ -185,7 +185,7 @@ const EventPage = ({ params }) => {
           </h2>
 
           <DecisionManager eventId={eventId} />
-          <div className="flex flex-wrap items-center justify-center gap-6 m-10">
+          <div className="flex flex-wrap items-center justify-center gap-6 my-6">
             <button
               onClick={goToCategories}
               className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
