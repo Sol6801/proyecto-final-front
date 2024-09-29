@@ -356,7 +356,7 @@ useEffect(() => {
   return (
     <section>
       <DecisionManager eventId={eventId} />
-      <section className="h-full min-h-screen bg-violet-400 rounded-lg w-full relative justify-evenly flex flex-col md:flex-row gap-8">
+      <section className="h-full min-h-screen bg-violet-400 rounded-lg w-full relative justify-evenly flex flex-col md:flex-row gap-8 my-8">
         <LikedItemsChart eventId={eventId} category={'movies'} creator={isCreator} />
         <LikedItemsChart eventId={eventId} category={'meals'} creator={isCreator} />
         <LikedItemsChart eventId={eventId} category={'places'} creator={isCreator} />

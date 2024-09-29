@@ -80,8 +80,8 @@ const LikedItemsChart = ({ eventId, category }) => {
                 <Image
                   src={item.urlImage}
                   alt={item.title}
-                  width={150}
-                  height={300}
+                  width={250}
+                  height={250}
                 />
                 <span className="font-semibold p-3">{item.title}</span>
                 <span className="text-sm text-gray-500">
