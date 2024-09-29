@@ -191,7 +191,7 @@ const DecisionManager = ({ eventId, creator }) => {
   console.log("isCreator", creator);
 
   return (
-    <div className="bg-white rounded-lg">
+    <div className="bg-white rounded-lg py-5 px-2">
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
         Event Decision
       </h2>
