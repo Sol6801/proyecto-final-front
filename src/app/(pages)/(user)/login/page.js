@@ -68,7 +68,7 @@ const LoginPage = () => {
       {!isLoading && (
         <div className="flex items-center justify-center bg-gray-100 rounded-lg">
           <div className="w-full max-w-md p-8 bg-white rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Iniciar Sesión</h2>
+            <h2 className="text-2xl font-bold mb-4">Iniciar sesión</h2>
             {errorMessage && (
               <div className="mb-4 text-red-500 text-sm font-medium">
                 {errorMessage}
@@ -112,7 +112,7 @@ const LoginPage = () => {
                 className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isLoading} // Deshabilitar el botón si está en modo de carga
               >
-                Iniciar Sesión
+                Iniciar sesión
               </button>
             </form>
             <p className="mt-4 text-sm text-gray-600">

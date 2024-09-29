@@ -80,8 +80,8 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
       )}
 
       {!loader && userEvents.length > 0 && (
-        <div className="flex flex-col bg-gradient-to-b from-violet-200 to-violet-200 mx-auto p-4 gap-4 h-full min-h-screen md:flex-row">
-          <aside className="bg-violet-600 md:max-w-72 px-5 grid place-items-center rounded-lg relative order-1 md:order-0">
+        <div className="flex flex-col bg-gradient-to-b from-violet-200 to-violet-200 mx-auto p-4 gap-4 h-full min-h-screen lg:flex-row">
+          <aside className="bg-violet-600 lg:max-w-72 px-5 grid place-items-center rounded-lg relative order-1 lg:order-0">
             <span className="absolute top-4 left-4">
               <h1 className="text-xl p-1 text-center">Selecciona un evento para verlo</h1>
             </span>
@@ -100,7 +100,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
               </ul>
             </nav>
           </aside>
-          <div className="bg-violet-400 place-items-center flex-1 flex items-center rounded-lg order-0 md:order-1">
+          <div className="bg-violet-400 place-items-center flex-1 flex items-center rounded-lg order-0 lg:order-1 justify-center">
             {children}
           </div>
         </div>

@@ -17,7 +17,7 @@ const Events = () => {
 
   return (
     <section className=" bg-violet-400 place-items-center flex-1 rounded-lg h-full min-h-screen grid">
-      <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
+      <div className="flex flex-col items-center justify-center gap-8 lg:flex-row">
         <div className="flex flex-col items-center justify-center gap-8">
           <Image
             src="https://cdn-icons-png.freepik.com/512/5948/5948841.png?uid=R133653469&ga=GA1.1.413291434.1727374790"

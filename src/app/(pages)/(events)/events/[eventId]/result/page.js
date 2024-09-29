@@ -356,21 +356,21 @@ useEffect(() => {
   return (
     <section>
       <DecisionManager eventId={eventId} />
-      <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg w-fit relative justify-evenly">
+      <section className="h-full min-h-screen bg-violet-400 rounded-lg w-full relative justify-evenly flex flex-col md:flex-row gap-8">
         <LikedItemsChart eventId={eventId} category={'movies'} creator={isCreator} />
         <LikedItemsChart eventId={eventId} category={'meals'} creator={isCreator} />
         <LikedItemsChart eventId={eventId} category={'places'} creator={isCreator} />
       </section>
-      <div className="flex flex-row items-center justify-center gap-8 py-8">
+      <div className="flex flex-col items-center justify-center gap-8 py-8 lg:flex-row">
         <button
           onClick={goToEvent}
-          className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          className="bg-white text-violet-600 px-6 py-3 rounded-full md:text-lg font-semibold hover:bg-gray-100"
         >
           Volver al Evento
         </button>
         <button
           onClick={handleIA}
-          className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          className="bg-white text-violet-600 px-6 py-3 rounded-full md:text-lg font-semibold hover:bg-gray-100"
         >
           Generá tu recomendación con IA 🌟
         </button>

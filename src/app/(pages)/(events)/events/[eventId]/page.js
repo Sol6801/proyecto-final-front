@@ -124,7 +124,7 @@ const EventPage = ({ params }) => {
   };
 
   return (
-    <section className="p-5 bg-gradient-to-b from-purple-600 to-purple-300 min-h-screen min-w-full flex items-center justify-center rounded-lg">
+    <section className="p-5 bg-gradient-to-b from-purple-600 to-purple-300 min-h-screen min-w-full flex flex-wrap items-center justify-center rounded-lg">
       {isLoading && (
         //<div className="bg-gradient-to-b from-violet-500 to-violet-200 place-items-center flex-1 flex flex-col h-full min-h-screen items-center">
           //<section className="py-10 text-center">
@@ -185,7 +185,7 @@ const EventPage = ({ params }) => {
           </h2>
 
           <DecisionManager eventId={eventId} />
-          <div className="flex flex-col items-center justify-center gap-6 mb-10 md:flex-row">
+          <div className="flex flex-wrap items-center justify-center gap-6 m-10">
             <button
               onClick={goToCategories}
               className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
@@ -198,9 +198,6 @@ const EventPage = ({ params }) => {
             >
               Ir a Resultados
             </button>
-          </div>
-
-          <div className="flex flex-col items-center justify-center gap-6 md:flex-row">
             {isCreator ? (
               <button
                 onClick={deleteEvent}

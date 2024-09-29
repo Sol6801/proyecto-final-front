@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -15,7 +22,7 @@ const LikedItemsChart = ({ eventId, category }) => {
     setLoading(true);
     fetch(`${API_URL}/events/${eventId}/${category}/mostLiked`)
       .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch data');
+        if (!res.ok) throw new Error("Failed to fetch data");
         return res.json();
       })
       .then((data) => {
@@ -29,18 +36,30 @@ const LikedItemsChart = ({ eventId, category }) => {
       });
   }, [eventId, category]);
 
-  if (loading) return <div className="grid place-items-center">Cargando resultados...</div>;
-  if (error) return <div className="grid place-items-center">Error: {error}</div>;
+  if (loading)
+    return (
+      <div className="w-full h-96 flex items-center justify-around">
+        <div className="relative block w-16 h-16">
+          <div className="w-full h-full border-4 border-purple-900 border-t-transparent rounded-full animate-spin"></div>
+          <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin-slow"></div>
+          <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
+        </div>
+      </div>
+    );
+  if (error)
+    return <div className="grid place-items-center">Error: {error}</div>;
 
   const categoryTitles = {
-    movies: 'Películas',
-    meals: 'Comidas',
-    places: 'Lugares'
+    movies: "Películas",
+    meals: "Comidas",
+    places: "Lugares",
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-3/4 m-5">
-      <h2 className="text-2xl font-bold mb-4 text-center">{categoryTitles[category]} con más Likes</h2>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        {categoryTitles[category]} con más Likes
+      </h2>
 
       {likedItems.length > 0 ? (
         <>
@@ -54,21 +73,29 @@ const LikedItemsChart = ({ eventId, category }) => {
           </ResponsiveContainer>
           <ul className="mt-6 space-y-2">
             {likedItems.map((item) => (
-              <li key={item[`${category.slice(0, -1)}Id`]} className="bg-gray-100 p-3 rounded flex flex-col justify-between items-center">
-                <Image 
+              <li
+                key={item[`${category.slice(0, -1)}Id`]}
+                className="bg-gray-100 p-3 rounded flex flex-col justify-between items-center"
+              >
+                <Image
                   src={item.urlImage}
                   alt={item.title}
                   width={150}
                   height={300}
                 />
                 <span className="font-semibold p-3">{item.title}</span>
-                <span className="text-sm text-gray-500">Likes: {item.likes}</span>
+                <span className="text-sm text-gray-500">
+                  Likes: {item.likes}
+                </span>
               </li>
             ))}
           </ul>
         </>
       ) : (
-        <p className="text-center text-gray-600">No hay {categoryTitles[category].toLowerCase()} gustados disponibles aún.</p>
+        <p className="text-center text-gray-600">
+          No hay {categoryTitles[category].toLowerCase()} gustados disponibles
+          aún.
+        </p>
       )}
     </div>
   );
