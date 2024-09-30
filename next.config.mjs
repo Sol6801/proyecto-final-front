@@ -222,6 +222,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "github.com",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "plannerbuddy.s3.amazonaws.com", 
+        pathname: "/placesoptimizado/**/**",
       }
     ],
   },
