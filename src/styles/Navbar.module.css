@@ -58,7 +58,7 @@
   font-size: 2rem;
 }
 .nav.active{
-  height: 60vh;
+  height: 50vh;
   pointer-events: auto;
 
 }
@@ -82,7 +82,7 @@
   display: block;
   min-width: 300px;
   text-align: center;
-  font-size: 1.9rem;
+  font-size: 1.2rem;
 }
 .a:hover {
   background-color: #fdf2e9;
