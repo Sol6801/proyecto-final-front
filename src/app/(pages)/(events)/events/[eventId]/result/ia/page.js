@@ -35,33 +35,33 @@
 //   //         }
 //   //     };
 //   // }, [eventId]);
-//   // useEffect(() => {
-//   //         const getRecommendations = async (mostLikedItems) => {
-//   //             try {
-//   //                 const categories = ['movies', 'meals', 'places'];
-//   //                 const response = await fetch('/api/ai', {
-//   //                     method: 'POST',
-//   //                     headers: { 'Content-Type': 'application/json' },
-//   //                     body: JSON.stringify({
-//   //                         movies: mostLikedItems.movies,
-//   //                         places: mostLikedItems.places,
-//   //                         foods: mostLikedItems.meals,
-//   //                         dislikes: [] // You might want to implement a way to track dislikes as well
-//   //                     })
-//   //                 });
+  // useEffect(() => {
+  //         const getRecommendations = async (mostLikedItems) => {
+  //             try {
+  //                 const categories = ['movies', 'meals', 'places'];
+  //                 const response = await fetch('/api/ai', {
+  //                     method: 'POST',
+  //                     headers: { 'Content-Type': 'application/json' },
+  //                     body: JSON.stringify({
+  //                         movies: mostLikedItems.movies,
+  //                         places: mostLikedItems.places,
+  //                         foods: mostLikedItems.meals,
+  //                         dislikes: [] // You might want to implement a way to track dislikes as well
+  //                     })
+  //                 });
 
-//   //                 if (!response.ok) throw new Error('Failed to get recommendations');
-//   //                 const data = await response.json();
-//   //                 setRecommendations(data);
-//   //             } catch (error) {
-//   //                 console.error('Error getting recommendations:', error);
-//   //                 setError(error.message);
-//   //             } finally {
-//   //                 setLoading(false);
-//   //             }
-//   //         };
-//   //         getRecommendations();
-//   //     }, []);
+  //                 if (!response.ok) throw new Error('Failed to get recommendations');
+  //                 const data = await response.json();
+  //                 setRecommendations(data);
+  //             } catch (error) {
+  //                 console.error('Error getting recommendations:', error);
+  //                 setError(error.message);
+  //             } finally {
+  //                 setLoading(false);
+  //             }
+  //         };
+  //         getRecommendations();
+  //     }, []);
 
 //   // fetchMostLikedItems()
 //   //     .then(getRecommendations)
@@ -153,8 +153,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import LikedItemsChart from "@/components/result.js";
 import withAuth from "@/components/withAuth.js";
+
 
 function AIRecommendationsPage({ params }) {
   const { eventId } = params;
@@ -163,16 +163,63 @@ function AIRecommendationsPage({ params }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  // Función para obtener los elementos más likeados
+  const getMostLikedItems = async (eventId, category) => {
+    try {
+      const response = await fetch(`${API_URL}/events/${eventId}/${category}/mostLiked`, {
+        method: 'GET',
+      });
+      if (!response.ok) {
+        throw new Error(`Error al obtener los elementos más likeados: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error en getMostLikedItems:', error);
+      throw error;
+    }
+  };
+
+  // Función para obtener los elementos dislikeados
+  const getDislikedItems = async (eventId, category) => {
+    try {
+      const response = await fetch(`${API_URL}/events/${eventId}/${category}/disliked`, {
+        method: 'GET',
+      });
+      if (!response.ok) {
+        throw new Error(`Error al obtener los elementos dislikeados: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error en getDislikedItems:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     const getRecommendations = async () => {
       try {
-        const response = await fetch(`/api/ai?eventId=${eventId}`, {
-          method: "GET",
+        const movies = await getMostLikedItems(eventId, 'movies');
+        const places = await getMostLikedItems(eventId, 'places');
+        const foods = await getMostLikedItems(eventId, 'meals');
+        const dislikes = await getDislikedItems(eventId, 'meals');
+
+        const response = await fetch(`/api/ai`, {
+          method: "POST",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            eventId,
+            movies,
+            places,
+            foods,
+            dislikes
+          }), // Enviar datos al backend
         });
 
         if (!response.ok) throw new Error("Failed to get recommendations");
         const data = await response.json();
+        console.log(data);
         setRecommendations(data);
       } catch (error) {
         console.error("Error getting recommendations:", error);
@@ -195,7 +242,6 @@ function AIRecommendationsPage({ params }) {
       <h1 className="text-3xl font-bold mb-6">Recomendaciones basadas en IA</h1>
       {recommendations && (
         <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">Recomendaciones de IA</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {Object.entries(recommendations).map(([category, items]) => (
               <div key={category} className="bg-white rounded-lg shadow p-4">
