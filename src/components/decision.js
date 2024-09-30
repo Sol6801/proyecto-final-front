@@ -193,7 +193,7 @@ const DecisionManager = ({ eventId, creator }) => {
   return (
     <div className="bg-white rounded-lg py-5 px-2">
       <div className="text-center">
-        <h2 className="text-3xl bg-violet-200 rounded-lg shadow-md font-extrabold mb-4 text-indigo-600 inline-block p-4">
+        <h2 className="text-3xl bg-violet-200 rounded-lg shadow-md font-bold mb-4 text-indigo-600 inline-block p-4">
           Decisión final:
         </h2>
       </div>
