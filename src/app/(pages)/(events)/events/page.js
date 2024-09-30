@@ -3,7 +3,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
 import Image from "next/image";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const Events = () => {
   const router = useRouter();
@@ -17,8 +16,8 @@ const Events = () => {
   };
 
   return (
-    <section className=" bg-violet-400 place-items-center flex-1 rounded-lg h-full min-h-screen grid">
-      <div className="flex flex-col justify-center gap-8 lg:flex-row sticky top-10">
+    <section className=" bg-violet-400 place-items-center rounded-lg h-full min-h-screen">
+      <div className="flex flex-col items-center justify-center gap-8 lg:flex-row md:pt-24">
         <div className="flex flex-col items-center justify-center gap-8">
           <Image
             src="https://cdn-icons-png.freepik.com/512/5948/5948841.png?uid=R133653469&ga=GA1.1.413291434.1727374790"
