@@ -66,7 +66,18 @@ const CreateEvent = () => {
       }),
     });
     if (joinResponse.ok) {
-      router.push(`/events/${result.data.id}`);
+      const eventsCookie = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('eventIds='));
+      const existingEventIds = eventsCookie
+        ? JSON.parse(eventsCookie.split('=')[1])
+        : [];
+
+      const updatedEventIds = [...existingEventIds, result.data.id];
+      document.cookie = `eventIds=${JSON.stringify(updatedEventIds)}; path=/`;
+      setTimeout(() => {
+        router.push(`/events/${result.data.id}`);
+      }, 100);
     } else {
       alert("Error al unirse al evento");
     }

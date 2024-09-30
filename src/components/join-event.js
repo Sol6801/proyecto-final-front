@@ -45,7 +45,23 @@ const JoinEvent = () => {
       alert(
         `Te has unido al evento con éxito. El ID del evento es: ${eventData.id}`
       );
-      router.push(`/events/${eventData.id}`);
+      const eventsCookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("eventIds="));
+      const existingEventIds = eventsCookie
+        ? JSON.parse(eventsCookie.split("=")[1])
+        : [];
+
+      const normalizedEventIds = existingEventIds.map((id) =>
+        Number(id)
+      );
+
+      const updatedEventIds = [...normalizedEventIds, Number(eventData.id)];
+
+      document.cookie = `eventIds=${JSON.stringify(updatedEventIds)}; path=/; samesite=strict;`;
+      setTimeout(() => {
+        router.push(`/events/${eventData.id}`);
+      }, 100);
     } else {
       alert("Error al unirse al evento");
     }
