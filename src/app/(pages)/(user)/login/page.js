@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
 import useAuthStore from "@/store/useAuthStore.js";
@@ -7,7 +7,7 @@ import useUserStore from "@/store/useUserStore.js";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
   const login = useAuthStore((state) => state.login);
   const setUserId = useUserStore((state) => state.setUserId);
   const router = useRouter();
@@ -17,7 +17,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage(""); 
+    setErrorMessage("");
 
     const userData = {
       email,
@@ -50,7 +50,7 @@ const LoginPage = () => {
       setIsLoading(false); // Resetear el estado de carga
     }
   };
-//*mammamiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
+  //*mammamiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
   useEffect(() => {
     const fetchUserEvents = async () => {
       // setLoader(true)
@@ -66,10 +66,10 @@ const LoginPage = () => {
         console.log('User events:', result);
 
         if (Array.isArray(result.data)) {
-          const events = result.data.map(item => ({
-            id: item.event.id
-          }));
-          console.log(events);
+          const eventIds = result.data.map(item => item.event.id);
+          // Set cookie to expire in 7 days
+          document.cookie = `eventIds=${JSON.stringify(eventIds)}; max-age=${7 * 24 * 60 * 60}; path=/`;
+          console.log('Event IDs:', eventIds);
         }
       } catch (error) {
         console.error('Error fetching user events:', error);
