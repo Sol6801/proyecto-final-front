@@ -1,23 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";  // Importar js-cookie
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import withAuth from '@/components/withAuth.js';
+import withAuth from "@/components/withAuth.js";
 import { useRouter } from "next/navigation";
-import '@/styles/custom-scrollbar.css';
+import "@/styles/custom-scrollbar.css";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function EventsLayout({ children, createEventModal, joinEventModal }) {
   const [userEvents, setUserEvents] = useState([]);
-  const [loader, setLoader] = useState(true)
+  const [loader, setLoader] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const fetchUserEvents = async () => {
-      setLoader(true)
+      setLoader(true);
       const userId = localStorage.getItem('userId');
+      
       if (!userId) {
         console.error('User ID not found in local storage');
+        router.push('/login'); // Redirigir al login si no hay userId
         return;
       }
 
@@ -31,19 +34,34 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
             id: item.event.id,
             name: item.event.name
           }));
-          setLoader(false)
+
           setUserEvents(events);
+
+          // Extraer los ids de los eventos y guardarlos como array en las cookies
+          const eventIds = events.map(event => event.id);
+          Cookies.set('eventIds', JSON.stringify(eventIds));  // Guardar en cookies como string JSON
+          
+          setLoader(false);
+        } else {
+          setLoader(false);
+          console.error('Error: Unexpected data format');
         }
       } catch (error) {
+        setLoader(false);
         console.error('Error fetching user events:', error);
       }
     };
 
     fetchUserEvents();
-  }, []);
+  }, [router]);
 
   const handleEventClick = (eventId) => {
-    router.push(`/events/${eventId}`);
+    console.log('Navigating to event with ID:', eventId);
+    if (eventId) {
+      router.push(`/events/${eventId}`);
+    } else {
+      console.error('Invalid event ID');
+    }
   };
 
   return (
@@ -82,40 +100,38 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
 
       {!loader && userEvents.length > 0 && (
         <div className="flex flex-col bg-gradient-to-b from-violet-200 to-violet-200 mx-auto p-4 gap-4 h-full min-h-screen lg:flex-row">
-<aside className="custom-scrollbar bg-violet-600 lg:max-w-72 px-5 grid rounded-lg relative order-1 lg:order-0 h-screen overflow-y-auto">
-  <nav>
-    <ul className="flex flex-col py-5 my-5 gap-10 sticky top-12">
-      <span className="top-4 left-4">
-        <h1 className="text-xl p-1 text-center overflow-hidden">
-          Selecciona un evento para verlo
-        </h1>
-      </span>
+          <aside className="custom-scrollbar bg-violet-600 lg:max-w-72 px-5 grid rounded-lg relative order-1 lg:order-0 h-screen overflow-y-auto">
+            <nav>
+              <ul className="flex flex-col py-5 my-5 gap-10 sticky top-12">
+                <span className="top-4 left-4">
+                  <h1 className="text-xl p-1 text-center overflow-hidden">
+                    Selecciona un evento para verlo
+                  </h1>
+                </span>
 
-      {userEvents
-        .slice() // Creamos una copia del array original para evitar modificar el original
-        .reverse() // Invertimos el array para mostrar el más reciente primero
-        .map((event) => (
-          <li key={event.id}>
-            <button
-              onClick={() => handleEventClick(event.id)}
-              className="text-center text-3xl md:text-xl bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded w-full overflow-hidden"
-            >
-              {event.name}
-            </button>
-          </li>
-        ))}
-    </ul>
-  </nav>
-</aside>
-
+                {userEvents
+                  .slice()
+                  .reverse()
+                  .map((event) => (
+                    <li key={event.id}>
+                      <button
+                        onClick={() => handleEventClick(event.id)}
+                        className="text-center text-3xl md:text-xl bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded w-full overflow-hidden"
+                      >
+                        {event.name}
+                      </button>
+                    </li>
+                  ))}
+              </ul>
+            </nav>
+          </aside>
 
           <div className="bg-violet-400 place-items-center flex-1 flex items-center rounded-lg order-0 lg:order-1 justify-center">
             {children}
           </div>
         </div>
       )}
-      
-        
+
       <Footer />
     </>
   );

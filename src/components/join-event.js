@@ -28,7 +28,7 @@ const JoinEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoader(true); // Activar el loader
+    setLoader(true);
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     try {
