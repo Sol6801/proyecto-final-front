@@ -51,33 +51,33 @@ const LoginPage = () => {
     }
   };
   //*mammamiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
-  useEffect(() => {
-    const fetchUserEvents = async () => {
-      // setLoader(true)
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        console.error('User ID not found in local storage');
-        return;
-      }
+  // useEffect(() => {
+  //   const fetchUserEvents = async () => {
+  //     // setLoader(true)
+  //     const userId = localStorage.getItem('userId');
+  //     if (!userId) {
+  //       console.error('User ID not found in local storage');
+  //       return;
+  //     }
 
-      try {
-        const response = await fetch(`${API_URL}/events/users/${userId}`);
-        const result = await response.json();
-        console.log('User events:', result);
+  //     try {
+  //       const response = await fetch(`${API_URL}/events/users/${userId}`);
+  //       const result = await response.json();
+  //       console.log('User events:', result);
 
-        if (Array.isArray(result.data)) {
-          const eventIds = result.data.map(item => item.event.id);
-          // Set cookie to expire in 7 days
-          document.cookie = `eventIds=${JSON.stringify(eventIds)}; max-age=${7 * 24 * 60 * 60}; path=/`;
-          console.log('Event IDs:', eventIds);
-        }
-      } catch (error) {
-        console.error('Error fetching user events:', error);
-      }
-    };
+  //       if (Array.isArray(result.data)) {
+  //         const eventIds = result.data.map(item => item.event.id);
+  //         // Set cookie to expire in 7 days
+  //         document.cookie = `eventIds=${JSON.stringify(eventIds)}; max-age=${7 * 24 * 60 * 60}; path=/`;
+  //         console.log('Event IDs:', eventIds);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user events:', error);
+  //     }
+  //   };
 
-    fetchUserEvents();
-  }, []);
+  //   fetchUserEvents();
+  // }, []);
 
   //*mammamiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
 

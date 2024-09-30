@@ -1,6 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+const deleteCookies = () => {
+    document.cookie.split(";").forEach((cookie) => {
+      const cookieName = cookie.split("=")[0].trim();
+      document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    });
+  };
+
 const useAuthStore = create(
     persist(
         (set) => ({
@@ -8,7 +15,10 @@ const useAuthStore = create(
             token: null,
             isAuthenticated: false,
             login: (token) => set({ token, isAuthenticated: true }),
-            logout: () => set({ id: null, token: null, isAuthenticated: false }),
+            logout: () => {
+                deleteCookies();
+                localStorage.clear();
+              },
             publicRoutes: ['/login', '/register', '/'],
         }),
         {
