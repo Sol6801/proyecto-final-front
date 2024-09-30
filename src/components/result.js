@@ -8,6 +8,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -57,33 +58,55 @@ const LikedItemsChart = ({ eventId, category }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-2">
-      <h2 className="text-2xl font-bold mb-4 text-center">
+      <h2 className="text-2xl font-bold mb-4 text-center md:text-lg">
         {categoryTitles[category]} con más Likes
       </h2>
 
       {likedItems.length > 0 ? (
         <>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={likedItems}>
-              <XAxis dataKey="title" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="likes" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-          <ul className="mt-6 space-y-2">
+ <ResponsiveContainer width="100%" height={300}>
+  <BarChart data={likedItems}>
+    <XAxis
+      dataKey="title"
+      tickFormatter={(value, index) => {
+        // Encuentra el valor con más likes
+        const maxItem = likedItems.reduce((prev, current) =>
+          prev.likes > current.likes ? prev : current
+        );
+        return value === maxItem.title ? value : "";
+      }}
+    />
+    <Tooltip />
+    <Bar dataKey="likes">
+      {likedItems.map((entry, index) => {
+        const colors = ["#bf68bf", "#9f369f", "#7f057f"];
+        return (
+          <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+        );
+      })}
+    </Bar>
+  </BarChart>
+</ResponsiveContainer>
+
+
+          <ul className="mt-6 space-y-4">
             {likedItems.map((item) => (
               <li
                 key={item[`${category.slice(0, -1)}Id`]}
-                className="bg-gray-100 p-3 rounded flex flex-col justify-between items-center"
+                className="bg-gray-50 p-4 border rounded-lg shadow-lg hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between items-center min-h-[350px] md:min-h-[450px] lg:min-h-[475px]"
               >
-                <Image
-                  src={item.urlImage}
-                  alt={item.title}
-                  width={250}
-                  height={250}
-                />
-                <span className="font-semibold p-3">{item.title}</span>
+                <span className="font-semibold text-lg text-gray-700 text-center mb-2">
+                  {item.title}
+                </span>
+                <div className="rounded-lg mb-4 shadow-md">
+                  <Image
+                    src={item.urlImage}
+                    alt={item.title}
+                    width={250}
+                    height={250}
+                    className="rounded-lg"
+                  />
+                </div>
                 <span className="text-sm text-gray-500">
                   Likes: {item.likes}
                 </span>

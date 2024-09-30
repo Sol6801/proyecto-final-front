@@ -310,7 +310,7 @@ const DecisionPage = ({ params }) => {
   const router = useRouter();
   const { eventId } = params;
   const { userId } = useUserStore();
-  const [isCreator, setIsCreator] = useState(false);
+  const [isCreator, setIsCreator] = useState();
   
   const goToEvent = () => {
     router.push(`/events/${eventId}`);
@@ -355,11 +355,11 @@ useEffect(() => {
 
   return (
     <section className="p-3">
-      <DecisionManager eventId={eventId} />
+      <DecisionManager eventId={eventId} creator={isCreator} />
       <section className="h-full min-h-screen bg-violet-400 rounded-lg w-full relative justify-evenly flex flex-col md:flex-row gap-8 my-8">
-        <LikedItemsChart eventId={eventId} category={'movies'} creator={isCreator} />
-        <LikedItemsChart eventId={eventId} category={'meals'} creator={isCreator} />
-        <LikedItemsChart eventId={eventId} category={'places'} creator={isCreator} />
+        <LikedItemsChart eventId={eventId} category={'movies'}  />
+        <LikedItemsChart eventId={eventId} category={'meals'} />
+        <LikedItemsChart eventId={eventId} category={'places'} />
       </section>
       <div className="flex flex-col items-center justify-center gap-8 py-8 lg:flex-row">
         <button

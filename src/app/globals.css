@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+#burger.active #top-bar {
+  transform: rotate(45deg) translate(-2px, -1px);
+  transform-origin: 0px 100%;
+}
+
+#burger.active #bottom-bar {
+  transform: rotate(-45deg) translate(-2px, -1px);
+}
+
+#burger.active #bar {
+  opacity: 0;
+}
+
 :root {
   --background: #cec5c5;
   --foreground: #171717;
