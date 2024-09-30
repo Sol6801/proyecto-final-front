@@ -1,56 +1,101 @@
-// import React, { useState } from "react";
-// import { useRouter } from "next/navigation";
-// import withAuth from "@/components/withAuth.js";
-// import OpenAI from "openai";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import LikedItemsChart from "@/components/result.js";
 
-// const openai = new OpenAI({
-//     organization: "YOUR_ORG_ID",
-//     project: "$PROJECT_ID",
-// });
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export default function AIRecommendationsPage() {
+    const router = useRouter();
+    const { eventId } = router.params;
+    const [recommendations, setRecommendations] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-// const ResultPage = ({ params }) => {
-//   const router = useRouter();
-//   const { eventId } = params;
+    useEffect(() => {
+        if (!eventId) return;
 
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
+        const fetchMostLikedItems = async () => {
+            try {
+                const categories = ['movies', 'meals', 'places'];
+                const mostLikedItems = {};
 
-//   const goToEvent = () => {
-//     router.push(`/events/${eventId}`);
-//   };
-//   const handleIA = () => {
-//     router.push(`/events/${eventId}/result/ia`);
-//   };
+                for (const category of categories) {
+                    const response = await fetch(`${API_URL}/events/${eventId}/${category}/mostLiked`);
+                    if (!response.ok) throw new Error(`Failed to fetch ${category}`);
+                    const data = await response.json();
+                    mostLikedItems[category] = data.map(item => item.title);
+                }
 
+                return mostLikedItems;
+            } catch (error) {
+                console.error('Error fetching most liked items:', error);
+                throw error;
+            }
+        };
 
-//   if (loading) return <div className="h-screen bg-violet-400 grid place-items-center">Cargando resultados...</div>;
-//   if (error) return <div className="h-screen bg-violet-400 grid place-items-center">Error: {error}</div>;
+        const getRecommendations = async (mostLikedItems) => {
+            try {
+                const response = await fetch('/api/ai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        movies: mostLikedItems.movies,
+                        places: mostLikedItems.places,
+                        foods: mostLikedItems.meals,
+                        dislikes: [] // You might want to implement a way to track dislikes as well
+                    })
+                });
 
-//   return (
-//     <section className="h-full min-h-screen bg-violet-400 flex flex-row rounded-lg relative justify-evenly">
-//       <div className="bg-white rounded-lg shadow-lg p-6 w-full min-w-80 m-5">
-//         <h2 className="text-2xl font-bold mb-4 text-center">Most Liked Movies</h2>
+                if (!response.ok) throw new Error('Failed to get recommendations');
+                const data = await response.json();
+                setRecommendations(data);
+            } catch (error) {
+                console.error('Error getting recommendations:', error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-//       </div>
- 
-//       <div className="flex flex-row items-center justify-center gap-8 py-8">
-//             <button
-//               onClick={goToEvent}
-//               className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-//             >
-//               Volver al Evento
-//             </button>
-//             <button
-//               onClick={handleIA}
-//               className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-//             >
-//              Generá tu recomendación 🌟
-//             </button>
-//           </div>
-//       </section>
-//   );
-// };
+        fetchMostLikedItems()
+            .then(getRecommendations)
+            .catch(error => {
+                setError(error.message);
+                setLoading(false);
+            });
+    }, [eventId]);
 
-// export default withAuth(ResultPage);
+    if (loading) return <div>Cargando recomendaciones...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    return (
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-6">Recomendaciones basadas en IA</h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <LikedItemsChart eventId={eventId} category="movies" />
+                <LikedItemsChart eventId={eventId} category="meals" />
+                <LikedItemsChart eventId={eventId} category="places" />
+            </div>
+
+            {recommendations && (
+                <div className="mt-8">
+                    <h2 className="text-2xl font-bold mb-4">Recomendaciones de IA</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {Object.entries(recommendations).map(([category, items]) => (
+                            <div key={category} className="bg-white rounded-lg shadow p-4">
+                                <h3 className="text-xl font-semibold mb-2 capitalize">{category}</h3>
+                                <ul className="list-disc pl-5">
+                                    {items.map((item, index) => (
+                                        <li key={index}>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
