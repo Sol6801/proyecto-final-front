@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth.js";
 import Image from "next/image";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const Events = () => {
   const router = useRouter();

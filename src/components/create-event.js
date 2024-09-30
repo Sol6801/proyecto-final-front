@@ -8,12 +8,14 @@ const CreateEvent = () => {
   const { userId } = useUserStore();
   const router = useRouter();
   const setEventId = useEventStore((state) => state.setEventId);
+  const [loader, setLoader] = useState(false);
   const [eventData, setEventData] = useState({
     name: "",
     plannedDate: "",
     password: "",
     userId,
   });
+  const [message, setMessage] = useState({ type: "", text: "" });
 
   useEffect(() => {
     setEventData((prevData) => ({
@@ -35,65 +37,104 @@ const CreateEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    setLoader(true);
 
-    const response = await fetch(`${API_URL}/createEvent`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(eventData, userId),
-    });
+    try {
+      // Crear el evento
+      const response = await fetch(`${API_URL}/createEvent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventData),
+      });
 
-    const result = await response.json();
-    setEventId(result.id);
+      const result = await response.json();
+      setEventId(result.id);
 
-    if (response.ok) {
-      alert(`Evento creado con éxito. El ID del evento es: ${result.data.id}`);
-    } else {
-      alert("Error al crear el evento");
-    }
-    const joinResponse = await fetch(`${API_URL}/joinEvent`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: result.data.id,
-        password: eventData.password,
-        userId,
-      }),
-    });
-    if (joinResponse.ok) {
-      const eventsCookie = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('eventIds='));
-      const existingEventIds = eventsCookie
-        ? JSON.parse(eventsCookie.split('=')[1])
-        : [];
+      if (response.ok) {
+        setMessage({ type: "success", text: "Evento creado con éxito." });
 
-      const updatedEventIds = [...existingEventIds, result.data.id];
-      document.cookie = `eventIds=${JSON.stringify(updatedEventIds)}; path=/`;
-      setTimeout(() => {
-        router.push(`/events/${result.data.id}`);
-      }, 100);
-    } else {
-      alert("Error al unirse al evento");
+        const joinResponse = await fetch(`${API_URL}/joinEvent`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: result.data.id,
+            password: eventData.password,
+            userId,
+          }),
+        });
+
+        if (joinResponse.ok) {
+          const eventsCookie = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("eventIds="));
+          const existingEventIds = eventsCookie
+            ? JSON.parse(eventsCookie.split("=")[1])
+            : [];
+
+          const updatedEventIds = [...existingEventIds, result.data.id];
+          document.cookie = `eventIds=${JSON.stringify(
+            updatedEventIds
+          )}; path=/`;
+          router.push(`/events/${result.data.id}`);
+        } else {
+          setMessage({ type: "error", text: "Error al unirse al evento." });
+        }
+      } else {
+        setMessage({ type: "error", text: "Error al crear el evento." });
+      }
+    } catch (error) {
+      setMessage({
+        type: "error",
+        text: "Hubo un problema con el servidor. Intenta más tarde.",
+      });
+    } finally {
+      setLoader(false); // Desactivar el loader
     }
   };
 
+  // Mover el return aquí, fuera de handleSubmit
   return (
-    <section className="bg-gray-100 px-10 py-3 my-3 rounded-lg shadow-md  w-70">
-      <h1 className="text-xl font-bold mb-4">Crear un nuevo evento</h1>
-      <button
-        onClick={handleClose}
-        className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 cursor-pointer"
-      >
-        Cerrar ventana
-      </button>
+    <section className="bg-gray-100 px-10 py-5 my-5 rounded-lg shadow-lg w-full max-w-md mx-auto">
+      {loader && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
+            <div
+              className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin border-purple-500`}
+            ></div>
+            <div
+              className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow border-purple-300`}
+            ></div>
+            <div
+              className={`absolute inset-0 m-auto w-8 h-8 border-4 border-t-transparent rounded-full animate-spin-reverse border-purple-100`}
+            ></div>
+          </div>
+        </div>
+      )}
+
+      <h1 className="text-2xl font-extrabold text-center mb-6 text-violet-700">
+        Crear un nuevo evento
+      </h1>
+
+      {/* Mostrar mensajes de éxito o error */}
+      {message.text && (
+        <div
+          className={`mb-4 text-center p-2 rounded-lg ${
+            message.type === "success"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <div className="mb-6">
           <label className="block text-gray-700 font-bold mb-2">
             Nombre del Evento
           </label>
@@ -102,11 +143,12 @@ const CreateEvent = () => {
             name="name"
             value={eventData.name}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-600"
             required
           />
         </div>
-        <div className="mb-4">
+
+        <div className="mb-6">
           <label className="block text-gray-700 font-bold mb-2">
             Fecha del Evento
           </label>
@@ -115,11 +157,12 @@ const CreateEvent = () => {
             name="plannedDate"
             value={eventData.plannedDate}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-600"
             required
           />
         </div>
-        <div className="mb-4">
+
+        <div className="mb-6">
           <label className="block text-gray-700 font-bold mb-2">
             Contraseña del Evento
           </label>
@@ -128,15 +171,22 @@ const CreateEvent = () => {
             name="password"
             value={eventData.password}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-600"
             required
           />
         </div>
+
         <button
           type="submit"
-          className="bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          className="bg-violet-600 text-white w-full py-3 rounded-lg font-semibold text-lg hover:bg-violet-800 hover:text-white transition duration-200"
         >
           Crear Evento
+        </button>
+        <button
+          onClick={handleClose}
+          className="bg-violet-200 text-violet-600 px-4 py-2 mb-4 rounded-lg text-lg font-semibold hover:bg-red-500 hover:text-white cursor-pointer w-full mt-4 transition duration-200"
+        >
+          Cerrar ventana
         </button>
       </form>
     </section>
