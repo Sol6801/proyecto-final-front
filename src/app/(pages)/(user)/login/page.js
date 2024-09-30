@@ -1,5 +1,5 @@
 "use client"; 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
 import useAuthStore from "@/store/useAuthStore.js";
 import useUserStore from "@/store/useUserStore.js";
@@ -39,6 +39,7 @@ const LoginPage = () => {
       }
 
       const data = await res.json();
+      console.log(data);
       setUserId(data.data.id); // Guardar el ID en el store y en localStorage
       login(data.token); // Guarda el token en el estado global
       router.push("/home"); // Redirige a la página principal
@@ -49,6 +50,37 @@ const LoginPage = () => {
       setIsLoading(false); // Resetear el estado de carga
     }
   };
+//*mammamiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
+  useEffect(() => {
+    const fetchUserEvents = async () => {
+      // setLoader(true)
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        console.error('User ID not found in local storage');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/events/users/${userId}`);
+        const result = await response.json();
+        console.log('User events:', result);
+
+        if (Array.isArray(result.data)) {
+          const events = result.data.map(item => ({
+            id: item.event.id
+          }));
+          console.log(events);
+        }
+      } catch (error) {
+        console.error('Error fetching user events:', error);
+      }
+    };
+
+    fetchUserEvents();
+  }, []);
+
+  //*mammamiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
+
 
   return (
     <>
