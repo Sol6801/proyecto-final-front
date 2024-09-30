@@ -184,7 +184,7 @@ const EventPage = ({ params }) => {
             ¡Empieza a planear!
           </h2>
 
-          <DecisionManager eventId={eventId} />
+          <DecisionManager eventId={eventId} creator={isCreator} />
           <div className="flex flex-wrap items-center justify-center gap-6 my-6">
             <button
               onClick={goToCategories}

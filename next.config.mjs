@@ -218,6 +218,11 @@ const nextConfig = {
         hostname: "cdn-icons-png.freepik.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "github.com",
+        pathname: "/**",
+      }
     ],
   },
 };

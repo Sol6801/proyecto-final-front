@@ -55,7 +55,7 @@ const CreateEvent = () => {
 
       if (response.ok) {
         setMessage({ type: "success", text: "Evento creado con éxito." });
-        
+
         const joinResponse = await fetch(`${API_URL}/joinEvent`, {
           method: "POST",
           headers: {
@@ -69,7 +69,18 @@ const CreateEvent = () => {
         });
 
         if (joinResponse.ok) {
-            router.push(`/events/${result.data.id}`);
+          const eventsCookie = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("eventIds="));
+          const existingEventIds = eventsCookie
+            ? JSON.parse(eventsCookie.split("=")[1])
+            : [];
+
+          const updatedEventIds = [...existingEventIds, result.data.id];
+          document.cookie = `eventIds=${JSON.stringify(
+            updatedEventIds
+          )}; path=/`;
+          router.push(`/events/${result.data.id}`);
         } else {
           setMessage({ type: "error", text: "Error al unirse al evento." });
         }
@@ -77,31 +88,45 @@ const CreateEvent = () => {
         setMessage({ type: "error", text: "Error al crear el evento." });
       }
     } catch (error) {
-      setMessage({ type: "error", text: "Hubo un problema con el servidor. Intenta más tarde." });
+      setMessage({
+        type: "error",
+        text: "Hubo un problema con el servidor. Intenta más tarde.",
+      });
     } finally {
       setLoader(false); // Desactivar el loader
     }
   };
 
+  // Mover el return aquí, fuera de handleSubmit
   return (
     <section className="bg-gray-100 px-10 py-5 my-5 rounded-lg shadow-lg w-full max-w-md mx-auto">
       {loader && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
           <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
-            <div className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin border-purple-500`}></div>
-            <div className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow border-purple-300`}></div>
-            <div className={`absolute inset-0 m-auto w-8 h-8 border-4 border-t-transparent rounded-full animate-spin-reverse border-purple-100`}></div>
+            <div
+              className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin border-purple-500`}
+            ></div>
+            <div
+              className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow border-purple-300`}
+            ></div>
+            <div
+              className={`absolute inset-0 m-auto w-8 h-8 border-4 border-t-transparent rounded-full animate-spin-reverse border-purple-100`}
+            ></div>
           </div>
         </div>
       )}
 
-      <h1 className="text-2xl font-extrabold text-center mb-6 text-violet-700">Crear un nuevo evento</h1>
+      <h1 className="text-2xl font-extrabold text-center mb-6 text-violet-700">
+        Crear un nuevo evento
+      </h1>
 
       {/* Mostrar mensajes de éxito o error */}
       {message.text && (
         <div
           className={`mb-4 text-center p-2 rounded-lg ${
-            message.type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+            message.type === "success"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
           }`}
         >
           {message.text}
@@ -110,7 +135,9 @@ const CreateEvent = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2">Nombre del Evento</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Nombre del Evento
+          </label>
           <input
             type="text"
             name="name"
@@ -122,7 +149,9 @@ const CreateEvent = () => {
         </div>
 
         <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2">Fecha del Evento</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Fecha del Evento
+          </label>
           <input
             type="date"
             name="plannedDate"
@@ -134,7 +163,9 @@ const CreateEvent = () => {
         </div>
 
         <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2">Contraseña del Evento</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Contraseña del Evento
+          </label>
           <input
             type="password"
             name="password"
