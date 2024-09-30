@@ -72,21 +72,21 @@ const HomePage = () => {
             ))}
           </div> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
-            <a href="categories/movies">
+            <a href="/home/categories/catalogmovies">
               <ItemCard
                 category="Peliculas"
                 description="¿Que quisieras ver?"
                 imageUrl="https://cdn-icons-png.flaticon.com/512/7295/7295380.png"
               />
             </a>
-            <a href="categories/meals">
+            <a href="/home/categories/catalogmeals">
               <ItemCard
                 category="Comidas"
                 description="Mmmmm... ¿Que quiero comer hoy?"
                 imageUrl="https://cdn-icons-png.flaticon.com/512/4359/4359642.png"
               />
             </a>
-            <a href="categories/places">
+            <a href="/home/categories/catalogplaces">
               <ItemCard
                 category="Lugares"
                 description="¿Donde vamos?"
