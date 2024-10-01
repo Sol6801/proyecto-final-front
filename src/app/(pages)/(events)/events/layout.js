@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";  // Importar js-cookie
+import Cookies from "js-cookie";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import withAuth from "@/components/withAuth.js";
@@ -10,50 +10,69 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function EventsLayout({ children, createEventModal, joinEventModal }) {
   const [userEvents, setUserEvents] = useState([]);
+  const [cookiesEvent, setCookiesEvent] = useState([]);
   const [loader, setLoader] = useState(true);
   const router = useRouter();
 
+  const fetchUserEvents = async () => {
+    setLoader(true);
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      console.error('User ID not found in local storage');
+      router.push('/login');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/events/users/${userId}`);
+      const result = await response.json();
+      console.log('User events:', result);
+
+      if (Array.isArray(result.data)) {
+        const events = result.data.map(item => ({
+          id: item.event.id,
+          name: item.event.name
+        }));
+
+        setUserEvents(events);
+
+        // Actualiza las cookies si los eventos han cambiado
+        const eventIds = events.map(event => event.id);
+        Cookies.set('eventIds', JSON.stringify(eventIds), { expires: 7 });
+      } else {
+        console.error('Error: Unexpected data format');
+      }
+    } catch (error) {
+      console.error('Error fetching user events:', error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserEvents = async () => {
-      setLoader(true);
-      const userId = localStorage.getItem('userId');
-      
-      if (!userId) {
-        console.error('User ID not found in local storage');
-        router.push('/login'); // Redirigir al login si no hay userId
-        return;
-      }
-
-      try {
-        const response = await fetch(`${API_URL}/events/users/${userId}`);
-        const result = await response.json();
-        console.log('User events:', result);
-
-        console.log('Estoy en layout/page.js', result.data)
-
-        if (Array.isArray(result.data)) {
-          const events = result.data.map(item => ({
-            id: item.event.id,
-            name: item.event.name
-          }));
-
-          setUserEvents(events);
-
-          const eventIds = events.map(event => event.id);
-          Cookies.set('eventIds', JSON.stringify(eventIds), { expires: 7 });
-          setLoader(false);
-        } else {
-          setLoader(false);
-          console.error('Error: Unexpected data format');
-        }
-      } catch (error) {
-        setLoader(false);
-        console.error('Error fetching user events:', error);
-      }
-    };
-
     fetchUserEvents();
   }, [router]);
+
+  useEffect(() => {
+    const eventIdsFromCookies = Cookies.get("eventIds");
+    if (eventIdsFromCookies) {
+      const parsedEventIds = JSON.parse(eventIdsFromCookies);
+      setCookiesEvent(parsedEventIds);
+    }
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const eventIdsFromCookies = Cookies.get("eventIds");
+      if (eventIdsFromCookies) {
+        const parsedEventIds = JSON.parse(eventIdsFromCookies);
+        setCookiesEvent(parsedEventIds);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleEventClick = (eventId) => {
     console.log('Navigating to event with ID:', eventId);
@@ -82,7 +101,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
         </div>
       )}
 
-      {!loader && userEvents.length === 0 && (
+      {!loader && userEvents.length === 0 && cookiesEvent.length === 0 && (
         <div className="bg-violet-400 place-items-center flex-1 flex flex-col h-full min-h-screen items-center">
           <section className="py-10 text-center">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
@@ -98,7 +117,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
         </div>
       )}
 
-      {!loader && userEvents.length > 0 && (
+      {!loader && (userEvents.length > 0 || cookiesEvent.length > 0) && (
         <div className="flex flex-col bg-gradient-to-b from-violet-200 to-violet-200 mx-auto p-4 gap-4 h-full min-h-screen lg:flex-row">
           <aside className="custom-scrollbar bg-violet-600 lg:max-w-72 px-5 grid rounded-lg relative order-1 lg:order-0 h-screen overflow-y-auto">
             <nav>
@@ -128,6 +147,8 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
 
           <div className="bg-violet-400 place-items-center flex-1 flex items-center rounded-lg order-0 lg:order-1 justify-center">
             {children}
+            {createEventModal && React.cloneElement(createEventModal, { refreshEvents: fetchUserEvents })}
+            {joinEventModal && React.cloneElement(joinEventModal, { refreshEvents: fetchUserEvents })}
           </div>
         </div>
       )}
