@@ -40,8 +40,7 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
           setUserEvents(events);
 
           const eventIds = events.map(event => event.id);
-          Cookies.set('eventIds', JSON.stringify(eventIds)); 
-          console.log('Es el layout:',JSON.stringify(eventIds))
+          Cookies.set('eventIds', JSON.stringify(eventIds), { expires: 7 });
           setLoader(false);
         } else {
           setLoader(false);

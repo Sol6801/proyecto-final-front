@@ -17,6 +17,7 @@ const EventPage = ({ params }) => {
   const [isCreator, setIsCreator] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
@@ -62,11 +63,6 @@ const EventPage = ({ params }) => {
           console.log("Event data:", eventData);
           setIsCreator(userId === eventData.data.userId);
           setEvent(eventData.data);
-
-          if (!user.some((eventUser) => eventUser.id === user.id)) {
-            setError("no tienes permisos para ver este evento");
-            router.push(`/events`);
-          }
         }
       } catch (error) {
         console.error("Error fetching event users:", error);
@@ -81,6 +77,7 @@ const EventPage = ({ params }) => {
   //*intento de delete event, falta find many users_in_event y eliminar todos los regitros de dicha tabla para evitar conflictos de key */
 
   const deleteEvent = async () => {
+    setIsProcessing(true)
     try {
       const response = await fetch(`${API_URL}/events/${eventId}`, {
         method: "DELETE",
@@ -103,6 +100,8 @@ const EventPage = ({ params }) => {
     } catch (error) {
       console.error(`Error deleting event: ${eventId}`, error);
       console.error("Error details:", error.message);
+    } finally {
+      setIsProcessing(false)
     }
   };
 
@@ -134,7 +133,18 @@ const EventPage = ({ params }) => {
   };
 
   return (
+    
     <section className="p-5 bg-gradient-to-b from-purple-600 to-purple-300 min-h-screen min-w-full flex flex-wrap items-center justify-center rounded-lg">
+      {isProcessing && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+            <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
+              <div className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin border-violet-500`}></div>
+              <div className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow border-violet-300`}></div>
+              <div className={`absolute inset-0 m-auto w-8 h-8 border-4  border-t-transparent rounded-full animate-spin-reverse border-violet-100`}></div>
+            </div>
+          </div>
+        )}
+      
       {isLoading && (
         //<div className="bg-gradient-to-b from-violet-500 to-violet-200 place-items-center flex-1 flex flex-col h-full min-h-screen items-center">
         //<section className="py-10 text-center">

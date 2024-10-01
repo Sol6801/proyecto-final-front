@@ -3,8 +3,11 @@ import { NextResponse } from 'next/server'
 
 export function middleware(request) {
     const eventsCookie = request.cookies.get('eventIds');
-    
-    const eventIdsArray = JSON.parse(eventsCookie.value);
+
+    console.log(eventsCookie);
+    const eventIdsArray = eventsCookie ? JSON.parse(eventsCookie.value).map(Number) : []; // Convertir la string separada por comas en un array de números
+
+    console.log(eventIdsArray);
 
     const pathname = request.nextUrl.pathname;
     const eventIdMatch = pathname.match(/^\/events\/([^\/]+)/);

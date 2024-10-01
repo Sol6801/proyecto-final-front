@@ -192,6 +192,16 @@ const DecisionManager = ({ eventId, creator }) => {
         <p className="text-gray-600 text-center mb-6">
           Dirígete a resultados si te sientes con ganas de decidir!
         </p>
+        {creator && (
+            <button
+              id="decision-btn"
+              onClick={createDecision}
+              className="bg-violet-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-violet-700 transition-all duration-300"
+              disabled={loading}
+            >
+              Fijar Decisión
+            </button>
+          )}
       </div>
     );
   }

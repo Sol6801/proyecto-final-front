@@ -41,8 +41,6 @@ const JoinEvent = () => {
         body: JSON.stringify(eventData),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
         console.log('ESTE ES EL DE JOIN EVENT');
 
@@ -52,30 +50,36 @@ const JoinEvent = () => {
           text: "Te has unido al evento con éxito.",
         }));
         // Obtener el valor de la cookie 'eventIds' y convertirla en un array de números
-        const existingEventIds = Cookies.get("eventIds")
-          ? Cookies.get("eventIds").split(",").map(Number)
-          : [];
+        const joinResult = await response.json();
+          // Obtener la cookie de 'eventIds' y parsearla como un array de números
+          const eventIdsArray = Cookies.get("eventIds")
+            ? JSON.parse(Cookies.get("eventIds")).map(Number)
+            : []; // Si no existe, devolvemos un array vacío
 
-        // Agregar el nuevo eventId si no está ya en el array
-        const newEventId = result.data.id;
-        if (!existingEventIds.includes(newEventId)) {
-          const updatedEventIds = [...existingEventIds, newEventId];
+          // Agregar el nuevo eventId si no está ya en el array
+          const newEventId = joinResult.data.id; // Usa el ID del evento del resultado
+          if (!eventIdsArray.includes(newEventId)) {
+            const updatedEventIds = [...eventIdsArray, newEventId];
 
-          Cookies.set("eventIds", updatedEventIds.join(","), { path: "/" });
-        }
+            // Guardar el array actualizado en la cookie (usando JSON)
+            Cookies.set("eventIds", JSON.stringify(updatedEventIds), {
+              expires: 7,
+            }); // Expira en 7 días, puedes ajustarlo
+          }
 
-        router.push(`/events/${result.data.id}`);
+        router.push(`/events/${joinResult.data.id}`);
       } else if (response.status === 409) {
         // Manejar conflicto
-        console.log(result); // Cambié joinResponse a result para que imprima el mensaje correcto
+        console.log(joinResult); // Cambié joinResponse a result para que imprima el mensaje correcto
         setMessage({
           type: "error",
-          text: result.message || "Error: ya estás unido a este evento.",
+          text: joinResult.message || "Error: ya estás unido a este evento.",
         });
       } else {
         setMessage({ type: "error", text: "Error al unirse al evento. Intenta nuevamente." });
       }
     } catch (error) {
+      console.log(error)
       setMessage({ type: "error", text: "Hubo un problema con el servidor. Intenta más tarde." });
     } finally {
       setLoader(false); // Desactivar el loader

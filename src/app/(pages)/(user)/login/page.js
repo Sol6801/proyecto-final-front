@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Actualiza la importación de router
 import useAuthStore from "@/store/useAuthStore.js";
 import useUserStore from "@/store/useUserStore.js";
-import Cookies from 'js-cookie';
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -54,11 +53,12 @@ const LoginPage = () => {
           const response = await fetch(`${API_URL}/events/users/${userId}`);
           const result = await response.json();
           console.log('User events:', result);
-    
+          
           if (Array.isArray(result.data)) {
-            const eventIds = result.data.map(event => event.id);
-            Cookies.set('eventIds', eventIds.join(',')); // Cambia esto
-        }
+            const eventIds = result.data.map(event => event.eventId);
+            console.log(eventIds)
+            localStorage.setItem('eventIds', JSON.stringify(eventIds));
+          }
         } catch (error) {
           console.error('Error fetching user events:', error);
         }

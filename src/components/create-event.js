@@ -73,18 +73,21 @@ const CreateEvent = () => {
         const joinResult = await joinResponse.json();
 
         if (joinResponse.ok) {
-          
-          const existingEventIds = Cookies.get("eventIds")
-          ? Cookies.get("eventIds").split(",").map(Number)
-          : [];
+          // Obtener la cookie de 'eventIds' y parsearla como un array de números
+          const eventIdsArray = Cookies.get("eventIds")
+            ? JSON.parse(Cookies.get("eventIds")).map(Number)
+            : []; // Si no existe, devolvemos un array vacío
 
-        // Agregar el nuevo eventId si no está ya en el array
-        const newEventId = result.data.id;
-        if (!existingEventIds.includes(newEventId)) {
-          const updatedEventIds = [...existingEventIds, newEventId];
+          // Agregar el nuevo eventId si no está ya en el array
+          const newEventId = joinResult.data.id; // Usa el ID del evento del resultado
+          if (!eventIdsArray.includes(newEventId)) {
+            const updatedEventIds = [...eventIdsArray, newEventId];
 
-          Cookies.set("eventIds", updatedEventIds.join(","), { path: "/" });
-        }
+            // Guardar el array actualizado en la cookie (usando JSON)
+            Cookies.set("eventIds", JSON.stringify(updatedEventIds), {
+              expires: 7,
+            }); // Expira en 7 días, puedes ajustarlo
+          }
 
           setMessage((prev) => ({
             ...prev,
