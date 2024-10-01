@@ -29,6 +29,8 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
         const result = await response.json();
         console.log('User events:', result);
 
+        console.log('Estoy en layout/page.js', result.data)
+
         if (Array.isArray(result.data)) {
           const events = result.data.map(item => ({
             id: item.event.id,
@@ -37,10 +39,9 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
 
           setUserEvents(events);
 
-          // Extraer los ids de los eventos y guardarlos como array en las cookies
           const eventIds = events.map(event => event.id);
-          Cookies.set('eventIds', JSON.stringify(eventIds));  // Guardar en cookies como string JSON
-          
+          Cookies.set('eventIds', JSON.stringify(eventIds)); 
+          console.log('Es el layout:',JSON.stringify(eventIds))
           setLoader(false);
         } else {
           setLoader(false);

@@ -16,7 +16,7 @@ const EventPage = ({ params }) => {
   const user = useAuthStore((state) => state.user);
   const [isCreator, setIsCreator] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [event, setEvent] = useState(null)
+  const [event, setEvent] = useState(null);
 
   const goToCategories = () => {
     router.push(`/events/${eventId}/categories`);
@@ -29,8 +29,18 @@ const EventPage = ({ params }) => {
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('es-ES', options);
+    const date = new Date(dateString);
+    const utcDate = new Date(
+      Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+    );
+
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    };
+    return utcDate.toLocaleDateString("es-ES", options);
   };
 
   useEffect(() => {
@@ -51,7 +61,7 @@ const EventPage = ({ params }) => {
           const eventData = await event.json();
           console.log("Event data:", eventData);
           setIsCreator(userId === eventData.data.userId);
-          setEvent(eventData.data)
+          setEvent(eventData.data);
 
           if (!user.some((eventUser) => eventUser.id === user.id)) {
             setError("no tienes permisos para ver este evento");
@@ -61,7 +71,7 @@ const EventPage = ({ params }) => {
       } catch (error) {
         console.error("Error fetching event users:", error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     };
 
@@ -127,95 +137,100 @@ const EventPage = ({ params }) => {
     <section className="p-5 bg-gradient-to-b from-purple-600 to-purple-300 min-h-screen min-w-full flex flex-wrap items-center justify-center rounded-lg">
       {isLoading && (
         //<div className="bg-gradient-to-b from-violet-500 to-violet-200 place-items-center flex-1 flex flex-col h-full min-h-screen items-center">
-          //<section className="py-10 text-center">
-            //<div className="w-full h-screen flex justify-center items-center min-h-full">
-              <>
-              <div className="relative block w-16 h-16">
-                <div className="w-full h-full border-4 border-purple-900 border-t-transparent rounded-full animate-spin"></div>
-                <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin-slow"></div>
-                <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
-              </div>
-              </>
-            //</div>
-          //</section>
+        //<section className="py-10 text-center">
+        //<div className="w-full h-screen flex justify-center items-center min-h-full">
+        <>
+          <div className="relative block w-16 h-16">
+            <div className="w-full h-full border-4 border-purple-900 border-t-transparent rounded-full animate-spin"></div>
+            <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin-slow"></div>
+            <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
+          </div>
+        </>
+        //</div>
+        //</section>
         //</div>
       )}
-      {!isLoading && (<article className="max-w-4xl w-full mx-auto">
-        <h1 className="pt-3 text-5xl font-extrabold text-center text-white mb-8">
-          {event.name}
-        </h1>
-        <h2 className="pt-3 text-2xl font-extrabold text-center text-white mb-8">
-        {formatDate(event.plannedDate)}
-        </h2>
-        <div className="text-center p-6">
-          <p className="text-xl">Pasales este ID a tus amigos para que se unan!</p>
-          <p className="text-3xl">{eventId}</p>
-          <p className="text-base">Psst... acordate de pasarles la contraseña</p>
-        </div>
-
-
-        <section className="bg-white p-10 rounded-lg shadow-xl">
-          <h2 className="text-4xl font-bold text-center text-indigo-600 mb-8">
-            Miembros del Evento
+      {!isLoading && (
+        <article className="max-w-4xl w-full mx-auto">
+          <h1 className="pt-3 text-xl md:text-3xl lg:text-5xl font-extrabold text-center text-white mb-8">
+            {event.name}
+          </h1>
+          <h2 className="pt-3 text-base md:text-2xl font-extrabold text-center text-white mb-8">
+            {formatDate(event.plannedDate)}
           </h2>
-
-          <div className="my-10">
-            <nav>
-              <ul className="flex flex-wrap justify-center gap-6">
-                {eventUsers.length === 0 ? (
-                  <p className="text-lg font-semibold text-gray-700">
-                    No tienes miembros disponibles.
-                  </p>
-                ) : (
-                  eventUsers.map((user) => (
-                    <li
-                      key={user.id}
-                      className="text-2xl bg-violet-200 text-black font-bold py-2 px-6 rounded-lg shadow-md cursor-default"
-                    >
-                      {user.username}
-                    </li>
-                  ))
-                )}
-              </ul>
-            </nav>
+          <div className="text-center p-6 rounded-lg shadow-md">
+            <p className="text-xl font-semibold mb-2">
+              ¡Pásales este ID a tus amigos para que se unan!
+            </p>
+            <p className="text-3xl font-bold text-white mb-4">{eventId}</p>
+            <p className="text-base text-black">
+              Psst... ¡acordate de pasarles la contraseña!
+            </p>
           </div>
 
-          <h2 className="text-3xl font-bold text-center text-indigo-600 mb-12">
-            ¡Empieza a planear!
-          </h2>
+          <section className="bg-white p-10 rounded-lg shadow-xl">
+            <h2 className="text-4xl font-bold text-center text-indigo-600 mb-8">
+              Miembros del Evento
+            </h2>
 
-          <DecisionManager eventId={eventId} creator={isCreator} />
-          <div className="flex flex-wrap items-center justify-center gap-6 my-6">
-            <button
-              onClick={goToCategories}
-              className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
-            >
-              Categorías
-            </button>
-            <button
-              onClick={goToResult}
-              className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
-            >
-              Ir a Resultados
-            </button>
-            {isCreator ? (
+            <div className="my-10">
+              <nav>
+                <ul className="flex flex-wrap justify-center gap-6">
+                  {eventUsers.length === 0 ? (
+                    <p className="text-lg font-semibold text-gray-700">
+                      No tienes miembros disponibles.
+                    </p>
+                  ) : (
+                    eventUsers.map((user) => (
+                      <li
+                        key={user.id}
+                        className="text-2xl bg-violet-200 text-black font-bold py-2 px-6 rounded-lg shadow-md cursor-default"
+                      >
+                        {user.username}
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </nav>
+            </div>
+
+            <h2 className="text-3xl font-bold text-center text-indigo-600 mb-12">
+              ¡Empieza a planear!
+            </h2>
+
+            <DecisionManager eventId={eventId} creator={isCreator} />
+            <div className="flex flex-wrap items-center justify-center gap-6 my-6">
               <button
-                onClick={deleteEvent}
-                className="w-60 bg-red-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-red-700 transition duration-300 shadow-md text-center"
-              >
-                Eliminar Evento
-              </button>
-            ) : (
-              <button
-                onClick={leaveEvent}
+                onClick={goToCategories}
                 className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
               >
-                Salir del Evento
+                Categorías
               </button>
-            )}
-          </div>
-        </section>
-      </article>)}
+              <button
+                onClick={goToResult}
+                className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
+              >
+                Ir a Resultados
+              </button>
+              {isCreator ? (
+                <button
+                  onClick={deleteEvent}
+                  className="w-60 bg-red-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-red-700 transition duration-300 shadow-md text-center"
+                >
+                  Eliminar Evento
+                </button>
+              ) : (
+                <button
+                  onClick={leaveEvent}
+                  className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
+                >
+                  Salir del Evento
+                </button>
+              )}
+            </div>
+          </section>
+        </article>
+      )}
     </section>
   );
 };

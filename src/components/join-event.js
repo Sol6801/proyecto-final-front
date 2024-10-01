@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/useUserStore.js";
+import Cookies from "js-cookie";
 
 const JoinEvent = () => {
   const router = useRouter();
@@ -43,20 +44,34 @@ const JoinEvent = () => {
       const result = await response.json();
 
       if (response.ok) {
-        setMessage({ type: "success", text: "Te has unido al evento con éxito." });
-        const eventsCookie = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("eventIds="));
-        const existingEventIds = eventsCookie
-          ? JSON.parse(eventsCookie.split("=")[1])
+        console.log('ESTE ES EL DE JOIN EVENT');
+
+        setMessage((prev) => ({
+          ...prev,
+          type: "success",
+          text: "Te has unido al evento con éxito.",
+        }));
+        // Obtener el valor de la cookie 'eventIds' y convertirla en un array de números
+        const existingEventIds = Cookies.get("eventIds")
+          ? Cookies.get("eventIds").split(",").map(Number)
           : [];
 
-        const normalizedEventIds = existingEventIds.map((id) => Number(id));
+        // Agregar el nuevo eventId si no está ya en el array
+        const newEventId = result.data.id;
+        if (!existingEventIds.includes(newEventId)) {
+          const updatedEventIds = [...existingEventIds, newEventId];
 
-        const updatedEventIds = [...normalizedEventIds, Number(eventData.id)];
+          Cookies.set("eventIds", updatedEventIds.join(","), { path: "/" });
+        }
 
-        document.cookie = `eventIds=${JSON.stringify(updatedEventIds)}; path=/; samesite=strict;`;
-        router.push(`/events/${eventData.id}`);
+        router.push(`/events/${result.data.id}`);
+      } else if (response.status === 409) {
+        // Manejar conflicto
+        console.log(result); // Cambié joinResponse a result para que imprima el mensaje correcto
+        setMessage({
+          type: "error",
+          text: result.message || "Error: ya estás unido a este evento.",
+        });
       } else {
         setMessage({ type: "error", text: "Error al unirse al evento. Intenta nuevamente." });
       }

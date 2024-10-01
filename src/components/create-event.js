@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/useUserStore.js";
 import useEventStore from "@/store/useEventStore.js";
+import Cookies from "js-cookie";
 
 const CreateEvent = () => {
   const { userId } = useUserStore();
@@ -51,11 +52,12 @@ const CreateEvent = () => {
       });
 
       const result = await response.json();
-      setEventId(result.id);
 
       if (response.ok) {
+        setEventId(result.data.id); // Ajustar según el formato de la respuesta
         setMessage({ type: "success", text: "Evento creado con éxito." });
 
+        // Unirse al evento
         const joinResponse = await fetch(`${API_URL}/joinEvent`, {
           method: "POST",
           headers: {
@@ -68,19 +70,35 @@ const CreateEvent = () => {
           }),
         });
 
-        if (joinResponse.ok) {
-          const eventsCookie = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("eventIds="));
-          const existingEventIds = eventsCookie
-            ? JSON.parse(eventsCookie.split("=")[1])
-            : [];
+        const joinResult = await joinResponse.json();
 
-          const updatedEventIds = [...existingEventIds, result.data.id];
-          document.cookie = `eventIds=${JSON.stringify(
-            updatedEventIds
-          )}; path=/`;
-          router.push(`/events/${result.data.id}`);
+        if (joinResponse.ok) {
+          
+          const existingEventIds = Cookies.get("eventIds")
+          ? Cookies.get("eventIds").split(",").map(Number)
+          : [];
+
+        // Agregar el nuevo eventId si no está ya en el array
+        const newEventId = result.data.id;
+        if (!existingEventIds.includes(newEventId)) {
+          const updatedEventIds = [...existingEventIds, newEventId];
+
+          Cookies.set("eventIds", updatedEventIds.join(","), { path: "/" });
+        }
+
+          setMessage((prev) => ({
+            ...prev,
+            type: "success",
+            text: "Te has unido al evento con éxito.",
+          }));
+
+          router.push(`/events/${newEventId}`); // Redirigir al evento
+        } else if (joinResponse.status === 409) {
+          // Manejar conflicto
+          setMessage({
+            type: "error",
+            text: joinResult.message || "Error: ya estás unido a este evento.",
+          });
         } else {
           setMessage({ type: "error", text: "Error al unirse al evento." });
         }
@@ -88,6 +106,7 @@ const CreateEvent = () => {
         setMessage({ type: "error", text: "Error al crear el evento." });
       }
     } catch (error) {
+      console.log(error);
       setMessage({
         type: "error",
         text: "Hubo un problema con el servidor. Intenta más tarde.",
@@ -97,21 +116,12 @@ const CreateEvent = () => {
     }
   };
 
-  // Mover el return aquí, fuera de handleSubmit
   return (
     <section className="bg-gray-100 px-10 py-5 my-5 rounded-lg shadow-lg w-full max-w-md mx-auto">
       {loader && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
           <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
-            <div
-              className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin border-purple-500`}
-            ></div>
-            <div
-              className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow border-purple-300`}
-            ></div>
-            <div
-              className={`absolute inset-0 m-auto w-8 h-8 border-4 border-t-transparent rounded-full animate-spin-reverse border-purple-100`}
-            ></div>
+            <div className="w-full h-full border-4 border-t-transparent rounded-full animate-spin border-purple-500"></div>
           </div>
         </div>
       )}
@@ -183,6 +193,7 @@ const CreateEvent = () => {
           Crear Evento
         </button>
         <button
+          type="button"
           onClick={handleClose}
           className="bg-violet-200 text-violet-600 px-4 py-2 mb-4 rounded-lg text-lg font-semibold hover:bg-red-500 hover:text-white cursor-pointer w-full mt-4 transition duration-200"
         >

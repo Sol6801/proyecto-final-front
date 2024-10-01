@@ -166,11 +166,11 @@ const DecisionManager = ({ eventId, creator }) => {
   if (loading) {
     return (
       <div className="w-full h-96 flex items-center align-middle justify-center">
-      <div className="relative block w-16 h-16">
-        <div className="w-full h-full border-4 border-purple-900 border-t-transparent rounded-full animate-spin"></div>
-        <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin-slow"></div>
-        <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
-      </div>
+        <div className="relative block w-16 h-16">
+          <div className="w-full h-full border-4 border-purple-900 border-t-transparent rounded-full animate-spin"></div>
+          <div className="absolute inset-0 m-auto w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin-slow"></div>
+          <div className="absolute inset-0 m-auto w-8 h-8 border-4 border-purple-300 border-t-transparent rounded-full animate-spin-reverse"></div>
+        </div>
       </div>
     );
   }
@@ -181,6 +181,19 @@ const DecisionManager = ({ eventId, creator }) => {
 
   if (error) {
     return <div>Error: {error}</div>;
+  }
+
+  if (noDecision) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center p-6 bg-gray-100 rounded-lg shadow-md text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          ¡Todavía no tomaron una decisión!
+        </h2>
+        <p className="text-gray-600 text-center mb-6">
+          Dirígete a resultados si te sientes con ganas de decidir!
+        </p>
+      </div>
+    );
   }
 
   const categoryTitles = {
@@ -226,7 +239,6 @@ const DecisionManager = ({ eventId, creator }) => {
         <div className="text-center">
           <p className="text-gray-500 mb-4">No decision has been made yet.</p>
           {creator ? (
-            
             <button
               id="decision-btn"
               onClick={createDecision}
