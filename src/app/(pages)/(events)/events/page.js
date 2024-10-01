@@ -23,7 +23,7 @@ const Events = () => {
       <div className="mt-20 lg:mt-0 flex flex-col items-center justify-center gap-8 md:flex-row h-full">
         <div className="flex flex-col items-center justify-center gap-8">
           <Image
-            src="https://cdn-icons-png.freepik.com/512/5948/5948841.png?uid=R133653469&ga=GA1.1.413291434.1727374790"
+            src="/utils/create-event.png"
             alt="Imagen Crear Evento"
             width={150}
             height={150}
@@ -39,7 +39,7 @@ const Events = () => {
         </div>
         <div className="flex flex-col items-center justify-center gap-8">
           <Image
-            src="https://cdn-icons-png.freepik.com/512/5948/5948841.png?uid=R133653469&ga=GA1.1.413291434.1727374790"
+            src="/utils/join-event.png"
             alt="Imagen Crear Evento"
             width={150}
             height={150}
