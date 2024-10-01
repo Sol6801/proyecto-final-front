@@ -115,75 +115,106 @@ const SwipeableCard = ({ items, category, eventId }) => {
   }
 
   return (
-      <section className={`flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10`}>
-        {isProcessing && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-            <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
-              <div className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin ${loaderColor}`}></div>
-              <div className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow ${swipeDirection === 'left' ? 'border-red-300' : 'border-green-300'}`}></div>
-              <div className={`absolute inset-0 m-auto w-8 h-8 border-4  border-t-transparent rounded-full animate-spin-reverse ${swipeDirection === 'left' ? 'border-red-100' : 'border-green-100'}`}></div>
-            </div>
+    <section
+      className={`flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10`}
+    >
+      {isProcessing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
+            <div
+              className={`w-full h-full border-4 border-t-transparent rounded-full animate-spin ${loaderColor}`}
+            ></div>
+            <div
+              className={`absolute inset-0 m-auto w-12 h-12 border-4 border-t-transparent rounded-full animate-spin-slow ${
+                swipeDirection === "left"
+                  ? "border-red-300"
+                  : "border-green-300"
+              }`}
+            ></div>
+            <div
+              className={`absolute inset-0 m-auto w-8 h-8 border-4  border-t-transparent rounded-full animate-spin-reverse ${
+                swipeDirection === "left"
+                  ? "border-red-100"
+                  : "border-green-100"
+              }`}
+            ></div>
           </div>
-        )}
-    
+        </div>
+      )}
+
+      <button
+        onClick={handleDislike}
+        className="hidden md:inline-block min-w-15 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-200"
+      >
+        <img
+          src="/utils/corazon-roto.png"
+          alt="Corazón roto"
+          className="w-8 h-8 m-auto"
+        />
+      </button>
+
+      {/* Imagen centrada en todas las pantallas */}
+      <div
+        {...handlers}
+        className={`flex flex-col justify-evenly min-w-80 md:min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition-transform duration-500 ${
+          swipeDirection === "left"
+            ? "animate-swipe-left"
+            : swipeDirection === "right"
+            ? "animate-swipe-right"
+            : ""
+        }`}
+      >
+        <Image
+          className="object-cover"
+          src={items[currentIndex].urlImage || "/fallback-image.jpg"}
+          alt={items[currentIndex].name || "Imagen no disponible"}
+          width={400}
+          height={600}
+        />
+        <div className="p-4">
+          <h3 className="text-xl font-bold mb-2">
+            {items[currentIndex].name || "Título no disponible"}
+          </h3>
+        </div>
+      </div>
+
+      <button
+        onClick={handleLike}
+        className="hidden md:inline-block min-w-15 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-200"
+      >
+        <img
+          src="/utils/corazon.png"
+          alt="Corazón roto"
+          className="w-8 h-8 m-auto"
+        />
+      </button>
+
+      {/* Contenedor de botones */}
+      <div className="flex justify-around w-screen md:w-auto md:hidden">
         <button
           onClick={handleDislike}
-          className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          className="min-w-15 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-200"
         >
-          Dislike
-        </button>
-    
-        {/* Imagen centrada en todas las pantallas */}
-        <div
-          {...handlers}
-          className={`flex flex-col justify-evenly min-w-80 md:min-w-96 h-full min-h-80 items-center bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition-transform duration-500 ${
-            swipeDirection === "left"
-              ? "animate-swipe-left"
-              : swipeDirection === "right"
-              ? "animate-swipe-right"
-              : ""
-          }`}
-        >
-          <Image
-            className="object-cover"
-            src={items[currentIndex].urlImage || "/fallback-image.jpg"}
-            alt={items[currentIndex].name || "Imagen no disponible"}
-            width={400}
-            height={600}
+          <img
+            src="/utils/corazon-roto.png"
+            alt="Corazón roto"
+            className="w-8 h-8 m-auto"
           />
-          <div className="p-4">
-            <h3 className="text-xl font-bold mb-2">
-              {items[currentIndex].name || "Título no disponible"}
-            </h3>
-          </div>
-        </div>
-    
+        </button>
+
         <button
           onClick={handleLike}
-          className="hidden md:inline-block min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
+          className="min-w-15 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-200"
         >
-          Like
+          <img
+            src="/utils/corazon.png"
+            alt="Corazón roto"
+            className="w-8 h-8 m-auto"
+          />
         </button>
-    
-        {/* Contenedor de botones */}
-        <div className="flex justify-around w-screen md:w-auto md:hidden">
-          <button
-            onClick={handleDislike}
-            className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-          >
-            Dislike
-          </button>
-    
-          <button
-            onClick={handleLike}
-            className="min-w-32 bg-white text-violet-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-100"
-          >
-            Like
-          </button>
-        </div>
-      </section>
-    );
-    
+      </div>
+    </section>
+  );
 };
 
 export default SwipeableCard;

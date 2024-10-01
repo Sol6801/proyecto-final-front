@@ -1,8 +1,15 @@
 import React from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 const LandingPage = () => {
   return (
+    <>
+          <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <title>Planner Buddy</title>
+      </Head>
+
     <div className="min-h-screen bg-gray-50">
       {/* Main Content */}
       <main className="h-screen flex flex-col items-center justify-center py-20 bg-gradient-to-b from-violet-500 to-violet-200 text-white p-3">
@@ -27,6 +34,7 @@ const LandingPage = () => {
         </Link>
       </main>
     </div>
+    </>
   );
 };
 

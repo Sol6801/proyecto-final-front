@@ -242,6 +242,11 @@ const nextConfig = {
         hostname: 'plannerbuddy.s3.amazonaws.com',
         pathname: '/mealsoptimizadas/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'us-east-2.console.aws.amazon.com',
+        pathname: '/**',
+      }
       
     ],
   },
