@@ -132,7 +132,6 @@ const nextConfig = {
         hostname: "www.essen.com.ar", 
         pathname: "/**",
       },
-      // Nuevos hostnames
       {
         protocol: "https",
         hostname: "elferroviarioparrilla.com",
@@ -225,9 +224,25 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "plannerbuddy.s3.amazonaws.com", 
-        pathname: "/placesoptimizado/**/**",
-      }
+        hostname: "www.serargentino.com",
+        pathname: "/**", 
+      },
+      {
+        protocol: 'https',
+        hostname: 'plannerbuddy.s3.amazonaws.com',
+        pathname: '/placesoptimizado/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plannerbuddy.s3.amazonaws.com',
+        pathname: '/optimizadasmovies/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plannerbuddy.s3.amazonaws.com',
+        pathname: '/mealsoptimizadas/**',
+      },
+      
     ],
   },
 };
