@@ -5,7 +5,7 @@ import withAuth from "@/components/withAuth.js";
 import useAuthStore from "@/store/useUserAuthStore.js";
 import useUserStore from "@/store/useUserStore.js";
 import DecisionManager from "@/components/decision.js";
-
+import Cookies from "js-cookie";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const EventPage = ({ params }) => {
@@ -26,7 +26,7 @@ const EventPage = ({ params }) => {
     router.push(`/events/${eventId}/result`);
   };
   const handleGoToEvent = () => {
-    router.push(`/events`);
+    router.push(`/events/${eventId}`);
   };
 
   const formatDate = (dateString) => {
@@ -72,7 +72,7 @@ const EventPage = ({ params }) => {
     };
 
     fetchEventUsers();
-  }, []);
+  }, [eventId, userId]);
 
   //*intento de delete event, falta find many users_in_event y eliminar todos los regitros de dicha tabla para evitar conflictos de key */
 
@@ -96,7 +96,15 @@ const EventPage = ({ params }) => {
 
       const data = await response.json();
       console.log(`Event ${eventId} deleted successfully:`, data);
-      handleGoToEvent();
+      const eventIdsCookie = Cookies.get('eventIds');
+      if (eventIdsCookie) {
+        let eventIds = JSON.parse(eventIdsCookie);
+        // Filtrar el eventId eliminado
+        eventIds = eventIds.filter(id => id != eventId);
+        // Actualizar la cookie
+        Cookies.set('eventIds', JSON.stringify(eventIds), { expires: 7 });
+      }
+      router.push(`/events`)
     } catch (error) {
       console.error(`Error deleting event: ${eventId}`, error);
       console.error("Error details:", error.message);
