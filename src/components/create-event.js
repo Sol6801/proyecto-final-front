@@ -5,7 +5,7 @@ import useUserStore from "@/store/useUserStore.js";
 import useEventStore from "@/store/useEventStore.js";
 import Cookies from "js-cookie";
 
-const CreateEvent = () => {
+const CreateEvent = ({ refreshEvents }) => {
   const { userId } = useUserStore();
   const router = useRouter();
   const setEventId = useEventStore((state) => state.setEventId);
@@ -94,8 +94,8 @@ const CreateEvent = () => {
             type: "success",
             text: "Te has unido al evento con éxito.",
           }));
-
-          router.push(`/events/${newEventId}`); // Redirigir al evento
+          router.push(`/events/${newEventId}`);
+          refreshEvents()          // Redirigir al evento
         } else if (joinResponse.status === 409) {
           // Manejar conflicto
           setMessage({
@@ -136,11 +136,10 @@ const CreateEvent = () => {
       {/* Mostrar mensajes de éxito o error */}
       {message.text && (
         <div
-          className={`mb-4 text-center p-2 rounded-lg ${
-            message.type === "success"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          }`}
+          className={`mb-4 text-center p-2 rounded-lg ${message.type === "success"
+            ? "bg-green-100 text-green-700"
+            : "bg-red-100 text-red-700"
+            }`}
         >
           {message.text}
         </div>

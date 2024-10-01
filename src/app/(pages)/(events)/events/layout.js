@@ -14,43 +14,43 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
   const [loader, setLoader] = useState(true);
   const router = useRouter();
 
+  const fetchUserEvents = async () => {
+    setLoader(true);
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      console.error('User ID not found in local storage');
+      router.push('/login');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/events/users/${userId}`);
+      const result = await response.json();
+      console.log('User events:', result);
+
+      if (Array.isArray(result.data)) {
+        const events = result.data.map(item => ({
+          id: item.event.id,
+          name: item.event.name
+        }));
+
+        setUserEvents(events);
+
+        // Actualiza las cookies si los eventos han cambiado
+        const eventIds = events.map(event => event.id);
+        Cookies.set('eventIds', JSON.stringify(eventIds), { expires: 7 });
+      } else {
+        console.error('Error: Unexpected data format');
+      }
+    } catch (error) {
+      console.error('Error fetching user events:', error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserEvents = async () => {
-      setLoader(true);
-      const userId = localStorage.getItem('userId');
-
-      if (!userId) {
-        console.error('User ID not found in local storage');
-        router.push('/login');
-        return;
-      }
-
-      try {
-        const response = await fetch(`${API_URL}/events/users/${userId}`);
-        const result = await response.json();
-        console.log('User events:', result);
-
-        if (Array.isArray(result.data)) {
-          const events = result.data.map(item => ({
-            id: item.event.id,
-            name: item.event.name
-          }));
-
-          setUserEvents(events);
-
-          // Actualiza las cookies si los eventos han cambiado
-          const eventIds = events.map(event => event.id);
-          Cookies.set('eventIds', JSON.stringify(eventIds), { expires: 7 });
-        } else {
-          console.error('Error: Unexpected data format');
-        }
-      } catch (error) {
-        console.error('Error fetching user events:', error);
-      } finally {
-        setLoader(false);
-      }
-    };
-
     fetchUserEvents();
   }, [router]);
 
@@ -147,6 +147,8 @@ function EventsLayout({ children, createEventModal, joinEventModal }) {
 
           <div className="bg-violet-400 place-items-center flex-1 flex items-center rounded-lg order-0 lg:order-1 justify-center">
             {children}
+            {createEventModal && React.cloneElement(createEventModal, { refreshEvents: fetchUserEvents })}
+            {joinEventModal && React.cloneElement(joinEventModal, { refreshEvents: fetchUserEvents })}
           </div>
         </div>
       )}
