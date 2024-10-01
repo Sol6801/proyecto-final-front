@@ -83,7 +83,7 @@ function AIRecommendationsPage({ params }) {
     }
   }, [eventId]);
 
-  if (loading) return <div className="text-center flex flex-col items-center">Cargando recomendaciones...
+  if (loading) return <div className="text-center tex-violet-900 flex flex-col items-center">Cargando recomendaciones...
       <div id="preloader6">
         <span className="sparkle"></span>
         <span className="sparkle"></span>
