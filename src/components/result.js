@@ -58,7 +58,7 @@ const LikedItemsChart = ({ eventId, category }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-2">
-      <h2 className="text-2xl font-bold mb-4 text-center md:text-lg">
+      <h2 className="text-2xl font-bold mb-4 text-center md:text-lg text-violet-900">
         {categoryTitles[category]} con más Likes
       </h2>
 

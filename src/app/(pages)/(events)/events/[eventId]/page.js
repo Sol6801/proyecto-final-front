@@ -142,7 +142,7 @@ const EventPage = ({ params }) => {
 
   return (
     
-    <section className="p-5 bg-gradient-to-b from-purple-600 to-purple-300 min-h-screen min-w-full flex flex-wrap items-center justify-center rounded-lg">
+    <section className="p-5 bg-gradient-to-b from-violet-600 to-violet-300 min-h-screen w-full flex flex-wrap items-center justify-center rounded-lg">
       {isProcessing && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
             <div className="relative w-24 h-24 rounded-lg flex items-center justify-center">
@@ -187,7 +187,7 @@ const EventPage = ({ params }) => {
           </div>
 
           <section className="bg-white p-10 rounded-lg shadow-xl">
-            <h2 className="text-4xl font-bold text-center text-indigo-600 mb-8">
+            <h2 className="text-4xl font-bold text-center text-violet-900 mb-8">
               Miembros del Evento
             </h2>
 
@@ -212,7 +212,7 @@ const EventPage = ({ params }) => {
               </nav>
             </div>
 
-            <h2 className="text-3xl font-bold text-center text-indigo-600 mb-12">
+            <h2 className="text-3xl font-bold text-center text-violet-900 mb-12">
               ¡Empieza a planear!
             </h2>
 
@@ -220,13 +220,13 @@ const EventPage = ({ params }) => {
             <div className="flex flex-wrap items-center justify-center gap-6 my-6">
               <button
                 onClick={goToCategories}
-                className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
+                className="w-60 bg-violet-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-violet-700 transition duration-300 shadow-md text-center"
               >
                 Categorías
               </button>
               <button
                 onClick={goToResult}
-                className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
+                className="w-60 bg-violet-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-violet-700 transition duration-300 shadow-md text-center"
               >
                 Ir a Resultados
               </button>
@@ -240,7 +240,7 @@ const EventPage = ({ params }) => {
               ) : (
                 <button
                   onClick={leaveEvent}
-                  className="w-60 bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
+                  className="w-60 bg-violet-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-md text-center"
                 >
                   Salir del Evento
                 </button>

@@ -17,38 +17,7 @@ const Events = () => {
     router.push(`/events/joinEvent`);
   };
 
-  // useEffect(() => {
-  //   const fetchUserEvents = async () => {
-  //     const userId = localStorage.getItem("userId");
-
-  //     if (!userId) {
-  //       console.error("User ID not found in local storage");
-  //       router.push("/login"); // Redirigir al login si no hay userId
-  //       return;
-  //     }
-
-  //     try {
-  //       const response = await fetch(`${API_URL}/events/users/${userId}`);
-  //       const result = await response.json();
-  //       console.log('Estoy en events/page.js', result.data)
-  //       if (Array.isArray(result.data)) {
-  //         const events = result.data.map((item) => ({
-  //           id: item.event.id,
-  //           name: item.event.name,
-  //         }));
-
-  //         // Extraer los ids de los eventos y guardarlos como array en las cookies
-  //         const eventIds = events.map((event) => event.id);
-  //         Cookies.set("eventIds", JSON.stringify(eventIds)); // Guardar en cookies como string JSON
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user events:", error);
-  //     }
-  //   };
-
-  //   fetchUserEvents();
-  // }, [router]);
-
+  
   return (
     <section className=" bg-violet-400 place-items-center rounded-lg h-full min-h-screen">
       <div className="mt-20 lg:mt-0 flex flex-col items-center justify-center gap-8 md:flex-row h-full">

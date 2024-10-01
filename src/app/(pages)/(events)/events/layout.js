@@ -117,13 +117,13 @@ function EventsLayout({ children }) {
 
       {!loader && (userEvents.length > 0 || cookiesEvent.length > 0) && (
         <div className="flex flex-col bg-gradient-to-b from-violet-200 to-violet-200 mx-auto p-4 gap-4 h-full min-h-screen lg:flex-row">
-          <aside className="bg-violet-600 lg:max-w-64 px-5 grid rounded-lg relative order-1 lg:order-0 h-full">
+          <aside className="bg-violet-500 lg:max-w-64 px-5 grid rounded-lg relative order-1 lg:order-0 h-full">
           {/* <aside className="custom-scrollbar bg-violet-600 lg:max-w-72 px-5 grid rounded-lg relative order-1 lg:order-0 h-screen overflow-y-auto"> */}
 
             <nav>
               <ul className="flex flex-col py-5 my-5 gap-10 sticky top-12">
                 <span className="top-4 left-4">
-                  <h1 className="text-xl p-1 text-center overflow-hidden">
+                  <h1 className="text-xl p-1 text-center overflow-hidden text-violet-900">
                     Selecciona un evento para verlo
                   </h1>
                 </span>
@@ -135,7 +135,7 @@ function EventsLayout({ children }) {
                     <li key={event.id}>
                       <button
                         onClick={() => handleEventClick(event.id)}
-                        className="text-center text-3xl md:text-xl bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded w-full overflow-hidden"
+                        className="text-center text-3xl md:text-xl bg-violet-400 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded w-full overflow-hidden"
                       >
                         {event.name}
                       </button>

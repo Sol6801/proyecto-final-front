@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
+import styles from "@/styles/Footer.module.css";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-4">
+    <footer className={styles.footer}>
       <div className="container mx-auto text-center">
         <p>&copy; {new Date().getFullYear()} Planner Buddy </p>
       </div>

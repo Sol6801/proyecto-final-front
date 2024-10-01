@@ -196,7 +196,7 @@ const DecisionManager = ({ eventId, creator }) => {
             <button
               id="decision-btn"
               onClick={createDecision}
-              className="bg-violet-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-violet-700 transition-all duration-300"
+              className="bg-purple-900 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-purple-600 transition-all duration-300"
               disabled={loading}
             >
               Fijar Decisión
@@ -216,7 +216,7 @@ const DecisionManager = ({ eventId, creator }) => {
   return (
     <div className="bg-white rounded-lg py-5 px-2">
       <div className="text-center">
-        <h2 className="text-3xl bg-violet-200 rounded-lg shadow-md font-bold mb-4 text-indigo-600 inline-block p-4">
+        <h2 className="text-3xl bg-violet-200 rounded-lg shadow-md font-bold mb-4 text-violet-900 inline-block p-4">
           Decisión final:
         </h2>
       </div>
@@ -227,7 +227,7 @@ const DecisionManager = ({ eventId, creator }) => {
               key={category}
               className="border rounded-lg p-6 shadow-lg flex flex-col items-center justify-between transition-transform transform min-h-60"
             >
-              <h3 className="text-2xl font-semibold mb-6 capitalize text-gray-800">
+              <h3 className="text-2xl font-semibold mb-6 capitalize text-violet-900">
                 {categoryTitles[category]}
               </h3>
               <div className="flex-grow flex items-center justify-center mb-6">

@@ -34,13 +34,13 @@ const HomePage = () => {
       <Navbar />
       <section className="min-h-dvh flex flex-col items-center justify-center py-40 bg-gradient-to-b from-violet-500 to-violet-200 text-white md:py-20">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-center">Planner Buddy</h1>
-        <p className="text-xl mb-8 md:text-2xl">Tu compa el que planea ;)</p>
+        <p className="text-xl mb-8 md:text-2xl text-#fdf2e9">Tu compa el que planea ;)</p>
       
       </section>
 
-      <section className="py-20 bg-gray-100">
+      <section className="py-20 bg-violet-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">
+          <h2 className="text-3xl font-bold text-center mb-12 text-#fdf2e9">
             ¡Invitá a tus amigos y empezá a planear!
           </h2>
           <div className=" flex flex-row justify-center items-center gap-8 text-center">
@@ -56,7 +56,7 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-100">
+      <section className="py-20 bg-violet-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">
             Elegí con tus amigos entre las diferentes categorías...

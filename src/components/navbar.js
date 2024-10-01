@@ -42,7 +42,7 @@ const Navbar = () => {
       </button>
       <nav className={styles.nav}>
         <h1
-          className="text-2xl font-bold cursor-pointer"
+          className="text-2xl font-bold cursor-pointer text-violet-900"
           onClick={() => router.push("/home")}>
           Planner Buddy
         </h1>

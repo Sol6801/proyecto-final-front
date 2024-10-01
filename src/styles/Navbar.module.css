@@ -25,7 +25,7 @@
   content: '';
   width: 80%;
   height: 3px;
-  background-color: #42170f;
+  background-color: #4c1d95;
   margin: 0.35rem -0.8rem;
   transition: all 450ms;
   margin: 0.35rem -0.8rem;
@@ -74,9 +74,9 @@
 }
 .a{
   text-decoration: none;
-  color: #42170f;
+  color: #4c1d95;
   background-color: transparent;
-  border: 2px #42170f solid;
+  border: 2px #4c1d95 solid;
   padding: 0.4rem;
   border-radius: 3px;
   display: block;
@@ -148,7 +148,7 @@
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  color: #42170f;
+  color: #4c1d95;
 }
 
 /**** BTN No. 6 ****/
@@ -171,7 +171,7 @@
   content: "";
   height: 0%;
   width: 2px;
-  background:#42170f;
+  background:#4c1d95;
 }
 .btn6:before {
   right: 0;
@@ -195,7 +195,7 @@
 .btn6span:after {
   position: absolute;
   content: "";
-  background:#42170f;
+  background:#4c1d95;
 }
 .btn6span:before {
   left: 0;
