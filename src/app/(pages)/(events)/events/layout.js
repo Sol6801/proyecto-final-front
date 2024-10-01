@@ -135,7 +135,7 @@ function EventsLayout({ children }) {
                     <li key={event.id}>
                       <button
                         onClick={() => handleEventClick(event.id)}
-                        className="text-center text-3xl md:text-xl bg-violet-400 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded w-full overflow-hidden"
+                        className="text-center text-3xl md:text-xl bg-violet-400 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded w-full overflow-hidden capitalize"
                       >
                         {event.name}
                       </button>

@@ -3,12 +3,14 @@
     width: 60px; /* Incrementa el tamaño general */
     height: 60px;
     animation: preloader_6 5s infinite linear;
+    transform: translateY(-20px);
   }
   
   #preloader6 span {
     width: 50px;
     height: 50px;
     position: absolute;
+    top: 50%;
     display: block;
     animation: preloader_6_span 1s infinite linear;
   }

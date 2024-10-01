@@ -170,7 +170,7 @@ const EventPage = ({ params }) => {
       )}
       {!isLoading && (
         <article className="max-w-4xl w-full mx-auto">
-          <h1 className="pt-3 text-xl md:text-3xl lg:text-5xl font-extrabold text-center text-white mb-8">
+          <h1 className="pt-3 text-xl md:text-3xl lg:text-5xl font-extrabold text-center text-white mb-8 capitalize">
             {event.name}
           </h1>
           <h2 className="pt-3 text-base md:text-2xl font-extrabold text-center text-white mb-8">

@@ -83,21 +83,22 @@ function AIRecommendationsPage({ params }) {
     }
   }, [eventId]);
 
-  if (loading) return <div className="text-center tex-violet-900 flex flex-col items-center">Cargando recomendaciones...
-      <div id="preloader6">
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-      </div>
+  if (loading) return  <div className="shimmer-text text-center text-violet-900 flex flex-row items-center justify-center">Cargando recomendaciones...
+  <div id="preloader6">
+    <div>
+    <span className="shimmer-text sparkle"></span>
+    <span className="shimmer-text sparkle"></span>
+    <span className="shimmer-text sparkle"></span>
+    <span className="shimmer-text sparkle"></span>
+    </div>
+  </div>
+  </div>
 
-
-  </div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Recomendaciones basadas en IA</h1>
+      <h1 className="text-3xl font-bold mb-6 text-violet-900">Recomendaciones basadas en IA</h1>
       {recommendations && (
         <div className="mt-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
