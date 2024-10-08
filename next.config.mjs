@@ -229,18 +229,18 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'plannerbuddy.s3.amazonaws.com',
+        hostname: 'plannerbyddy.s3.us-east-2.amazonaws.com',
         pathname: '/placesoptimizado/**',
       },
       {
         protocol: 'https',
-        hostname: 'plannerbuddy.s3.amazonaws.com',
+        hostname: 'plannerbyddy.s3.us-east-2.amazonaws.com',
         pathname: '/optimizadasmovies/**',
       },
       {
         protocol: 'https',
-        hostname: 'plannerbuddy.s3.amazonaws.com',
-        pathname: '/mealsoptimizadas/**',
+        hostname: 'plannerbyddy.s3.us-east-2.amazonaws.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
