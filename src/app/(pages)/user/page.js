@@ -1,5 +1,6 @@
 import React from "react";
 import "@/styles/ai-loader.css";
+import Image from "next/image";
 
 
 const User = () => {
@@ -17,6 +18,13 @@ const User = () => {
         </div>
       </div>
       </div>
+      <Image
+          src="https://plannerbyddy.s3.us-east-2.amazonaws.com/mealsoptimizadas/tartadeespinacaconensalada.webp"
+          alt="user"
+          width={200}
+          height={200}
+          className="mb-2 rounded"
+        />
     
     </section>
   );

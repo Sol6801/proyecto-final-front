@@ -1,104 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import Image from 'next/image';
-
-// const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-// const DecisionManager = ({ eventId }) => {
-//   const [decision, setDecision] = useState(null);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(null);
-
-//   const getDecision = async () => {
-//     setLoading(true);
-//     setError(null);
-//     try {
-//       const response = await fetch(`${API_URL}/events/${eventId}/decision`);
-//       if (!response.ok) {
-//         throw new Error('Failed to fetch decision');
-//       }
-//       const data = await response.json();
-//       setDecision(data.data);
-//     } catch (err) {
-//       console.error('Error fetching decision:', err);
-//       setError('Failed to fetch decision. Please try again.');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const createDecision = async () => {
-//     setLoading(true);
-//     setError(null);
-//     try {
-//       const response = await fetch(`${API_URL}/events/${eventId}/decision`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       });
-
-//       if (!response.ok) {
-//         throw new Error('Failed to create decision');
-//       }
-
-//       await getDecision(); // Fetch the updated decision after creating it
-//     } catch (err) {
-//       console.error('Error creating decision:', err);
-//       setError('Failed to create decision. Please try again.');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     getDecision();
-//   }, [eventId]);
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
-
-//   return (
-//     <div className="bg-white rounded-lg shadow-lg p-6 w-full">
-//       <h2 className="text-2xl font-bold mb-4">Event Decision</h2>
-//       {decision ? (
-//         <div className="grid grid-cols-3 gap-4">
-//           {['movie', 'meal', 'place'].map((category) => (
-//             <div key={category} className="border rounded p-4">
-//               <h3 className="text-xl font-semibold mb-2 capitalize">{category}</h3>
-//               <Image
-//                 src={decision[category].urlImage}
-//                 alt={decision[category].title}
-//                 width={200}
-//                 height={200}
-//                 className="mb-2 rounded"
-//               />
-//               <p>{decision[category].title}</p>
-//             </div>
-//           ))}
-//         </div>
-//       ) : (
-//         <p>No decision has been made yet.</p>
-//       )}
-//       <button
-//         id="decision-btn"
-//         onClick={createDecision}
-//         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-//         disabled={loading}
-//         style={{ display: 'none' }}
-//       >
-//         {decision ? 'Update Decision' : 'Create Decision'}
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default DecisionManager;
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -108,7 +7,8 @@ const DecisionManager = ({ eventId, creator }) => {
   const [decision, setDecision] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [noDecision, setNoDecision] = useState(false); // Nuevo estado para manejar cuando no hay decisiones
+  const [noDecision, setNoDecision] = useState(false); 
+  const [hasResults, setHasResults] = useState({ movies: false, places: false, meals: false });
 
   const getDecision = async () => {
     setLoading(true);
@@ -116,16 +16,17 @@ const DecisionManager = ({ eventId, creator }) => {
     setNoDecision(false); // Resetear el estado de noDecision
     try {
       const response = await fetch(`${API_URL}/events/${eventId}/decision`);
+      const data = await response.json();
       if (!response.ok) {
-        // Si el servidor responde con un 404, significa que no se encontró la decisión
         if (response.status === 404) {
-          setNoDecision(true); // Establecer el estado de noDecision a true
+          setNoDecision(true); 
+          setHasResults(data.hasResults || { movies: false, places: false, meals: false });
         } else {
           throw new Error("Failed to fetch decision");
         }
       } else {
-        const data = await response.json();
         setDecision(data.data);
+        setHasResults(data.hasResults || { movies: false, places: false, meals: false });
       }
     } catch (err) {
       console.error("Error fetching decision:", err);
@@ -163,6 +64,10 @@ const DecisionManager = ({ eventId, creator }) => {
     getDecision();
   }, [eventId]);
 
+  const handleIA = () => {
+    router.push(`/events/${eventId}/result/ia`);
+  };
+
   if (loading) {
     return (
       <div className="w-full h-96 flex items-center align-middle justify-center">
@@ -183,6 +88,8 @@ const DecisionManager = ({ eventId, creator }) => {
     return <div>Error: {error}</div>;
   }
 
+  const canCreateDecision = hasResults.movies && hasResults.places && hasResults.meals;
+
   if (noDecision) {
     return (
       <div className="w-full flex flex-col items-center justify-center p-6 bg-gray-100 rounded-lg shadow-md text-center">
@@ -190,17 +97,24 @@ const DecisionManager = ({ eventId, creator }) => {
           ¡Todavía no tomaron una decisión!
         </h2>
         <p className="text-gray-600 text-center mb-6">
-          Dirígete a resultados si te sientes con ganas de decidir!
+        {canCreateDecision 
+            ? "Dirígete a resultados si te sientes con ganas de decidir!"
+            : "Aún no hay suficientes resultados para tomar una decisión."}
         </p>
         {creator && (
             <button
               id="decision-btn"
               onClick={createDecision}
-              className="bg-purple-900 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-purple-600 transition-all duration-300"
-              disabled={loading}
+              className={`px-6 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
+                canCreateDecision
+                  ? "bg-purple-900 text-white hover:bg-purple-600"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+              disabled={!canCreateDecision || loading}
             >
               Fijar Decisión
             </button>
+
           )}
       </div>
     );
@@ -221,6 +135,7 @@ const DecisionManager = ({ eventId, creator }) => {
         </h2>
       </div>
       {decision ? (
+        <div className="flex flex-col items-center justify-center">
         <div className="flex flex-col md:flex-row justify-evenly gap-8">
           {["movie", "meal", "place"].map((category) => (
             <div
@@ -244,6 +159,14 @@ const DecisionManager = ({ eventId, creator }) => {
               </p>
             </div>
           ))}
+          </div>
+            <button
+          onClick={handleIA}
+          className="bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 mt-5 rounded-full md:text-lg font-semibold"
+        >
+          Generá tu recomendación con IA 🌟
+        </button>
+
         </div>
       ) : (
         <div className="text-center">
