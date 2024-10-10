@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const DecisionManager = ({ eventId, creator }) => {
+  const router = useRouter();
   const [decision, setDecision] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
