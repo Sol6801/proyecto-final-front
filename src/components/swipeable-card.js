@@ -97,6 +97,9 @@ const SwipeableCard = ({ items, category, eventId }) => {
     onSwipedRight: handleLike,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
+    trackTouch: true, // Ensure touch events are tracked
+    delta: 50, // Minimum distance in pixels before a swipe is recognized
+    rotationAngle: 0, // Don't rotate the swipe direction
   });
 
   // Loader styles (red for dislike, green for like)
