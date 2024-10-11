@@ -102,6 +102,7 @@ const SwipeableCard = ({ items, category, eventId }) => {
     rotationAngle: 0, // Don't rotate the swipe direction
   });
 
+  
   // Loader styles (red for dislike, green for like)
   const loaderColor = swipeDirection === "left" ? "bg-red-500" : "bg-green-500";
 
