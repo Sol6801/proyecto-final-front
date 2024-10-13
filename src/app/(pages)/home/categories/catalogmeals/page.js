@@ -34,7 +34,7 @@ const MealsCatalogPage = () => {
 
         const formattedMeals = result.map((meal) => ({
           id: meal.id,
-          name: meal.title,
+          name: meal.name,
           urlImage: meal.urlImage,
         }));
 
